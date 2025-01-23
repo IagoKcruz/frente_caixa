@@ -8,29 +8,41 @@ use frente_caixa;
 
 -- CLIENTE 
 CREATE TABLE cliente(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL
+    id CHAR(36) PRIMARY KEY NOT NULL,
 	nome varchar(120) NOT NULL,	
 	codigo INT(11) NOT NULL,
 	cnpj_cpf VARCHAR(13) NOT NULL,	
 	data_nascimento DATE,
 	rg VARCHAR(13) NOT NULL,
-	municipio_id INT(11) NOT NULL,
+	municipio_id CHAR(36) NOT NULL,
 	inscricao_estadual VARCHAR(11),
 	bairro VARCHAR(120),
 	numero_logradouro INT(9),
 	logradouro VARCHAR(120),
 	email VARCHAR(120),
-	pacote_preco_id INT(11),
+	promocao_id INT(11),
 	sn_ativo CHAR(2) NOT NULL
 );
 
 
+-- PACOTE_PROMOCAO
+CREATE TABLE promocao(
+    id CHAR(36) PRIMARY KEY NOT NULL,
+    descricao VARCHAR(120) NOT NULL
+);
+
+
+-- COMBO_PROMOCAO
+CREATE TABLE combo_promocao(
+    id CHAR(36) PRIMARY KEY NOT NULL,
+    valor_promocao FLOAT(10,2),
+    item_id char(36) NOT NULL
+);
+
 
 -- ITEM
 CREATE table item(
-    --id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL
+    id CHAR(36) PRIMARY KEY NOT NULL,
 	codigo INT(11) NOT NULL,
 	codigo_de_barra VARCHAR(20) NOT NULL,
 	categoria_id INT(11),
@@ -43,11 +55,17 @@ CREATE table item(
 );
 
 
+-- UNIDADE_MEDIDA
+
+CREATE TABLE unidade_medida(
+	id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	descricao VARCHAR(60) NOT NULL
+);
+
 
 -- USUARIO 
 CREATE TABLE usuario (
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL,
+    id CHAR(36) PRIMARY KEY NOT NULL,
 	nome VARCHAR(120) NOT NULL,
 	login VARCHAR(9) NOT NULL,
 	grupo_usuario_id INT(11),
@@ -58,8 +76,7 @@ CREATE TABLE usuario (
 
 -- MUNICIPIO 
 CREATE TABLE municipio(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL,
+    id CHAR(36) PRIMARY KEY NOT NULL,
 	descricao VARCHAR(120) NOT NULL
 );
 
@@ -67,32 +84,30 @@ CREATE TABLE municipio(
 
 -- VENDA
 CREATE TABLE venda(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL,
+    id CHAR(36) PRIMARY KEY NOT NULL,
 	total_venda INT(11) NOT NULL,
 	desconto INT(3),
 	acrescimo INT(5),
 	observacao VARCHAR(700),
 	data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	sn_ativo CHAR(1) NOT NULL,
-	cliente_id INT(11) NOT NULL
+	cliente_id CHAR(36) NOT NULL
 );
 
 
 
 -- ITEM_VENDA
 CREATE TABLE item_venda(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL,
-	item_id INT(11) NOT NULL,
-	venda_id INT(11) NOT NULL,
+    id CHAR(36) PRIMARY KEY NOT NULL,
+	item_id CHAR(36) NOT NULL,
+	venda_id CHAR(36) NOT NULL,
 	quantidade INT(9) NOT NULL,
 	preco INT(9) NOT NULL,
 	total INT(9) NOT NULL,
 	desconto INT(3) NOT NULL,
 	acrescimo INT(5) NOT NULL,
 	data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	usuario_id INT(11) NOT NULL,
+	usuario_id CHAR(36) NOT NULL,
 	sn_ativo CHAR(2) NOT NULL
 );
 
@@ -108,8 +123,7 @@ CREATE TABLE tipo_recebimento(
 
 -- FORMA_PAGAMENTO
 CREATE TABLE forma_pagamento(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	codigo INT(11) NOT NULL,
+	codigo INT(11) PRIMARY KEY NOT NULL,
 	descricao VARCHAR(60) NOT NULL,
 	tipo_recebimento_id INT(11) NOT NULL
 );
@@ -118,8 +132,7 @@ CREATE TABLE forma_pagamento(
 
 -- RECEBIMENTO_VENDA
 CREATE TABLE recebimento_venda(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL,
+    id CHAR(36) PRIMARY KEY  NULL,
 	venda_id INT(11) NOT NULL,
 	forma_pagamento_id INT(11) NOT NULL
 );
@@ -136,11 +149,10 @@ CREATE TABLE tipo_operacao(
 
 -- SYS_LOG_REGISTRO
 CREATE TABLE sys_log_registro(
-	--id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id CHAR(36) NOT NULL,
+    id CHAR(36) PRIMARY KEY NOT NULL,
     tipo_operacao_id INT(11) NOT NULL,
-    venda_id INT(11) NOT NULL,
-    usuario_registro_id INT(11) NOT NULL,
+    venda_id CHAR(36) NOT NULL,
+    usuario_registro_id CHAR(36) NOT NULL,
     data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     query VARCHAR(60) NOT NULL,
     sn_ativo CHAR(1) NOT NULL
@@ -164,6 +176,17 @@ ALTER TABLE cliente
 ADD CONSTRAINT fk_municipio_id
 FOREIGN KEY (municipio_id) REFERENCES municipio(id);
 
+ALTER TABLE cliente
+ADD CONSTRAINT fk_promocao_id_cliente
+FOREIGN KEY(promocao_id)
+REFERENCES promocao(id);
+
+-- COMBO PROMOCAO
+
+ALTER TABLE combo_promocao
+ADD CONSTRAINT fk_promocao_id_combo_promocao
+FOREIGN KEY(item_id)
+REFERENCES promocao(id);
 
 
 -- VENDA
@@ -327,5 +350,28 @@ DELIMITER ;
 DELIMITER ;
 
 
+ DELIMITER ;;
+    CREATE TRIGGER tgr_before_insert_promocao
+    BEFORE INSERT ON promocao
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id IS NULL THEN
+            SET NEW.id = UUID();
+        END IF;
+    END ;;
+DELIMITER ;
 
-https://loop.cloud.microsoft/p/eyJ1IjoiaHR0cHM6Ly9zZW5hY3JzZWR1LnNoYXJlcG9pbnQuY29tL2NvbnRlbnRzdG9yYWdlL3g4Rk5PLXh0c2t1Q1JYMl9mTVRITGZLdFk1VFJEdHBDbU9CSmVndDhLY0E%2FbmF2PWN6MGxNa1pqYjI1MFpXNTBjM1J2Y21GblpTVXlSbmc0Ums1UExYaDBjMnQxUTFKWU1sOW1UVlJJVEdaTGRGazFWRkpFZEhCRGJVOUNTbVZuZERoTFkwRW1aRDFpSVhGbFQyeHlaMDFuTVRBdGFrdFFkRXRFTUVVeGFHTkdWVEJ3VFU1UVlUVkdjbFZMUzNBdE9HNXZZVmt6TTA1UVJreERZakJVUzNGTVEybEtSMVJHV2xNbVpqMHdNVUpVVlZjeVVqVkdOME5EV1U5VFZWbFRXa2RMVFZjMFYxTk1VbHBNUzFBeUptTTlKVEpHSm1ac2RXbGtQVEVtY0QwbE5EQm1iSFZwWkhnbE1rWnNiMjl3TFhCaFoyVXRZMjl1ZEdGcGJtVnkifQ%3D%3D
+
+ DELIMITER ;;
+    CREATE TRIGGER tgr_before_insert_combo_promocao
+    BEFORE INSERT ON combo_promocao
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id IS NULL THEN
+            SET NEW.id = UUID();
+        END IF;
+    END ;;
+DELIMITER ;
+
+
+-- https://loop.cloud.microsoft/p/eyJ1IjoiaHR0cHM6Ly9zZW5hY3JzZWR1LnNoYXJlcG9pbnQuY29tL2NvbnRlbnRzdG9yYWdlL3g4Rk5PLXh0c2t1Q1JYMl9mTVRITGZLdFk1VFJEdHBDbU9CSmVndDhLY0E%2FbmF2PWN6MGxNa1pqYjI1MFpXNTBjM1J2Y21GblpTVXlSbmc0Ums1UExYaDBjMnQxUTFKWU1sOW1UVlJJVEdaTGRGazFWRkpFZEhCRGJVOUNTbVZuZERoTFkwRW1aRDFpSVhGbFQyeHlaMDFuTVRBdGFrdFFkRXRFTUVVeGFHTkdWVEJ3VFU1UVlUVkdjbFZMUzNBdE9HNXZZVmt6TTA1UVJreERZakJVUzNGTVEybEtSMVJHV2xNbVpqMHdNVUpVVlZjeVVqVkdOME5EV1U5VFZWbFRXa2RMVFZjMFYxTk1VbHBNUzFBeUptTTlKVEpHSm1ac2RXbGtQVEVtY0QwbE5EQm1iSFZwWkhnbE1rWnNiMjl3TFhCaFoyVXRZMjl1ZEdGcGJtVnkifQ%3D%3D
