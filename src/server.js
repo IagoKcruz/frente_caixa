@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require('./app/routes');
+const routes = require('./app/routes/routes.js');
 const sequelize = require('./config/database'); // Conexão com o banco de dados
 require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 4000;
 
 // Middleware
 app.use(bodyParser.json());

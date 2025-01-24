@@ -1,4 +1,4 @@
-const UserService = require('../services/UserService');
+const UserService = require('../../services/UserService.js');
 
 class UserController {
   static async getAll(req, res) {
@@ -18,6 +18,18 @@ class UserController {
       res.status(201).json(user);
     } catch (err) {
       res.status(500).json({ error: err.message });
+    }
+  }
+
+  static async index(req, res) {
+    try {
+      // Renderiza a view localizada em `views/User/index.ejs`
+      res.render('User/index', {
+        title: 'Lista de Usuários',
+        message: 'Bem-vindo à tela de usuários!',
+      });
+    } catch (err) {
+      res.status(500).send('Erro ao carregar a página: ' + err.message);
     }
   }
 }

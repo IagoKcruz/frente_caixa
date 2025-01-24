@@ -1,6 +1,6 @@
 const IRepository = require('../interfaces/IRepository');
-const User = require('./models/User.js');
-a
+const User = require('../models/user/User.js');
+
 class UserRepository extends IRepository {
   async findAll() {
     return await User.findAll();
