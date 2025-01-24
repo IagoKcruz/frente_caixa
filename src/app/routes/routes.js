@@ -1,7 +1,9 @@
 const express = require('express');
-const PromocaoController = require('../app/controllers/PromocaoController');
-const ComboPromocaoController = require('../app/controllers/ComboPromocaoController');
-const ClienteController = require('../app/controllers/ClienteController');
+const PromocaoController = require('../controllers/PromocaoController');
+const ComboPromocaoController = require('../controllers/ComboPromocaoController');
+const ClienteController = require('../controllers/ClienteController');
+const MunicipioController = require('../app/controllers/MunicipioController');
+
 
 const router = express.Router();
 
@@ -25,5 +27,12 @@ router.post('/clientes', ClienteController.criar);
 router.get('/clientes/:id', ClienteController.buscarPorId);
 router.put('/clientes/:id', ClienteController.atualizar);
 router.delete('/clientes/:id', ClienteController.deletar);
+
+// Rotas para Município
+router.get('/municipios', MunicipioController.listar);
+router.post('/municipios', MunicipioController.criar);
+router.get('/municipios/:id', MunicipioController.buscarPorId);
+router.put('/municipios/:id', MunicipioController.atualizar);
+router.delete('/municipios/:id', MunicipioController.deletar);
 
 module.exports = router;

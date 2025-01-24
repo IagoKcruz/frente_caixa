@@ -1,4 +1,4 @@
-const { Cliente } = require('../models');
+const { Cliente } = require('../models/Cliente.js');
 
 class ClienteRepository {
   async findAll() {

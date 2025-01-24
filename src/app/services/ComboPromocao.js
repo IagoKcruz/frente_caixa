@@ -1,4 +1,4 @@
-const ComboPromocaoRepository = require('../repositories/ComboPromocaoRepository');
+const ComboPromocaoRepository = require('../repositories/ComboPromocaoRepository.js');
 
 class ComboPromocaoService {
   async listarCombos() {
