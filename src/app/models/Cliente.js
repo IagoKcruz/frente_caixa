@@ -54,4 +54,7 @@ const Cliente = sequelize.define('Cliente', {
   },
 });
 
+Cliente.belongsTo(Municipio, { foreignKey: 'municipio_id', as: 'municipio' });
+Cliente.belongsTo(Promocao, { foreignKey: 'promocao_id', as: 'promocao' });
+
 module.exports = Cliente;

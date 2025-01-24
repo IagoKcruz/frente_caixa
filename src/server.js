@@ -1,16 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./app/routes/routes.js');
-const sequelize = require('../../config/database');
-const Cliente = require('./Cliente');
-const Promocao = require('./Promocao');
-const Municipio = require('./Municipio');
+const sequelize = require('./config/database'); // Conexão com o banco de dados
 require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
 
 const app = express();
 const PORT = 4000;
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -21,24 +19,26 @@ app.set('views', './src/app/views');
 // Rotas
 app.use('/', routes);
 
+(async () => {
+  try {
+    // Sincroniza os modelos com o banco de dados
+    await syncModels();
+    console.log('Modelos sincronizados com sucesso!');
 
-Cliente.belongsTo(Municipio, { foreignKey: 'municipio_id', as: 'municipio' });
-Cliente.belongsTo(Promocao, { foreignKey: 'promocao_id', as: 'promocao' });
-const syncModels = async () =>{ sequelize
-  .sync({ force: false }) 
-  .then(() => {
-    console.log('Tabelas sincronizadas com sucesso!');
-  })
-  .catch((err) => {
-    console.error('Erro ao sincronizar tabelas:', err.message);
-  });
-}
+    // Inicia o servidor
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando em http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Erro ao iniciar o servidor:', error.message);
+  }
+})();
 
 // Iniciar o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
-module.exports = { sequelize, Cliente, Promocao, Municipio, syncModels };
+
 /*
 
 agora implemente um leyout responsivo em que eu mude apenas o body, ajeite os arquivos q eu preciso modificar
