@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../database');
+const sequelize = require('../../config/database');
 const TipoRecebimento = require('./TipoRecebimento');
 
 const FormaPagamento = sequelize.define('FormaPagamento', {
@@ -20,9 +20,6 @@ const FormaPagamento = sequelize.define('FormaPagamento', {
     type: DataTypes.INTEGER(11),
     allowNull: false,
   },
-}, {
-  tableName: 'forma_pagamento',
-  timestamps: false,
 });
 
 // Associações
