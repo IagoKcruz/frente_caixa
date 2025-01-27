@@ -1,5 +1,5 @@
 const TipoRecebimento = require('../models/TipoRecebimento');
-const BasicRepository = require('./BasicReposiroty.js');
+const BasicRepository = require('./BasicRepository.js');
 
 class TipoRecebimentoRepository extends BasicRepository {
   constructor() {

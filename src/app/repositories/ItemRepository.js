@@ -1,7 +1,7 @@
-const BaseRepository = require('./BaseRepository');
+const BasicRepository = require('./BasicRepository');
 const Item = require('../models/Item');
 
-class ItemRepository extends BaseRepository {
+class ItemRepository extends BasicRepository {
   constructor() {
     super(Item);
   }

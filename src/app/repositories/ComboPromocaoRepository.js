@@ -1,5 +1,5 @@
 const { ComboPromocao } = require('../models');
-const BasicRepository = require('./BasicReposiroty');
+const BasicRepository = require('./BasicRepository');
 
 class ComboPromocaoRepository extends BasicRepository {
   constructor() {

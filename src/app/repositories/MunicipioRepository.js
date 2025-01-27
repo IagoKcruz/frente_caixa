@@ -1,5 +1,5 @@
 const Municipio = require('../models/Municipio');
-const BasicRepository = require('./BasicReposiroty');
+const BasicRepository = require('./BasicRepository');
 
 class MunicipioRepository extends BasicRepository {
   constructor() {

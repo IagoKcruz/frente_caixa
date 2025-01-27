@@ -1,5 +1,5 @@
 const { Promocao } = require('../models');
-const BasicRepository = require('./BasicReposiroty');
+const BasicRepository = require('./BasicRepository');
 
 class PromocaoRepository extends BasicRepository {
   constructor() {
