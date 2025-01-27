@@ -4,6 +4,8 @@ const ComboPromocaoController = require('../controllers/ComboPromocaoController'
 const ClienteController = require('../controllers/ClienteController');
 const MunicipioController = require('../app/controllers/MunicipioController');
 const ItemController = require('./app/controllers/ItemController');
+const TipoRecebimentoController = require('./app/controllers/TipoRecebimentoController');
+const FormaPagamentoController = require('./app/controllers/FormaPagamentoController');
 
 const router = express.Router();
 
@@ -66,5 +68,17 @@ router.get('/item-vendas/:id', ItemVendaController.show);
 router.post('/item-vendas', ItemVendaController.store);
 router.put('/item-vendas/:id', ItemVendaController.update);
 router.delete('/item-vendas/:id', ItemVendaController.destroy);
+
+router.get('/tipos-recebimento', TipoRecebimentoController.index);
+router.get('/tipos-recebimento/:id', TipoRecebimentoController.show);
+router.post('/tipos-recebimento', TipoRecebimentoController.store);
+router.put('/tipos-recebimento/:id', TipoRecebimentoController.update);
+router.delete('/tipos-recebimento/:id', TipoRecebimentoController.destroy);
+
+router.get('/formas-pagamento', FormaPagamentoController.index);
+router.get('/formas-pagamento/:id', FormaPagamentoController.show);
+router.post('/formas-pagamento', FormaPagamentoController.store);
+router.put('/formas-pagamento/:id', FormaPagamentoController.update);
+router.delete('/formas-pagamento/:id', FormaPagamentoController.destroy);
 
 module.exports = router;
