@@ -52,4 +52,19 @@ router.post('/vendas', VendaController.criar);
 router.put('/vendas/:id', VendaController.atualizar);
 router.delete('/vendas/:id', VendaController.deletar);
 
+// Rotas para Usuario
+
+router.get('/usuarios', UsuarioController.index);
+router.get('/usuarios/:id', UsuarioController.show);
+router.post('/usuarios', UsuarioController.store);
+router.put('/usuarios/:id', UsuarioController.update);
+router.delete('/usuarios/:id', UsuarioController.destroy);
+
+// Rotas para ItemVenda
+router.get('/item-vendas', ItemVendaController.index);
+router.get('/item-vendas/:id', ItemVendaController.show);
+router.post('/item-vendas', ItemVendaController.store);
+router.put('/item-vendas/:id', ItemVendaController.update);
+router.delete('/item-vendas/:id', ItemVendaController.destroy);
+
 module.exports = router;
