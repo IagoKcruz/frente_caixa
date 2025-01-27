@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const Promocao = require('./Promocao');
+const Item = require('./Item');
 
 const ComboPromocao = sequelize.define('ComboPromocao', {
   id: {
@@ -18,9 +18,6 @@ const ComboPromocao = sequelize.define('ComboPromocao', {
 });
 
 // Definir associações
-ComboPromocao.belongsTo(Promocao, {
-  foreignKey: 'item_id',
-  as: 'promocao',
-});
+ComboPromocao.belongsTo(Item, { foreignKey: 'item_id', as: 'item' });
 
 module.exports = ComboPromocao;

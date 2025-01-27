@@ -13,4 +13,6 @@ const Promocao = sequelize.define('Promocao', {
   },
 });
 
+Promocao.hasMany(ComboPromocao, { foreignKey: 'item_id', as: 'combos' });
+
 module.exports = Promocao;

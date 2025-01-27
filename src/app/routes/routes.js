@@ -43,4 +43,13 @@ router.post('/itens', ItemController.criar);
 router.put('/itens/:id', ItemController.atualizar);
 router.delete('/itens/:id', ItemController.deletar);
 
+// Rotas para venda
+
+router.get('/vendas', VendaController.listar);
+router.get('/vendas/:id', VendaController.buscarPorId);
+router.get('/vendas/cliente/:clienteId', VendaController.buscarPorCliente);
+router.post('/vendas', VendaController.criar);
+router.put('/vendas/:id', VendaController.atualizar);
+router.delete('/vendas/:id', VendaController.deletar);
+
 module.exports = router;
