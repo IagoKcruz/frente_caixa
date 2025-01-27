@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
+const ComboPromocao = require('./ComboPromocao');
 
 const Promocao = sequelize.define('Promocao', {
   id: {
@@ -13,6 +14,5 @@ const Promocao = sequelize.define('Promocao', {
   },
 });
 
-Promocao.hasMany(ComboPromocao, { foreignKey: 'item_id', as: 'combos' });
 
 module.exports = Promocao;

@@ -36,7 +36,7 @@ CREATE TABLE promocao(
 CREATE TABLE combo_promocao(
     id CHAR(36) PRIMARY KEY NOT NULL,
     valor_promocao FLOAT(10,2),
-    item_id char(36) NOT NULL
+    promocao_id char(36) NOT NULL
 );
 
 

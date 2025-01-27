@@ -1,9 +1,9 @@
-const { ComboPromocao } = require('../models');
+const ComboPromocao = require('../models/ComboPromocao');
 const BasicRepository = require('./BasicRepository');
 
 class ComboPromocaoRepository extends BasicRepository {
   constructor() {
-    super(Cliente);
+    super(ComboPromocao);
   }
 }
 

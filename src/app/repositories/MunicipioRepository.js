@@ -3,7 +3,7 @@ const BasicRepository = require('./BasicRepository');
 
 class MunicipioRepository extends BasicRepository {
   constructor() {
-    super(Cliente);
+    super(Municipio);
   }
 }
 module.exports = new MunicipioRepository();

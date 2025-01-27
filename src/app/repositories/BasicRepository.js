@@ -1,3 +1,4 @@
+
 class BasicRepository {
     constructor(model) {
       if (!model) {

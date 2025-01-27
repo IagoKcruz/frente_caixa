@@ -1,4 +1,4 @@
-const FormaPagamento = require('./models/FormaPagamento.js');
+const FormaPagamento = require('../models/Formapagamento.js');
 const BasicRepository = require('./BasicRepository.js');
 
 class FormaPagamentoRepository extends BasicRepository {
