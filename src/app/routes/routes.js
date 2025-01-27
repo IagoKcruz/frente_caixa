@@ -3,7 +3,7 @@ const PromocaoController = require('../controllers/PromocaoController');
 const ComboPromocaoController = require('../controllers/ComboPromocaoController');
 const ClienteController = require('../controllers/ClienteController');
 const MunicipioController = require('../app/controllers/MunicipioController');
-
+const ItemController = require('./app/controllers/ItemController');
 
 const router = express.Router();
 
@@ -34,5 +34,13 @@ router.post('/municipios', MunicipioController.criar);
 router.get('/municipios/:id', MunicipioController.buscarPorId);
 router.put('/municipios/:id', MunicipioController.atualizar);
 router.delete('/municipios/:id', MunicipioController.deletar);
+
+// Rotas para Item
+
+router.get('/itens', ItemController.listar);
+router.get('/itens/:id', ItemController.buscarPorId);
+router.post('/itens', ItemController.criar);
+router.put('/itens/:id', ItemController.atualizar);
+router.delete('/itens/:id', ItemController.deletar);
 
 module.exports = router;
