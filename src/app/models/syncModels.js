@@ -1,5 +1,3 @@
-const databaseConfig = require('../../config/database');
-
 // Importação de todos os modelos
 const Cliente = require('./Cliente');
 const ComboPromocao = require('./ComboPromocao');
@@ -41,7 +39,7 @@ class Database {
   }
 
   init() {
-    this.connection = new Sequelize(databaseConfig);
+    this.connection = sequelize;
 
     // Inicializar todos os modelos
     models
