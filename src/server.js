@@ -1,46 +1,25 @@
+require('dotenv').config(); // Carrega variáveis de ambiente
 const express = require('express');
-const bodyParser = require('body-parser');
-const routes = require('./app/routes/routes.js');
-const sequelize = require('./config/database'); // Conexão com o banco de dados
-const { init } = require('./app/models/syncModels.js');
-require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
+const syncModels = require('./app/models/syncModels');
+const routes = require('./app/routes/routes');
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Configurar middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Configuração do EJS para views
-app.set('view engine', 'ejs');
-app.set('views', './src/app/views');
+// Configurar rotas
+app.use('/api', routes);
 
-// Rotas
-app.use('/', routes);
-
+// Sincronizar o banco de dados e iniciar o servidor
 (async () => {
-  try {
-    // Sincroniza os modelos com o banco de dados
-    await init();
-    console.log('Modelos sincronizados com sucesso!');
+  const forceSync = process.env.DB_FORCE_SYNC === 'true'; // Controle via variável de ambiente
+  await syncModels(forceSync); // Chama o syncModels para sincronizar as tabelas
 
-    // Inicia o servidor
-    app.listen(PORT, () => {
-      console.log(`Servidor rodando em http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('Erro ao iniciar o servidor:', error.message);
-  }
+  // Inicia o servidor após a sincronização
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
 })();
-
-// Iniciar o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
-
-/*
-
-agora implemente um leyout responsivo em que eu mude apenas o body, ajeite os arquivos q eu preciso modificar
-
-*/

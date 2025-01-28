@@ -1,3 +1,5 @@
+const sequelize = require('../../config/database');
+
 // Importação de todos os modelos
 const Cliente = require('./Cliente');
 const ComboPromocao = require('./ComboPromocao');
@@ -13,7 +15,6 @@ const TipoOperacao = require('./TipoOperacao');
 const SysLogRegistro = require('./SysLogRegistro');
 const Categoria = require('./Categoria');
 const UnidadeMedida = require('./UnidadeMedida'); // Novo modelo
-const { Sequelize } = require('sequelize');
 
 // Lista de modelos para inicialização
 const models = [
@@ -33,22 +34,29 @@ const models = [
   UnidadeMedida,
 ];
 
-class Database {
-  constructor() {
-    this.init();
+const syncModels = async (force = false) => {
+  try {
+    console.log('Iniciando sincronização do banco de dados...');
+
+    await sequelize.authenticate();
+    console.log('Conexão com o banco de dados estabelecida com sucesso.');
+
+    models.forEach((model) => model);
+
+    await sequelize.sync({ force });
+    console.log('Models sincronizadas com sucesso!');
+
+    if (force) {
+      console.log('Foram recriadas todas as tabelas no banco de dados devido ao uso de force=true.');
+    }
+  } catch (error) {
+    console.error('Erro ao sincronizar os modelos:', error);
+  } finally {
+    // Fechar a conexão
+    await sequelize.close();
+    console.log('Conexão com o banco de dados encerrada.');
   }
+};
 
-  init() {
-    this.connection = sequelize;
-
-    // Inicializar todos os modelos
-    models
-      .forEach((model) => model.init(this.connection));
-
-    // Configurar associações, se existirem
-    models
-      .forEach((model) => model.associate && model.associate(this.connection.models));
-  }
-}
-
-module.exports = new Database();
+// Exporta a função para uso externo
+module.exports = syncModels;

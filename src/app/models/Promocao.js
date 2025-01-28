@@ -12,6 +12,10 @@ const Promocao = sequelize.define('Promocao', {
     type: DataTypes.STRING(120),
     allowNull: false,
   },
+  promocao_id: {
+    type: DataTypes.CHAR(36),
+    allowNull: false,
+  },
 });
 
 

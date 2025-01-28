@@ -28,15 +28,15 @@ CREATE TABLE cliente(
 -- PACOTE_PROMOCAO
 CREATE TABLE promocao(
     id CHAR(36) PRIMARY KEY NOT NULL,
-    descricao VARCHAR(120) NOT NULL
+    descricao VARCHAR(120) NOT NULL,
+    promocao_id char(36) NOT NULL
 );
 
 
 -- COMBO_PROMOCAO
 CREATE TABLE combo_promocao(
     id CHAR(36) PRIMARY KEY NOT NULL,
-    valor_promocao FLOAT(10,2),
-    promocao_id char(36) NOT NULL
+    valor_promocao FLOAT(10,2)
 );
 
 
@@ -198,12 +198,12 @@ ALTER TABLE cliente
 ADD CONSTRAINT fk_promocao_id_cliente
 FOREIGN KEY(promocao_id) REFERENCES promocao(id);
 
--- COMBO PROMOCAO
+-- PROMOCAO 
 
-ALTER TABLE combo_promocao
+ALTER TABLE promocao
 ADD CONSTRAINT fk_promocao_id_combo_promocao
-FOREIGN KEY(item_id)
-REFERENCES promocao(id);
+FOREIGN KEY(promocao_id)
+REFERENCES combo_promocao(id);
 
 
 -- ITEM 

@@ -11,7 +11,7 @@ const CategoriaController = require('../controllers/CategoriaController');
 const TipoOperacaoController = require('../controllers/TipoOperacaoController');
 const RecebimentoVendaController = require('../controllers/RecebimentoVendaController');
 const VendaController = require('../controllers/VendaController')
-const UsuarioController = require('../controllers/UsuarioController')
+const UsuarioController = require('../controllers/usuarioController')
 const UnidadeMedidaController = require('../controllers/UnidadeMedicaController')
 
 const router = express.Router();
