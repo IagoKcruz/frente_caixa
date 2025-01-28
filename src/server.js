@@ -1,6 +1,7 @@
 require('dotenv').config(); // Carrega variáveis de ambiente
 const express = require('express');
 const syncModels = require('./app/models/syncModels');
+const authRoutes = require("./app/routes/auth");
 const routes = require('./app/routes/routes');
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configurar rotas
-app.use('/api', routes);
+app.use("/auth", authRoutes);
 
 // Sincronizar o banco de dados e iniciar o servidor
 (async () => {
