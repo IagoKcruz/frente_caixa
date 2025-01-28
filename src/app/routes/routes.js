@@ -2,13 +2,17 @@ const express = require('express');
 const PromocaoController = require('../controllers/PromocaoController');
 const ComboPromocaoController = require('../controllers/ComboPromocaoController');
 const ClienteController = require('../controllers/ClienteController');
-const MunicipioController = require('../app/controllers/MunicipioController');
-const ItemController = require('./app/controllers/ItemController');
-const TipoRecebimentoController = require('./app/controllers/TipoRecebimentoController');
-const FormaPagamentoController = require('./app/controllers/FormaPagamentoController');
+const MunicipioController = require('../controllers/MunicipioController');
+const ItemController = require('../controllers/ItemController');
+const ItemVendaController = require('../controllers/ItemVendaController');
+const TipoRecebimentoController = require('../controllers/TipoRecebimentoController');
+const FormaPagamentoController = require('../controllers/FormaPagamentoController');
 const CategoriaController = require('../controllers/CategoriaController');
 const TipoOperacaoController = require('../controllers/TipoOperacaoController');
 const RecebimentoVendaController = require('../controllers/RecebimentoVendaController');
+const VendaController = require('../controllers/VendaController')
+const UsuarioController = require('../controllers/UsuarioController')
+const UnidadeMedidaController = require('../controllers/UnidadeMedicaController')
 
 const router = express.Router();
 

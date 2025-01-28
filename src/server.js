@@ -2,13 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./app/routes/routes.js');
 const sequelize = require('./config/database'); // Conexão com o banco de dados
+const { init } = require('./app/models/syncModels.js');
 require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
 
 const app = express();
 const PORT = 4000;
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -22,7 +22,7 @@ app.use('/', routes);
 (async () => {
   try {
     // Sincroniza os modelos com o banco de dados
-    await syncModels();
+    await init();
     console.log('Modelos sincronizados com sucesso!');
 
     // Inicia o servidor

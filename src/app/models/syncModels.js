@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 const databaseConfig = require('../../config/database');
 
 // Importação de todos os modelos
@@ -16,6 +15,7 @@ const TipoOperacao = require('./TipoOperacao');
 const SysLogRegistro = require('./SysLogRegistro');
 const Categoria = require('./Categoria');
 const UnidadeMedida = require('./UnidadeMedida'); // Novo modelo
+const { Sequelize } = require('sequelize');
 
 // Lista de modelos para inicialização
 const models = [

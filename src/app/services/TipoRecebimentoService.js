@@ -1,4 +1,4 @@
-const TipoRecebimentoRepository = require('../repositories/TipoRecebimentoRepository');
+const TipoRecebimentoRepository = require('../repositories/TipoOperacaoRepository');
 
 class TipoRecebimentoService {
   constructor() {
