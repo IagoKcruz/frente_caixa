@@ -4,7 +4,7 @@ const syncModels = require('./app/models/syncModels');
 const routes = require('./app/routes/routes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // Configurar middlewares
 app.use(express.json());
