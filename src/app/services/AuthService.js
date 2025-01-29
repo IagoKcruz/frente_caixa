@@ -1,20 +1,31 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/UserAuth");
-const AuthDTO = require("../utils/dtos/UserAuth.js");
+const jwt = require("jwt-simple");
+const bcrypt = require("bcryptjs");
+const UserAuth = require("../models/UserAuth"); // Modelo do usuário
 
 class AuthService {
-  async login(authDTO) {
-    const user = await User.findOne({ where: { email: authDTO.email } });
+  async login(email, password) {
+    // Busca o usuário no banco
+    const user = await UserAuth.findOne({ where: { email } });
 
-    if (!user || !(await user.checkPassword(authDTO.password))) {
-      throw new Error("Credenciais inválidas");
+    if (!user) {
+      throw new Error("Usuário não encontrado");
     }
 
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    // Verifica a senha
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      throw new Error("Senha incorreta");
+    }
 
-    return { user, token };
+    // Gera o token com o papel do usuário
+    const payload = {
+      id: user.id,
+      role: user.role,
+    };
+
+    const token = jwt.encode(payload, process.env.JWT_SECRET);
+
+    return token;
   }
 }
 
