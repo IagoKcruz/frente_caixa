@@ -1,4 +1,4 @@
-const ComboPromocaoService= require('../services/ComboPromocao');
+const ComboPromocaoService= require('../../services/ComboPromocao');
 
 class ComboPromocaoController {
   async listar(req, res) {

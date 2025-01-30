@@ -1,4 +1,4 @@
-const ItemVendaService = require('../services/ItemVendaService');
+const ItemVendaService = require('../../services/ItemVendaService');
 
 class ItemVendaController {
   constructor() {

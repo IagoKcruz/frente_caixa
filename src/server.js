@@ -2,12 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const syncModels = require('./app/models/syncModels');
 const routes = require('./app/routes/routes');
-
+const addMenu = require('./app/middlewares/front/menu')
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(addMenu);
 
 app.use('/', routes);
 

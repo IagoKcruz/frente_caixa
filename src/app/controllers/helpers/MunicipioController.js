@@ -1,4 +1,4 @@
-const MunicipioService = require('../services/MunicipioService');
+const MunicipioService = require('../../services/MunicipioService');
 
 class MunicipioController {
   async listar(req, res) {

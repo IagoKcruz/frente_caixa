@@ -1,4 +1,4 @@
-const FormaPagamentoService = require('../services/FormaPagamentoService');
+const FormaPagamentoService = require('../../services/FormaPagamentoService');
 
 class FormaPagamentoController {
   constructor() {

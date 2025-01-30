@@ -1,15 +1,15 @@
 const express = require('express');
-const PromocaoController = require('../controllers/PromocaoController');
-const ComboPromocaoController = require('../controllers/ComboPromocaoController');
-const ClienteController = require('../controllers/ClienteController');
-const MunicipioController = require('../controllers/MunicipioController');
-const ItemController = require('../controllers/ItemController');
-const ItemVendaController = require('../controllers/ItemVendaController');
-const TipoRecebimentoController = require('../controllers/TipoRecebimentoController');
-const FormaPagamentoController = require('../controllers/FormaPagamentoController');
-const VendaController = require('../controllers/VendaController')
-const UsuarioController = require('../controllers/usuarioController')
-const AuthController = require("../controllers/UserAuthController");    
+const PromocaoController = require('../controllers/helpers/PromocaoController');
+const ComboPromocaoController = require('../controllers/helpers/ComboPromocaoController');
+const ClienteController = require('../controllers/helpers/ClienteController');
+const MunicipioController = require('../controllers/helpers/MunicipioController');
+const ItemController = require('../controllers/helpers/ItemController');
+const ItemVendaController = require('../controllers/helpers/ItemVendaController');
+const TipoRecebimentoController = require('../controllers/helpers/TipoRecebimentoController');
+const FormaPagamentoController = require('../controllers/helpers/FormaPagamentoController');
+const VendaController = require('../controllers/helpers/VendaController')
+const UsuarioController = require('../controllers/helpers/usuarioController')
+const AuthController = require("../controllers/helpers/UserAuthController");    
 
 const authMiddleware = require("../middlewares/auth");
 
