@@ -10,13 +10,14 @@
 </head>
 <body class="bg-gray-100">
   <!-- Menu Lateral (renderizado apenas uma vez) -->
-  <%- include('views/partials/menu.ejs') %> <!-- Partial do menu -->
+  <%- include('./partials/menu.ejs') %> <!-- Partial do menu -->
 
   <div id="conteudo" class="ml-64">
-    <%- body %> <!-- O conteúdo da página será inserido aqui -->
+    <%- include(body) %> <!-- O conteúdo da página será inserido aqui -->
   </div>
 
   <!-- Inclui o JS para os eventos -->
   <script src="../public/js/menu.js"></script>
+  <script src="../public/js/operacoes/login.js"></script>
 </body>
 </html>

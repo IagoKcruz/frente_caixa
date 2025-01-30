@@ -15,7 +15,8 @@ const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
 
-router.get("/login", AuthController.login);
+router.get("/", AuthController.login);
+router.post("/login", AuthController.login);
 
 router.use(authMiddleware);
 
