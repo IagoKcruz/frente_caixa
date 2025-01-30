@@ -1,4 +1,4 @@
-const TipoOperacaoService = require('../services/TipoOperacaoService');
+const TipoOperacaoService = require('../../services/TipoOperacaoService');
 
 class TipoOperacaoController {
   constructor() {

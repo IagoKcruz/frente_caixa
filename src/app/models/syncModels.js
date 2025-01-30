@@ -33,6 +33,12 @@ const models = [
   Categoria,
   UnidadeMedida,
 ];
+// Associando os modelos ao Sequelize
+models.forEach((model) => {
+  if (model.associate) {
+    model.associate(sequelize.models);
+  }
+});
 
 const syncModels = async (force = false) => {
   try {
@@ -41,20 +47,15 @@ const syncModels = async (force = false) => {
     await sequelize.authenticate();
     console.log('Conexão com o banco de dados estabelecida com sucesso.');
 
-    models.forEach((model) => model);
-
+    // Sincronização correta dos modelos
     await sequelize.sync({ force });
-    console.log('Models sincronizadas com sucesso!');
+    console.log('Models sincronizados com sucesso!');
 
     if (force) {
-      console.log('Foram recriadas todas as tabelas no banco de dados devido ao uso de force=true.');
+      console.log('Todas as tabelas foram recriadas devido a force=true.');
     }
   } catch (error) {
     console.error('Erro ao sincronizar os modelos:', error);
-  } finally {
-    // Fechar a conexão
-    await sequelize.close();
-    console.log('Conexão com o banco de dados encerrada.');
   }
 };
 

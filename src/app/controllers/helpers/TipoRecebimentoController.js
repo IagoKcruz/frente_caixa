@@ -1,4 +1,4 @@
-const TipoRecebimentoService = require('../services/TipoRecebimentoService');
+const TipoRecebimentoService = require('../../services/TipoRecebimentoService');
 
 class TipoRecebimentoController {
   constructor() {

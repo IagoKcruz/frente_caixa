@@ -1,12 +1,18 @@
 {
   "dependencies": {
     "22": "^0.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
+    "casl": "^1.1.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-simple": "^0.5.6",
     "mysql2": "^3.12.0",
     "node": "^18.20.6",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "sequelize": "^6.37.5"
   },
   "devDependencies": {

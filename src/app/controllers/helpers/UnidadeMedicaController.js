@@ -1,4 +1,4 @@
-const UnidadeMedidaService = require('../services/UnidadeMedidaService');
+const UnidadeMedidaService = require('../../services/UnidadeMedidaService');
 
 class UnidadeMedidaController {
   constructor() {

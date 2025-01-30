@@ -1,20 +1,23 @@
 const express = require('express');
-const PromocaoController = require('../controllers/PromocaoController');
-const ComboPromocaoController = require('../controllers/ComboPromocaoController');
-const ClienteController = require('../controllers/ClienteController');
-const MunicipioController = require('../controllers/MunicipioController');
-const ItemController = require('../controllers/ItemController');
-const ItemVendaController = require('../controllers/ItemVendaController');
-const TipoRecebimentoController = require('../controllers/TipoRecebimentoController');
-const FormaPagamentoController = require('../controllers/FormaPagamentoController');
-const CategoriaController = require('../controllers/CategoriaController');
-const TipoOperacaoController = require('../controllers/TipoOperacaoController');
-const RecebimentoVendaController = require('../controllers/RecebimentoVendaController');
-const VendaController = require('../controllers/VendaController')
-const UsuarioController = require('../controllers/usuarioController')
-const UnidadeMedidaController = require('../controllers/UnidadeMedicaController')
+const PromocaoController = require('../controllers/helpers/PromocaoController');
+const ComboPromocaoController = require('../controllers/helpers/ComboPromocaoController');
+const ClienteController = require('../controllers/helpers/ClienteController');
+const MunicipioController = require('../controllers/helpers/MunicipioController');
+const ItemController = require('../controllers/helpers/ItemController');
+const ItemVendaController = require('../controllers/helpers/ItemVendaController');
+const TipoRecebimentoController = require('../controllers/helpers/TipoRecebimentoController');
+const FormaPagamentoController = require('../controllers/helpers/FormaPagamentoController');
+const VendaController = require('../controllers/helpers/VendaController')
+const UsuarioController = require('../controllers/helpers/usuarioController')
+const AuthController = require("../controllers/helpers/UserAuthController");    
+
+const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
+
+router.post("/login", AuthController.login);
+
+router.use(authMiddleware);
 
 // Rotas para Promoção
 router.get('/promocoes', PromocaoController.listar);
@@ -91,37 +94,5 @@ router.get('/formas-pagamento/:id', FormaPagamentoController.show);
 router.post('/formas-pagamento', FormaPagamentoController.store);
 router.put('/formas-pagamento/:id', FormaPagamentoController.update);
 router.delete('/formas-pagamento/:id', FormaPagamentoController.destroy);
-
-// Rotas recebimentos-venda
-
-router.get('/recebimentos-venda', RecebimentoVendaController.index);
-router.get('/recebimentos-venda/:id', RecebimentoVendaController.show);
-router.post('/recebimentos-venda', RecebimentoVendaController.store);
-router.put('/recebimentos-venda/:id', RecebimentoVendaController.update);
-router.delete('/recebimentos-venda/:id', RecebimentoVendaController.destroy);
-
-// Rotas para
-
-router.get('/tipo-operacoes', TipoOperacaoController.index);
-router.get('/tipo-operacoes/:id', TipoOperacaoController.show);
-router.post('/tipo-operacoes', TipoOperacaoController.store);
-router.put('/tipo-operacoes/:id', TipoOperacaoController.update);
-router.delete('/tipo-operacoes/:id', TipoOperacaoController.destroy);
-
-// Rotas para categorias
-
-router.get('/categorias', CategoriaController.index);
-router.get('/categorias/:id', CategoriaController.show);
-router.post('/categorias', CategoriaController.store);
-router.put('/categorias/:id', CategoriaController.update);
-router.delete('/categorias/:id', CategoriaController.destroy);
-
-// rotas para UnidadeMedida
-
-router.get('/unidades-medida', UnidadeMedidaController.index);
-router.get('/unidades-medida/:id', UnidadeMedidaController.show);
-router.post('/unidades-medida', UnidadeMedidaController.store);
-router.put('/unidades-medida/:id', UnidadeMedidaController.update);
-router.delete('/unidades-medida/:id', UnidadeMedidaController.destroy);
 
 module.exports = router;
