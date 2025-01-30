@@ -4,20 +4,17 @@ const UserAuth = require("../models/UserAuth"); // Modelo do usuário
 
 class AuthService {
   async login(email, password) {
-    // Busca o usuário no banco
     const user = await UserAuth.findOne({ where: { email } });
 
     if (!user) {
       throw new Error("Usuário não encontrado");
     }
 
-    // Verifica a senha
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       throw new Error("Senha incorreta");
     }
 
-    // Gera o token com o papel do usuário
     const payload = {
       id: user.id,
       role: user.role,

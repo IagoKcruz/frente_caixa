@@ -1,26 +1,25 @@
-require('dotenv').config(); // Carrega variáveis de ambiente
+require('dotenv').config();
 const express = require('express');
 const syncModels = require('./app/models/syncModels');
-const authRoutes = require("./app/routes/auth");
 const routes = require('./app/routes/routes');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 5000;
 
-// Configurar middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configurar rotas
-app.use("/auth", authRoutes);
+app.use('/', routes);
 
-// Sincronizar o banco de dados e iniciar o servidor
-(async () => {
-  const forceSync = process.env.DB_FORCE_SYNC === 'true'; // Controle via variável de ambiente
-  await syncModels(forceSync); // Chama o syncModels para sincronizar as tabelas
+// Inicia o servidor primeiro
+app.listen(PORT, async () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 
-  // Inicia o servidor após a sincronização
-  app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-  });
-})();
+  try {
+    const forceSync = process.env.DB_FORCE_SYNC === 'true';
+    await syncModels(forceSync);
+    console.log('Sincronização do banco concluída.');
+  } catch (error) {
+    console.error('Erro ao sincronizar modelos:', error);
+  }
+});

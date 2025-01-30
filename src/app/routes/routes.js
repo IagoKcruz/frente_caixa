@@ -13,85 +13,86 @@ const AuthController = require("../controllers/UserAuthController");
 
 const authMiddleware = require("../middlewares/auth");
 
-
 const router = express.Router();
 
-routes.post("/login", AuthController.login);
+router.post("/login", AuthController.login);
+
+router.use(authMiddleware);
 
 // Rotas para Promoção
-router.get('/promocoes', authMiddleware, PromocaoController.listar);
-router.post('/promocoes', authMiddleware, PromocaoController.criar);
-router.get('/promocoes/:id', authMiddleware, PromocaoController.buscarPorId);
-router.put('/promocoes/:id', authMiddleware, PromocaoController.atualizar);
-router.delete('/promocoes/:id', authMiddleware, PromocaoController.deletar);
+router.get('/promocoes', PromocaoController.listar);
+router.post('/promocoes', PromocaoController.criar);
+router.get('/promocoes/:id', PromocaoController.buscarPorId);
+router.put('/promocoes/:id', PromocaoController.atualizar);
+router.delete('/promocoes/:id', PromocaoController.deletar);
 
 // Rotas para Combo Promoção
-router.get('/combo-promocoes', authMiddleware, ComboPromocaoController.listar);
-router.post('/combo-promocoes', authMiddleware, ComboPromocaoController.criar);
-router.get('/combo-promocoes/:id', authMiddleware, ComboPromocaoController.buscarPorId);
-router.put('/combo-promocoes/:id', authMiddleware, ComboPromocaoController.atualizar);
-router.delete('/combo-promocoes/:id',authMiddleware,  ComboPromocaoController.deletar);
+router.get('/combo-promocoes', ComboPromocaoController.listar);
+router.post('/combo-promocoes', ComboPromocaoController.criar);
+router.get('/combo-promocoes/:id', ComboPromocaoController.buscarPorId);
+router.put('/combo-promocoes/:id', ComboPromocaoController.atualizar);
+router.delete('/combo-promocoes/:id', ComboPromocaoController.deletar);
 
 // Rotas para Cliente
-router.get('/clientes', authMiddleware, ClienteController.listar);
-router.post('/clientes', authMiddleware, ClienteController.criar);
-router.get('/clientes/:id', authMiddleware, ClienteController.buscarPorId);
-router.put('/clientes/:id', authMiddleware, ClienteController.atualizar);
-router.delete('/clientes/:id', authMiddleware, ClienteController.deletar);
+router.get('/clientes', ClienteController.listar);
+router.post('/clientes', ClienteController.criar);
+router.get('/clientes/:id', ClienteController.buscarPorId);
+router.put('/clientes/:id', ClienteController.atualizar);
+router.delete('/clientes/:id', ClienteController.deletar);
 
 // Rotas para Município
-router.get('/municipios', authMiddleware, MunicipioController.listar);
-router.post('/municipios', authMiddleware, MunicipioController.criar);
-router.get('/municipios/:id', authMiddleware, MunicipioController.buscarPorId);
-router.put('/municipios/:id', authMiddleware, MunicipioController.atualizar);
-router.delete('/municipios/:id', authMiddleware, MunicipioController.deletar);
+router.get('/municipios', MunicipioController.listar);
+router.post('/municipios', MunicipioController.criar);
+router.get('/municipios/:id', MunicipioController.buscarPorId);
+router.put('/municipios/:id', MunicipioController.atualizar);
+router.delete('/municipios/:id', MunicipioController.deletar);
 
 // Rotas para Item
 
-router.get('/itens', authMiddleware, ItemController.listar);
-router.get('/itens/:id', authMiddleware, ItemController.buscarPorId);
-router.post('/itens', authMiddleware, ItemController.criar);
-router.put('/itens/:id', authMiddleware, ItemController.atualizar);
-router.delete('/itens/:id', authMiddleware, ItemController.deletar);
+router.get('/itens', ItemController.listar);
+router.get('/itens/:id', ItemController.buscarPorId);
+router.post('/itens', ItemController.criar);
+router.put('/itens/:id', ItemController.atualizar);
+router.delete('/itens/:id', ItemController.deletar);
 
 // Rotas para venda
 
-router.get('/vendas', authMiddleware, VendaController.listar);
-router.get('/vendas/:id', authMiddleware, VendaController.buscarPorId);
-router.get('/vendas/cliente/:clienteId', authMiddleware, VendaController.buscarPorCliente);
-router.post('/vendas', authMiddleware, VendaController.criar);
-router.put('/vendas/:id', authMiddleware, VendaController.atualizar);
-router.delete('/vendas/:id', authMiddleware, VendaController.deletar);
+router.get('/vendas', VendaController.listar);
+router.get('/vendas/:id', VendaController.buscarPorId);
+router.get('/vendas/cliente/:clienteId', VendaController.buscarPorCliente);
+router.post('/vendas', VendaController.criar);
+router.put('/vendas/:id', VendaController.atualizar);
+router.delete('/vendas/:id', VendaController.deletar);
 
 // Rotas para Usuario
 
-router.get('/usuarios', authMiddleware, UsuarioController.index);
-router.get('/usuarios/:id', authMiddleware, UsuarioController.show);
-router.post('/usuarios', authMiddleware, UsuarioController.store);
-router.put('/usuarios/:id', authMiddleware, UsuarioController.update);
-router.delete('/usuarios/:id', authMiddleware, UsuarioController.destroy);
+router.get('/usuarios', UsuarioController.index);
+router.get('/usuarios/:id', UsuarioController.show);
+router.post('/usuarios', UsuarioController.store);
+router.put('/usuarios/:id', UsuarioController.update);
+router.delete('/usuarios/:id', UsuarioController.destroy);
 
 // Rotas para ItemVenda
-router.get('/item-vendas', authMiddleware, ItemVendaController.index);
-router.get('/item-vendas/:id', authMiddleware, ItemVendaController.show);
-router.post('/item-vendas', authMiddleware, ItemVendaController.store);
-router.put('/item-vendas/:id', authMiddleware, ItemVendaController.update);
-router.delete('/item-vendas/:id', authMiddleware, ItemVendaController.destroy);
+router.get('/item-vendas', ItemVendaController.index);
+router.get('/item-vendas/:id', ItemVendaController.show);
+router.post('/item-vendas', ItemVendaController.store);
+router.put('/item-vendas/:id', ItemVendaController.update);
+router.delete('/item-vendas/:id', ItemVendaController.destroy);
 
 // Rotas para tipos-recebimento
 
-router.get('/tipos-recebimento', authMiddleware, TipoRecebimentoController.index);
-router.get('/tipos-recebimento/:id', authMiddleware, TipoRecebimentoController.show);
-router.post('/tipos-recebimento', authMiddleware, TipoRecebimentoController.store);
-router.put('/tipos-recebimento/:id', authMiddleware, TipoRecebimentoController.update);
-router.delete('/tipos-recebimento/:id', authMiddleware, TipoRecebimentoController.destroy);
+router.get('/tipos-recebimento', TipoRecebimentoController.index);
+router.get('/tipos-recebimento/:id', TipoRecebimentoController.show);
+router.post('/tipos-recebimento', TipoRecebimentoController.store);
+router.put('/tipos-recebimento/:id', TipoRecebimentoController.update);
+router.delete('/tipos-recebimento/:id', TipoRecebimentoController.destroy);
 
 // Rotas para formas-pagamento
 
-router.get('/formas-pagamento', authMiddleware, FormaPagamentoController.index);
-router.get('/formas-pagamento/:id', authMiddleware, FormaPagamentoController.show);
-router.post('/formas-pagamento', authMiddleware, FormaPagamentoController.store);
-router.put('/formas-pagamento/:id', authMiddleware, FormaPagamentoController.update);
-router.delete('/formas-pagamento/:id', authMiddleware, FormaPagamentoController.destroy);
+router.get('/formas-pagamento', FormaPagamentoController.index);
+router.get('/formas-pagamento/:id', FormaPagamentoController.show);
+router.post('/formas-pagamento', FormaPagamentoController.store);
+router.put('/formas-pagamento/:id', FormaPagamentoController.update);
+router.delete('/formas-pagamento/:id', FormaPagamentoController.destroy);
 
 module.exports = router;
