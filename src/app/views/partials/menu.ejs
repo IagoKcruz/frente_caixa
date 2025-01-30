@@ -1,12 +1,14 @@
 <!-- views/partials/menu.ejs -->
 <div id="menu" class="bg-blue-900 text-white w-64 h-full fixed top-0 left-0 z-10 transition-all duration-300">
     <div class="flex items-center justify-center mt-4">
-      <img src="<%= imageSrc %>" alt="Logo" class="w-24 h-24 rounded-full">
+      <!-- <img src="%= imageSrc %>" alt="Logo" class="w-24 h-24 rounded-full"> -->
+      <img src="" alt="Logo" class="w-24 h-24 rounded-full">
     </div>
     <ul id="menu-items" class="mt-8 space-y-4">
       <% menuItems.forEach(item => { %>
         <li class="menu-item">
-          <a href="<%= item.route %>" class="flex items-center px-4 py-2 hover:bg-blue-700 rounded-lg transition-colors duration-200">
+          <!-- <a href="%= item.route %>" class="flex items-center px-4 py-2 hover:bg-blue-700 rounded-lg transition-colors duration-200"> -->
+          <a href="" class="flex items-center px-4 py-2 hover:bg-blue-700 rounded-lg transition-colors duration-200">
             <i class="<%= item.iconClass %> mr-4"></i>
             <span class="menu-text <%= item.isActive ? 'text-blue-300' : 'text-white' %>"><%= item.name %></span>
           </a>
