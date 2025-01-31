@@ -1,31 +1,32 @@
-const jwt = require("jwt-simple");
+const { error } = require("console");
+const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = (allowedRoles = []) => {
   return (req, res, next) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
+    const token= req.session.token;
+    console.log(req.session.token)
+    if (!token) {
       return res.status(401).json({ error: "Token não fornecido" });
     }
-
-    const [, token] = authHeader.split(" ");
-
     try {
-      // Verifica o token JWT
-      const decoded = jwt.decode(token, process.env.JWT_SECRET);
+      // Verifica o token jsonwebtoken
+      const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
+        
+        if (allowedRoles.length > 0 && !allowedRoles.includes(decoded.role)) {
+          return res.status(403).json({ error: "Permissão negada!" });
+        }
 
-      // Adiciona os dados do token à requisição
-      req.userId = decoded.id;
-      req.userRole = decoded.role;
-
-      // Verifica se o papel do usuário está na lista de papéis permitidos
-      if (allowedRoles.length > 0 && !allowedRoles.includes(decoded.role)) {
-        return res.status(403).json({ error: "Permissão negada!" });
-      }
-
-      return next(); // Passa para o próximo middleware ou controller
+        if(erro){
+          // return res.json({
+          //   error : erro.message
+          // })
+        }else{
+          return next(); 
+        }
+        
+      });
     } catch (err) {
-      return res.status(401).json({ error: "Token inválido" });
+      return res.status(401).json({ error: err.message });
     }
   };
 };

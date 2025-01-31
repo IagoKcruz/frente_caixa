@@ -3,13 +3,18 @@ const AuthService = require("../../services/AuthService");
 class AuthController {
   async login(req, res) {
     try {
-      // const { email, password } = req.body;
-      // const token = await AuthService.login(email, password);
-      console.log("cheguei aqui")
-      return res.render('/User/index', { title: 'Página do Usuário' });
+      const { email, password } = req.body;
+      const token = await AuthService.login(email, password);
+      req.session.token = token;
+      return res.json(token);
+
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
+  }
+
+  async openHome(req, res) {
+      return res.render('layout', { body: './partials/login.ejs' })
   }
 }
 

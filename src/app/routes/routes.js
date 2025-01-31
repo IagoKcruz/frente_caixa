@@ -15,10 +15,11 @@ const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
 
+router.get("/", AuthController.openHome);
 router.post("/login", AuthController.login);
 
-router.use(authMiddleware);
 
+router.get('/dashboardadmin', authMiddleware(["ADMIN"]) ,PromocaoController.openDashboard);
 // Rotas para Promoção
 router.get('/promocoes', PromocaoController.listar);
 router.post('/promocoes', PromocaoController.criar);
