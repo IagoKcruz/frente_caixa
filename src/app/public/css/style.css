@@ -1,0 +1,26 @@
+/* public/css/styles.css */
+.menu-item.active {
+    background-color: #1E3A8A; /* Azul mais claro para o item ativo */
+  }
+  
+  .menu-item.active .menu-text {
+    color: #93C5FD; /* Texto mais claro no item ativo */
+  }
+  
+  .menu-item.active i {
+    color: #93C5FD; /* Ícone mais claro no item ativo */
+  }
+  
+  .submenu-item.active {
+    background-color: #1E3A8A; /* Azul mais claro para submenu ativo */
+  }
+  
+  #menu.hover {
+    width: 250px; /* Ajuste do menu ao passar o mouse */
+  }
+  
+  #menu {
+    width: 64px; /* Menu fechado */
+    transition: width 0.3s;
+  }
+  

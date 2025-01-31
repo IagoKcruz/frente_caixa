@@ -14,14 +14,12 @@ class AuthService {
     // if (!validPassword) {
     //   throw new Error("Senha incorreta");
     // }
-
     const payload = {
       id: email,
       role: "ADMIN",
     };
-
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"24h", subject:payload.id });
-
+    
     return token;
   }
 }

@@ -51,6 +51,10 @@ class PromocaoController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  async openDashboard(req, res) {
+    return res.render('layout', { body: './partials/dashBoard.ejs' })
+  }
 }
 
 module.exports = new PromocaoController();
