@@ -15,6 +15,10 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING(9),
     allowNull: false,
   },
+  email: {
+    type: DataTypes.STRING(120),
+    allowNull: false,
+  },
   grupo_usuario_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
