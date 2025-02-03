@@ -1,3 +1,4 @@
+const jsonwebtoken = require("jsonwebtoken")
 const AuthService = require("../../services/AuthService");
 
 class AuthController {
@@ -8,7 +9,7 @@ class AuthController {
       const token = await AuthService.login(email, codigo, sessionCode);
       if(token){
         req.session.token = token;
-        return res.json(token);
+        return res.json({token : token});
       }
     } catch (error) {
       return res.status(400).json({ error: error.message });
@@ -25,12 +26,23 @@ class AuthController {
       
       return res.json({ code : randon });
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message });
     }
   }
 
   async openHome(req, res) {
       return res.render('layout', { body: './partials/login.ejs' })
+  }
+
+  async openRegisterPage(req, res) {
+    const token = req.session.token;
+    if(token == null || token == undefined){
+      return res.render('layout', { body: './partials/register.ejs', role: ""})
+    }
+
+    jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
+      return res.render('layout', { body: './partials/register.ejs', role: decoded.role})
+    })
   }
 }
 

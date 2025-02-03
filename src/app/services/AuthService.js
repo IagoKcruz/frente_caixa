@@ -27,8 +27,9 @@ class AuthService {
   }
 
   async findUserByEmail(email) {
-    const user = UsuarioRepositoryIntance.countByEmail(email);
-    if (!user ||user <= 0) {
+    const user = await UsuarioRepositoryIntance.countByEmail(email);
+    console.log(user)
+    if (!user || user == 0) {
        throw new Error("Email não encontrado");
     }
     return user;

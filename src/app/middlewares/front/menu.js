@@ -4,15 +4,17 @@ const menuItems = {
   ADMIN: [
     { name: 'Dashboard', route: '/dashboard', iconClass: 'fas fa-chart-line' },
     { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
-    { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' }
+    { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
+    {name: 'Sair', route: '/logout', iconClass: 'public/img/login'}
   ],
   CLIENTE: [
     { name: 'Início', route: '/home', iconClass: 'fas fa-home' },
-    { name: 'Perfil', route: '/perfil', iconClass: 'fas fa-user' }
+    { name: 'Perfil', route: '/perfil', iconClass: 'fas fa-user' },
+    {name: 'Sair', route: '/logout', iconClass: 'public/img/login'}
   ],
   menu: [
-    { name: 'Entrar', route: '/home', iconClass: 'fas fa-home' },
-    { name: 'Cadastrar', route: '/home', iconClass: 'fas fa-home' },
+    { name: 'Entrar', route: '/', iconClass: 'public/img/login' },
+    { name: 'Cadastrar', route: '/register', iconClass: 'public/img/register' },
   ]
 };
 

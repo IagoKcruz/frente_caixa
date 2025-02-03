@@ -19,13 +19,14 @@ const router = express.Router();
 router.get("/", AuthController.openHome);
 router.post("/login", AuthController.login);
 router.post("/find-user", AuthController.findUserByEmail);
+router.get('/register', AuthController.openRegisterPage);
 
 
-router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) ,PromocaoController.openDashboard);
+router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) , PromocaoController.openDashboard);
 
 router.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/caixa/');
 });
 
 

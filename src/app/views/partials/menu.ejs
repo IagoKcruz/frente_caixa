@@ -7,17 +7,16 @@
     <ul id="menu-items" class="mt-8 space-y-4">
       <% menuItems.forEach(item => { %>
         <li class="menu-item">
-          <!-- <a href="%= item.route %>" class="flex items-center px-4 py-2 hover:bg-blue-700 rounded-lg transition-colors duration-200"> -->
-          <a href="" class="flex items-center px-4 py-2 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-            <i class="<%= item.iconClass %> mr-4"></i>
+          <a href="/caixa<%= item.route %>" class="flex items-center px-6 py-2 hover:bg-blue-700 rounded-lg transition-colors duration-200">
+            <img src="<%= item.iconClass %>" class="mr-6"/>
             <span class="menu-text <%= item.isActive ? 'text-blue-300' : 'text-white' %>"><%= item.name %></span>
           </a>
           <% if(item.submenu) { %>
             <ul class="submenu ml-4 mt-2 space-y-2 hidden">
               <% item.submenu.forEach(subitem => { %>
                 <li class="submenu-item">
-                  <a href="<%= subitem.route %>" class="flex items-center px-4 py-2 hover:bg-blue-700 rounded-lg">
-                    <i class="<%= subitem.iconClass %> mr-4"></i>
+                  <a href="/caixa<%= subitem.route %>" class="flex items-center px-6 py-2 hover:bg-blue-700 rounded-lg">
+                    <i class="<%= subitem.iconClass %> mr-6"></i>
                     <span class="submenu-text <%= subitem.isActive ? 'text-blue-300' : 'text-white' %>"><%= subitem.name %></span>
                   </a>
                 </li>

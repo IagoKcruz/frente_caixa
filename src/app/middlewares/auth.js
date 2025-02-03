@@ -6,7 +6,8 @@ module.exports = (allowedRoles = []) => {
     const token= req.session.token;
     console.log(req.session.token)
     if (!token) {
-      return res.status(401).json({ error: "Token não fornecido" });
+      console.log("Token não fornecido");
+      return res.redirect("/caixa/");
     }
     try {
       jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
@@ -16,16 +17,14 @@ module.exports = (allowedRoles = []) => {
         }
 
         if(erro){
-          return res.json({
-            error : erro.message
-          })
+          return res.redirect("/caixa/")
         }else{
           return next(); 
         }
         
       });
     } catch (err) {
-      return res.status(401).json({ error: err.message });
+      return res.redirect("/caixa/")
     }
   };
 };
