@@ -23,11 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Evento hover para o menu
     menu.addEventListener('mouseenter', () => {
-      menu.classList.add('hover');
+        menu.classList.add('hover');
+        menu.style.width = '250px'; // Aumenta a largura do menu
     });
-  
+
+    // Recolhe o menu ao sair
     menu.addEventListener('mouseleave', () => {
-      menu.classList.remove('hover');
+        menu.classList.remove('hover');
+        menu.style.width = '64px'; // Retorna ao tamanho fechado
     });
   
     // Alterna a visibilidade dos itens do submenu

@@ -12,7 +12,7 @@ const UsuarioController = require('../controllers/helpers/usuarioController')
 const AuthController = require("../controllers/helpers/UserAuthController");    
 
 const authMiddleware = require("../middlewares/auth");
-const addMenu = require('../middlewares/front/menu');
+const addMenu = require('../middlewares/front/MenuItems');
 
 const router = express.Router();
 

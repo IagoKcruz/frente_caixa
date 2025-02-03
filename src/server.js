@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const syncModels = require('./app/models/syncModels');
-const addMenu = require('./app/middlewares/front/menu');
+const addMenu = require('./app/middlewares/front/MenuItems.js');
 const routes = require('./app/routes/routes');
 const app = express();
 

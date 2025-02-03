@@ -5,16 +5,16 @@ const menuItems = {
     { name: 'Dashboard', route: '/dashboard', iconClass: 'fas fa-chart-line' },
     { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
     { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
-    {name: 'Sair', route: '/logout', iconClass: 'public/img/login'}
+    {name: 'Sair', route: '/logout', iconClass: '/img/login'}
   ],
   CLIENTE: [
     { name: 'Início', route: '/home', iconClass: 'fas fa-home' },
     { name: 'Perfil', route: '/perfil', iconClass: 'fas fa-user' },
-    {name: 'Sair', route: '/logout', iconClass: 'public/img/login'}
+    {name: 'Sair', route: '/logout', iconClass: '/img/login.svg'}
   ],
   menu: [
-    { name: 'Entrar', route: '/', iconClass: 'public/img/login' },
-    { name: 'Cadastrar', route: '/register', iconClass: 'public/img/register' },
+    { name: 'Entrar', route: '/', iconClass: '/img/login.svg' },
+    { name: 'Cadastrar', route: '/register', iconClass: '/img/register.svg' },
   ]
 };
 
