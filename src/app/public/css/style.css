@@ -20,7 +20,7 @@
 }
 
 #menu {
-  width: 250px; /* Menu fechado */
+  width: 64px; /* Menu fechado */
   transition: width 0.3s;
 }
   

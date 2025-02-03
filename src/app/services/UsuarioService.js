@@ -1,10 +1,6 @@
 const UsuarioRepository = require('../repositories/UsuarioRepository');
 
 class UsuarioService {
-  constructor() {
-    this.usuarioRepository = new UsuarioRepository();
-  }
-
   async getAllUsuarios() {
     return this.usuarioRepository.findAll();
   }
