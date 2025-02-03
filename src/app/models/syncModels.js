@@ -40,7 +40,7 @@ models.forEach((model) => {
   }
 });
 
-const syncModels = async (force = false) => {
+const syncModels = async (force = true) => {
   try {
     console.log('Iniciando sincronização do banco de dados...');
 

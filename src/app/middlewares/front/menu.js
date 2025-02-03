@@ -1,20 +1,34 @@
-// middleware/menu.js
-const menuItems = [
-    { name: 'Página 1', route: '/pagina1', iconClass: 'fas fa-home', isActive: false, submenu: [] },
-    { name: 'Página 2', route: '/pagina2', iconClass: 'fas fa-user', isActive: false, submenu: [] },
-    {
-      name: 'Configurações', route: '#', iconClass: 'fas fa-cogs', isActive: false, submenu: [
-        { name: 'Subpágina 1', route: '/subpagina1', iconClass: 'fas fa-cog' },
-        { name: 'Subpágina 2', route: '/subpagina2', iconClass: 'fas fa-cog' }
-      ]
-    }
-  ];
-  
-  function addMenu(req, res, next) {
-    res.locals.menuItems = menuItems;
-    //res.locals.imageSrc = '/path/to/your/image.png'; 
-    next(); // Chama o próximo middleware ou rota
+const jsonwebtoken = require("jsonwebtoken");
+
+const menuItems = {
+  ADMIN: [
+    { name: 'Dashboard', route: '/dashboard', iconClass: 'fas fa-chart-line' },
+    { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
+    { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
+    {name: 'Sair', route: '/logout', iconClass: 'public/img/login'}
+  ],
+  CLIENTE: [
+    { name: 'Início', route: '/home', iconClass: 'fas fa-home' },
+    { name: 'Perfil', route: '/perfil', iconClass: 'fas fa-user' },
+    {name: 'Sair', route: '/logout', iconClass: 'public/img/login'}
+  ],
+  menu: [
+    { name: 'Entrar', route: '/', iconClass: 'public/img/login' },
+    { name: 'Cadastrar', route: '/register', iconClass: 'public/img/register' },
+  ]
+};
+
+function addMenu(req, res, next) {
+  const token= req.session.token;
+  if(!token){
+    res.locals.menuItems = menuItems["menu"];
+  }else{
+    jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
+        res.locals.menuItems = menuItems[decoded.role] || [];
+    })
   }
-  
-  module.exports = addMenu;
-  
+  //res.locals.imageSrc = '/path/to/your/image.png';
+  next();
+}
+
+module.exports = addMenu;

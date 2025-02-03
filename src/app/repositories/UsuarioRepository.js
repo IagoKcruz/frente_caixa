@@ -5,6 +5,14 @@ class UsuarioRepository extends BaseRepository {
   constructor() {
     super(Usuario);
   }
+
+  async countByEmail(email){
+    const count = await Usuario.count({
+      where: { email: email }
+    });
+
+    return count;
+  }
 }
 
 module.exports = UsuarioRepository;
