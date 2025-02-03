@@ -11,6 +11,8 @@ class ClienteController {
   }
 
   async criar(req, res) {
+
+    console.log(req.body)
     try {
       const {
         nome,
@@ -44,9 +46,9 @@ class ClienteController {
         sn_ativo,
       });
 
-      return res.status(201).json(novoCliente);
+      return res.json({ ok: true });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return res.json({ erro: error.message });
     }
   }
 

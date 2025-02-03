@@ -1,4 +1,4 @@
-class ClienteDTO {
+export class ClienteDTO {
     constructor(data = {}) {
       this.id = data.id || null;
       this.nome = data.nome || null;

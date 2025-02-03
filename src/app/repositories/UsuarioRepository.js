@@ -15,4 +15,4 @@ class UsuarioRepository extends BaseRepository {
   }
 }
 
-module.exports = UsuarioRepository;
+module.exports = new UsuarioRepository();

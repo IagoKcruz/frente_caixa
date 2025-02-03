@@ -1,7 +1,7 @@
 const express = require('express');
 const PromocaoController = require('../controllers/helpers/PromocaoController');
 const ComboPromocaoController = require('../controllers/helpers/ComboPromocaoController');
-const ClienteController = require('../controllers/helpers/ClienteController');
+const ClienteController = require('../controllers/operacoes/ClienteController');
 const MunicipioController = require('../controllers/helpers/MunicipioController');
 const ItemController = require('../controllers/helpers/ItemController');
 const ItemVendaController = require('../controllers/helpers/ItemVendaController');
@@ -9,10 +9,10 @@ const TipoRecebimentoController = require('../controllers/helpers/TipoRecebiment
 const FormaPagamentoController = require('../controllers/helpers/FormaPagamentoController');
 const VendaController = require('../controllers/helpers/VendaController')
 const UsuarioController = require('../controllers/helpers/usuarioController')
-const AuthController = require("../controllers/helpers/UserAuthController");    
+const AuthController = require("../controllers/operacoes/UserAuthController");    
 
 const authMiddleware = require("../middlewares/auth");
-const addMenu = require('../middlewares/front/menu');
+const addMenu = require('../middlewares/front/MenuItems');
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get('/register', AuthController.openRegisterPage);
 
 
 router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) , PromocaoController.openDashboard);
-
+router.post('/register-cliente', ClienteController.criar)
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');
