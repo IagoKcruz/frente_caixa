@@ -31,17 +31,17 @@ class AuthController {
   }
 
   async openHome(req, res) {
-      return res.render('layout', { body: './partials/login.ejs' })
+      return res.render('layout', { body: './partials/LoginPage.ejs' })
   }
 
   async openRegisterPage(req, res) {
     const token = req.session.token;
     if(token == null || token == undefined){
-      return res.render('layout', { body: './partials/register.ejs', role: ""})
+      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: ""})
     }
 
     jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
-      return res.render('layout', { body: './partials/register.ejs', role: decoded.role})
+      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: decoded.role})
     })
   }
 }

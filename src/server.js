@@ -18,6 +18,7 @@ app.use(session({
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'app', 'views'));
+
 app.use(express.static(path.join(__dirname, 'app', 'public')));
 app.use(express.static(path.join(__dirname, 'app', 'utils')));
 
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(addMenu);
 
 app.use('/caixa', routes);
+//app.use('/admin', routesAdmin);
 // Inicia o servidor primeiro
 app.listen(PORT, async () => {
   console.log(`Servidor rodando na porta ${PORT}`);

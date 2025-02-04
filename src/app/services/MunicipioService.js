@@ -1,24 +1,16 @@
 const MunicipioRepository = require('../repositories/MunicipioRepository');
 
 class MunicipioService {
+  async listarMunicipios(nome){
+    const whereCondition = nome
+      ? { descricao: { [Op.like]: `%${nome}%` } }
+      : {};
+    const response = await MunicipioRepository.GetlistarMunicipios(whereCondition)
+    return response;
+  }
+
   async listarMunicipios() {
-    return await MunicipioRepository.listarMunicipios();
-  }
-
-  async criarMunicipio(dados) {
-    return await MunicipioRepository.criarMunicipio(dados);
-  }
-
-  async buscarMunicipioPorId(id) {
-    return await MunicipioRepository.buscarMunicipioPorId(id);
-  }
-
-  async atualizarMunicipio(id, atualizacoes) {
-    return await MunicipioRepository.atualizarMunicipio(id, atualizacoes);
-  }
-
-  async deletarMunicipio(id) {
-    return await MunicipioRepository.deletarMunicipio(id);
+    return await MunicipioRepository.findAll();
   }
 }
 

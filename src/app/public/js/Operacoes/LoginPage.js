@@ -1,5 +1,5 @@
-import { ajaxGet, ajaxPost } from '../commom.js'
-import { openErrorWindow, openSuccessWindow } from '../modal.js';
+import { ajaxGet, ajaxPost } from '../FetchCommom.js'
+import { openErrorWindow, openSuccessWindow } from '../WindowModal.js';
 let entrar, userEmail, code, campoSenha, buttonEmail, but_recuperar_codigo;
 
 function eventLogin(){

@@ -1,7 +1,7 @@
 function formatMessage(message) {
     if (!message) return "<span>Mensagem vazia</span>";
     
-    if (typeof message === "string") {
+    if (typeof message === "string" || typeof message === "number") {
         return `<span>${message}</span>`;
     }
     

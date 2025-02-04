@@ -1,0 +1,25 @@
+#jsGrid {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.jsgrid-header-row, .jsgrid-grid-body tr {
+    background-color: #fff;
+}
+
+.jsgrid-header-cell {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.jsgrid-row, .jsgrid-alt-row {
+    transition: background 0.3s;
+}
+
+.jsgrid-row:hover, .jsgrid-alt-row:hover {
+    background-color: #e3f2fd;
+}
