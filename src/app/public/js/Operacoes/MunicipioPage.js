@@ -37,21 +37,19 @@ function montarGrid(dataGrid) {
         // Evento de inserção
         onItemInserting: async function (args) {
             try {
-                const municipioDTO = new MunicipioDTO(args.item); 
                 args.cancel = true;
+
+                const municipioDTO = new MunicipioDTO(args.item);
                 
                 const response = await ajaxPost('/caixa/municipio-criar', JSON.stringify(municipioDTO));
-        
+                
                 const newMunicipio = await response.json();
-        
-                if (newMunicipio.error) {
+                
+                if (newMunicipio.error != null) {
                     throw new Error(newMunicipio.error); 
                 }
         
-                args.item.id = newMunicipio.id; 
-
-                const grid = $("#jsGrid").jsGrid("instance");
-                grid.insertItem(args.item)
+                args.item.id = newMunicipio.municipio.id; 
             } catch (error) {
                 // Se houve erro, cancela a inserção
                 openErrorWindow(null, error); // Exibe a janela de erro
