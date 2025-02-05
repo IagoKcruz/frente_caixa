@@ -40,16 +40,15 @@ function montarGrid(dataGrid) {
                 args.cancel = true;
 
                 const municipioDTO = new MunicipioDTO(args.item);
-                
                 const response = await ajaxPost('/caixa/municipio-criar', JSON.stringify(municipioDTO));
-                
                 const newMunicipio = await response.json();
                 
                 if (newMunicipio.error != null) {
                     throw new Error(newMunicipio.error); 
                 }
-        
                 args.item.id = newMunicipio.municipio.id; 
+                
+                 setNewLine(args.item);
             } catch (error) {
                 // Se houve erro, cancela a inserção
                 openErrorWindow(null, error); // Exibe a janela de erro
@@ -67,7 +66,7 @@ function montarGrid(dataGrid) {
                 if(updatedMunicipio.error){
                     throw new Error(updatedMunicipio.error);
                 }
-                args.item.id = updatedMunicipio.id; // Atualiza o ID retornado pela API
+                args.item.id = updatedMunicipio.id; 
             } catch (error) {
                 args.cancel = true; // Cancela a atualização em caso de erro
                 openErrorWindow(null, error);
@@ -92,6 +91,9 @@ function montarGrid(dataGrid) {
     });
 }
 
+function setNewLine(newRow){
+    $("#jsGrid").jsGrid("insertItem", newRow)
+}
 
 // Evento do botão "Filtrar"
 document.getElementById("btnFiltrar").addEventListener("click", function () {
