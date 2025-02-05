@@ -29,7 +29,6 @@ class CadastrarMunicipioController {
     async createMunicipio(req, res) {
         try {
             let municipioDto = req.body;
-            return res.json({error :'Erro ao criar município'});
             municipioDto.id = uuidv4();
             const municipio = await MunicipioService.create(municipioDto);
             return res.json(municipio);
