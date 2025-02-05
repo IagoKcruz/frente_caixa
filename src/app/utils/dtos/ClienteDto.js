@@ -15,5 +15,5 @@ export class ClienteDTO {
       this.promocaoId = data.promocaoId || null;
       this.snAtivo = data.snAtivo || null;
     }
-  }
+}
   

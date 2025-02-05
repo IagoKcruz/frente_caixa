@@ -1,12 +1,13 @@
+import { MunicipioDTO } from '../../dtos/MunicipioDto.js';
 import { openErrorWindow, openSuccessWindow } from '../WindowModal.js';
 import { ajaxGet, ajaxPost } from '../FetchCommom.js'
 
 async function carregarMunicipios(nome = "") {
     try {
-        const response = await ajaxPost("/caixa/listar-municipios", JSON.stringify({nome : nome}));
+        const response = await ajaxPost("/caixa/listar-municipios", JSON.stringify({nome}));
         const municipios = await response.json();
 
-        montarGrid(municipios);
+        montarGrid(municipios.Municipios);
     } catch (error) {
         console.log(error)
         openErrorWindow(null, error);
@@ -14,77 +15,80 @@ async function carregarMunicipios(nome = "") {
     }
 }
 
-function montarGrid(data) {
+function montarGrid(dataGrid) {
     $("#jsGrid").jsGrid({
         width: "100%",
         height: "400px",
 
-        inserting: true,
-        editing: true,
-        sorting: true,
-        paging: true,
-        autoload: true,
+        inserting: true, // Permite a inserção de dados
+        editing: true,   // Permite a edição de dados
+        sorting: true,   // Permite a ordenação dos dados
+        paging: true,    // Habilita a paginação
+        autoload: true,  // Carrega os dados automaticamente
+        deleting: true,  // Permite a exclusão de dados
 
-        data: Array.isArray(data) ? data : [],
+        data: Array.isArray(dataGrid) ? dataGrid : [],
 
         fields: [
             { name: "descricao", type: "text", title: "Município", width: 200, validate: "required" },
-            { type: "control" }
+            { type: "control", editButton: true, deleteButton: true }
         ],
 
-        // Criar novo município
-        onItemInserting: function (args) {
-            args.item._isInserting = true; // Marca que estamos inserindo um novo item
-            showCancelButton(args);
-        },
-
-        // Editar município
-        onItemUpdating: function (args) {
-            args.item._isInserting = false; // Marca que estamos atualizando um item existente
-            showCancelButton(args);
-        },
-
-        // Função para mostrar o botão de cancelar
-        showCancelButton: function(args) {
-            const grid = $("#jsGrid").jsGrid("instance");
-
-            // Adicionando o botão de cancelar
-            const cancelButton = $("<button>")
-                .addClass("bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700")
-                .text("Cancelar")
-                .click(function() {
-                    // Cancela a operação de inserção ou atualização
-                    grid.cancelEdit();
-                });
-
-            // Adiciona o botão ao container
-            const container = $(args.row).find(".jsgrid-insert-row, .jsgrid-edit-row");
-            if (!container.find("button.bg-red-600").length) {
-                container.append(cancelButton);
-            }
-        },
-
-        // Criar novo município - confirmar a inserção
+        // Evento de inserção
         onItemInserting: async function (args) {
             try {
-                const response = await ajaxPost('/caixa/municipio-criar', args.item);
-                const newMunicipio = await response.json();
-                args.item.id = newMunicipio.id;
-            } catch (error) {
+                const municipioDTO = new MunicipioDTO(args.item); 
                 args.cancel = true;
-                openErrorWindow(error);
+                
+                const response = await ajaxPost('/caixa/municipio-criar', JSON.stringify(municipioDTO));
+        
+                const newMunicipio = await response.json();
+        
+                if (newMunicipio.error) {
+                    throw new Error(newMunicipio.error); 
+                }
+        
+                args.item.id = newMunicipio.id; 
+
+                const grid = $("#jsGrid").jsGrid("instance");
+                grid.insertItem(args.item)
+            } catch (error) {
+                // Se houve erro, cancela a inserção
+                openErrorWindow(null, error); // Exibe a janela de erro
+                args.cancel = true;  // Cancela a inserção
+            }
+        },
+        
+
+        // Evento de atualização
+        onItemUpdating: async function (args) {
+            try {
+                // Atualização de dados via AJAX
+                const response = await ajaxPut('/caixa/municipio-update', args.item);
+                const updatedMunicipio = await response.json();
+                if(updatedMunicipio.error){
+                    throw new Error(updatedMunicipio.error);
+                }
+                args.item.id = updatedMunicipio.id; // Atualiza o ID retornado pela API
+            } catch (error) {
+                args.cancel = true; // Cancela a atualização em caso de erro
+                openErrorWindow(null, error);
             }
         },
 
-        // Editar município - confirmar a atualização
-        onItemUpdating: async function (args) {
+        // Evento de exclusão
+        onItemDeleting: async function (args) {
             try {
-                const response = await ajaxPut('/caixa/municipio-update', args.item);
-                const updatedMunicipio = await response.json();
-                args.item.id = updatedMunicipio.id;
+                // Exclusão de dados via AJAX
+                const response = await ajaxDelete('/caixa/municipio-delete', { id: args.item.id });
+                const result = await response.json();
+                if (!result.success) {
+                    args.cancel = true; // Cancela a exclusão se falhar
+                    openErrorWindow(null, "Falha ao excluir o item.");
+                }
             } catch (error) {
-                args.cancel = true;
-                openErrorWindow(error);
+                args.cancel = true; // Cancela a exclusão em caso de erro
+                openErrorWindow(null, error);
             }
         }
     });
@@ -97,5 +101,4 @@ document.getElementById("btnFiltrar").addEventListener("click", function () {
     carregarMunicipios(nome);
 });
 
-// Carregar a grid ao iniciar
 carregarMunicipios();

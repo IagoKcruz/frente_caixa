@@ -1,20 +1,14 @@
-<div class="flex flex-col items-center space-y-6 p-4">
-    <h2 class="text-2xl font-semibold">Municípios</h2>
+<div class="flex flex-col items-center p-6 lg:p-12 w-full">
+  <h2 class="text-2xl font-semibold mb-6">Municípios</h2>
   
-    <!-- Filtro -->
-    <div class="flex flex-col items-center w-full max-w-md space-y-4">
-      <label for="filterNome" class="block text-sm font-medium text-gray-700">Filtrar por nome</label>
-      <div class="flex w-full">
-        <input type="text" id="filterNome" placeholder="Filtrar por nome" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-        <button id="btnFiltrar" class="ml-3 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Filtrar</button>
-      </div>
-    </div>
-  
-    <!-- Grid -->
-    <div id="jsGrid" class="w-full max-w-full bg-white shadow overflow-hidden sm:rounded-lg">
-      <!-- Conteúdo da grid será injetado aqui -->
-    </div>
+  <!-- Filtro -->
+  <div class="flex items-center w-full mb-6">
+    <input type="text" id="filterNome" placeholder="Filtrar por nome" class="block w-full max-w-xs px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+    <button id="btnFiltrar" class="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Filtrar</button>
   </div>
-  
-  <script src="/js/Operacoes/MunicipioPage.js" type="module"></script>
-  
+
+  <!-- Grid -->
+  <div id="jsGrid" class="w-full max-w-full bg-white shadow overflow-hidden sm:rounded-lg"></div>
+</div>
+
+<script src="/js/Operacoes/MunicipioPage.js" type="module"></script>

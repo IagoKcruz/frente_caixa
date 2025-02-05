@@ -1,25 +1,98 @@
-#jsGrid {
-    border: 1px solid #ccc;
+  /* Layout base para o grid */
+  .jsgrid {
+    margin: 20px auto;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
-}
-
-.jsgrid-header-row, .jsgrid-grid-body tr {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-}
+    padding: 15px;
+    overflow: hidden;
+  }
 
-.jsgrid-header-cell {
-    background-color: #0056b3;
+  /* Cabeçalho da tabela */
+  .jsgrid .jsgrid-header-row {
+    background-color: #007BFF;
     color: white;
-    font-weight: bold;
     text-align: center;
-}
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+  }
 
-.jsgrid-row, .jsgrid-alt-row {
-    transition: background 0.3s;
-}
+  /* Estilo das células da tabela */
+  .jsgrid .jsgrid-cell {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+  }
 
-.jsgrid-row:hover, .jsgrid-alt-row:hover {
-    background-color: #e3f2fd;
-}
+  /* Estilo das linhas pares e ímpares */
+  .jsgrid .jsgrid-row:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .jsgrid .jsgrid-row:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+
+  /* Estilo do botão de ação de editar, excluir e inserir */
+  .jsgrid .jsgrid-edit-button,
+  .jsgrid .jsgrid-delete-button,
+  .jsgrid .jsgrid-insert-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+  }
+
+  .jsgrid .jsgrid-edit-button:hover,
+  .jsgrid .jsgrid-delete-button:hover,
+  .jsgrid .jsgrid-insert-button:hover {
+    background-color: #218838;
+  }
+
+  .jsgrid .jsgrid-delete-button {
+    background-color: #dc3545;
+  }
+
+  .jsgrid .jsgrid-delete-button:hover {
+    background-color: #c82333;
+  }
+
+  /* Estilo para o formulário de edição/inserção */
+  .jsgrid .jsgrid-insert-row,
+  .jsgrid .jsgrid-edit-row {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  /* Estilo da barra de filtros */
+  .jsgrid .jsgrid-filter-row input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+
+  /* Estilo de botão de filtro (só aparecerá se filtering estiver ativado) */
+  .jsgrid .jsgrid-filter-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+
+  /* Melhorias visuais gerais */
+  .jsgrid .jsgrid-row:hover {
+    background-color: #e9ecef;
+  }

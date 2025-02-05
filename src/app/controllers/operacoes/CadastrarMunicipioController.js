@@ -1,5 +1,5 @@
 const MunicipioService = require('../../services/MunicipioService.js')
-const { MunicipioDTO } = require("../../utils/dtos/MunicipioDto");
+const { v4: uuidv4 } = require('uuid');
 
 class CadastrarMunicipioController {
     async openPageMunicipio(req, res){
@@ -12,25 +12,31 @@ class CadastrarMunicipioController {
 
     async listarMunicipios(req, res){
         try {
-            console.log(req.body)
             const nome = req.body.nome;
-            const municipios = await MunicipioService.GetListaMunicipios(nome ? nome : "");
-            const municipiosDTO = municipios.map(m => new MunicipioDTO(m));
+            let lista;
+            if (!nome) {
+                lista = await MunicipioService.listarMunicipios();
+            } else {
+                lista = await MunicipioService.GetlistarMunicipios(nome);
+            }
 
-            return res.json({ Municipios : municipiosDTO });
+            return res.json({ Municipios : lista });
         } catch (error) {
             return res.json({error : error});
         }
     }
 
-    async createMunicipio (req, res) {
+    async createMunicipio(req, res) {
         try {
-            const { descricao } = req.body;
-            const municipio = await Municipio.create({ descricao });
-            res.json(new MunicipioDTO(municipio));
+            let municipioDto = req.body;
+            return res.json({error :'Erro ao criar município'});
+            municipioDto.id = uuidv4();
+            const municipio = await MunicipioService.create(municipioDto);
+            return res.json(municipio);
         } catch (error) {
             console.error('Erro ao criar município:', error);
-            res.status(500).send('Erro ao criar município');
+            return res.json({error :'Erro ao criar município'});
+
         }
     }
 
