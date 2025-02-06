@@ -1,24 +1,32 @@
 const MunicipioRepository = require('../repositories/MunicipioRepository');
 
 class MunicipioService {
+  
+  async GetlistarMunicipios(nome){
+    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
+
+    const response = await MunicipioRepository.GetlistarMunicipios(whereCondition)
+    return response;
+  }
+
   async listarMunicipios() {
-    return await MunicipioRepository.listarMunicipios();
+    return await MunicipioRepository.findAll();
   }
 
-  async criarMunicipio(dados) {
-    return await MunicipioRepository.criarMunicipio(dados);
+  async create(municipioDto) {
+    return await MunicipioRepository.create(municipioDto);
   }
 
-  async buscarMunicipioPorId(id) {
-    return await MunicipioRepository.buscarMunicipioPorId(id);
+  async update(municipioDto) {
+    return await MunicipioRepository.update(municipioDto)
   }
 
-  async atualizarMunicipio(id, atualizacoes) {
-    return await MunicipioRepository.atualizarMunicipio(id, atualizacoes);
-  }
-
-  async deletarMunicipio(id) {
-    return await MunicipioRepository.deletarMunicipio(id);
+  async delete(id) {
+    const municipio = await MunicipioRepository.findById(id)
+    if(municipio == null){
+        throw new Error("Erro ao achar Municipio para excluir");
+    }
+    return await MunicipioRepository.delete(municipio)
   }
 }
 

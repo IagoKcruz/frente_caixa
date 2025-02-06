@@ -53,7 +53,7 @@ class PromocaoController {
   }
 
   async openDashboard(req, res) {
-    return res.render('layout', { body: './partials/dashBoard.ejs' })
+    return res.render('layout', { body: './partials/LoginPage.ejs' })
   }
 }
 

@@ -5,6 +5,7 @@ const menuItems = {
     { name: 'Dashboard', route: '/dashboard', iconClass: 'fas fa-chart-line' },
     { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
     { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
+    { name: 'Cadastrar Municipio', route: '/cadastrar-municipio', iconClass: 'fas fa-cogs' },
     {name: 'Sair', route: '/logout', iconClass: '/img/login'}
   ],
   CLIENTE: [

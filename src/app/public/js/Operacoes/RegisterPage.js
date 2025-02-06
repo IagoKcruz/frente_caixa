@@ -1,55 +1,8 @@
 import { ClienteDTO } from '../../dtos/ClienteDto.js';
-import { openErrorWindow, openSuccessWindow } from '../modal.js';
-import { ajaxGet, ajaxPost } from '../commom.js'
+import { openErrorWindow, openSuccessWindow } from '../WindowModal.js';
+import { ajaxGet, ajaxPost } from '../FetchCommom.js'
 
-const radioCPF = document.getElementById('cpf');
-const radioCNPJ = document.getElementById('cnpj');
-const documentoInput = document.getElementById('documento');
-
-function mascaraCPF(cpf) {
-    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-}
-
-function mascaraCNPJ(cnpj) {
-    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
-}
-
-function formatarDocumento(event) {
-    let valor = documentoInput.value.replace(/\D/g, '');
-    if (radioCPF.checked) {
-        valor = mascaraCPF(valor); 
-    } else if (radioCNPJ.checked) {
-        valor = mascaraCNPJ(valor); 
-    }
-    documentoInput.value = valor; 
-
-    if (radioCPF.checked && valor.length > 14) {
-        documentoInput.classList.add('border-red-500'); 
-    } else if (radioCNPJ.checked && valor.length > 18) {
-        documentoInput.classList.add('border-red-500'); 
-    } else {
-        documentoInput.classList.remove('border-red-500');
-    }
-}
-
-// Inicializa com a máscara de CPF
-documentoInput.addEventListener('input', formatarDocumento);
-
-// Troca a máscara ao selecionar CPF ou CNPJ
-radioCPF.addEventListener('change', function() {
-    documentoInput.placeholder = 'Digite CPF';
-    documentoInput.value = ''; // Limpa o campo
-    documentoInput.classList.remove('border-red-500'); // Remove borda vermelha ao mudar para CPF
-});
-
-radioCNPJ.addEventListener('change', function() {
-    documentoInput.placeholder = 'Digite CNPJ';
-    documentoInput.value = ''; // Limpa o campo
-    documentoInput.classList.remove('border-red-500'); // Remove borda vermelha ao mudar para CNPJ
-});
-
-
-let nome, documento, rg, dataNascimento, email, bairro, logradouro, numeroLogradouro, municipioId, inscricaoEstadual, promocaoId, registrarBtn;
+let nome, documento, rg, dataNascimento, email, bairro, logradouro, numeroLogradouro, municipioId, inscricaoEstadual, promocaoId, registrarBtn, radioCPF, radioCNPJ, documentoInput;
 
 function getDadosTela() {
     nome = document.getElementById("nome");
@@ -64,6 +17,9 @@ function getDadosTela() {
     inscricaoEstadual = document.getElementById("inscricaoEstadual");
     promocaoId = document.getElementById("promocao");
     registrarBtn = document.getElementById("registrar");
+    radioCPF = document.getElementById('cpf');
+    radioCNPJ = document.getElementById('cnpj');
+    documentoInput = document.getElementById('documento');
 }
 
 async function registerUser(){
@@ -127,9 +83,52 @@ function setDados() {
     municipioId.value = "Cidade Exemplo";
 }
 
+function mascaraCPF(cpf) {
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
+
+function mascaraCNPJ(cnpj) {
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+}
+
+function formatarDocumento(event) {
+    let valor = documentoInput.value.replace(/\D/g, '');
+    
+    if (radioCPF.checked) {
+        valor = mascaraCPF(valor); 
+    } else if (radioCNPJ.checked) {
+        valor = mascaraCNPJ(valor); 
+    }
+    documentoInput.value = valor; 
+
+    if (radioCPF.checked && valor.length > 14) {
+        documentoInput.classList.add('border-red-500'); 
+    } else if (radioCNPJ.checked && valor.length > 18) {
+        documentoInput.classList.add('border-red-500'); 
+    } else {
+        documentoInput.classList.remove('border-red-500');
+    }
+}
 
 /// CHAMAR INICIO DE FUNÇÕES
 
 getDadosTela();
+
 registrarBtn.addEventListener("click", () => registerUser())
+documentoInput.addEventListener('input', formatarDocumento);
+
 setDados()
+
+
+radioCPF.addEventListener('change', function() {
+    documentoInput.placeholder = 'Digite CPF';
+    documentoInput.value = ''; 
+    documentoInput.classList.remove('border-red-500'); 
+});
+
+radioCNPJ.addEventListener('change', function() {
+    documentoInput.placeholder = 'Digite CNPJ';
+    documentoInput.value = ''; 
+    documentoInput.classList.remove('border-red-500');
+});
+

@@ -1,12 +1,23 @@
 function formatMessage(message) {
     if (!message) return "<span>Mensagem vazia</span>";
     
-    if (typeof message === "string") {
+    if (typeof message === "string" || typeof message === "number") {
         return `<span>${message}</span>`;
     }
     
     if (Array.isArray(message)) {
-        return `<ul class='list-none p-0'>${message.map(m => `<li>${m.erro || m}</li>`).join("")}</ul>`;
+        console.log(message)
+        return `<ul class='list-none p-0'>${message.map(m => {
+            if(m.erro){
+                `<li>${m.erro}</li>`
+            }
+            if(m.Error){
+                `<li>${m.Error}</li>`
+            }
+            else{
+                `<li>${m}</li>`
+            }
+        }).join("")}</ul>`;
     }
     
     if (typeof message === "object" && message.erro) {

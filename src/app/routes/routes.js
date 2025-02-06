@@ -1,15 +1,8 @@
 const express = require('express');
 const PromocaoController = require('../controllers/helpers/PromocaoController');
-const ComboPromocaoController = require('../controllers/helpers/ComboPromocaoController');
 const ClienteController = require('../controllers/operacoes/ClienteController');
-const MunicipioController = require('../controllers/helpers/MunicipioController');
-const ItemController = require('../controllers/helpers/ItemController');
-const ItemVendaController = require('../controllers/helpers/ItemVendaController');
-const TipoRecebimentoController = require('../controllers/helpers/TipoRecebimentoController');
-const FormaPagamentoController = require('../controllers/helpers/FormaPagamentoController');
-const VendaController = require('../controllers/helpers/VendaController')
-const UsuarioController = require('../controllers/helpers/usuarioController')
 const AuthController = require("../controllers/operacoes/UserAuthController");    
+const CadastrarMunicipio = require('../controllers/operacoes/CadastrarMunicipioController')
 
 const authMiddleware = require("../middlewares/auth");
 const addMenu = require('../middlewares/front/MenuItems');
@@ -28,6 +21,11 @@ router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');
 });
+router.get("/cadastrar-municipio", authMiddleware(["ADMIN"]), CadastrarMunicipio.openPageMunicipio);
+router.post("/listar-municipios", authMiddleware(["ADMIN"]), CadastrarMunicipio.listarMunicipios);
+router.post("/municipio-criar", authMiddleware(["ADMIN"]), CadastrarMunicipio.createMunicipio);
+router.put("/municipio-update", authMiddleware(["ADMIN"]), CadastrarMunicipio.updateMunicipio);
+router.delete("/municipio-delete", authMiddleware(["ADMIN"]), CadastrarMunicipio.deleteMunicipio);
 
 
 // Rotas para Promoção
