@@ -19,14 +19,14 @@ class BasicRepository {
       return await this.model.create(data);
     }
   
-    async update(id, updates) {
-      const instance = await this.model.findByPk(id);
+    async update(updates) {
+      const instance = await this.model.findByPk(updates.id);
       if (!instance) return null;
       return await instance.update(updates);
     }
   
-    async delete() {
-      await instance.destroy();
+    async delete(deleteModel) {
+      await deleteModel.destroy();
       return instance;
     }
   }

@@ -1,6 +1,6 @@
 import { MunicipioDTO } from '../../dtos/MunicipioDto.js';
 import { openErrorWindow, openSuccessWindow } from '../WindowModal.js';
-import { ajaxGet, ajaxPost } from '../FetchCommom.js'
+import { ajaxGet, ajaxPost, ajaxPut, ajaxDelete } from '../FetchCommom.js'
 
 async function carregarMunicipios(nome = "") {
     try {
@@ -20,80 +20,90 @@ function montarGrid(dataGrid) {
         width: "100%",
         height: "400px",
 
-        inserting: true, // Permite a inserção de dados
-        editing: true,   // Permite a edição de dados
-        sorting: true,   // Permite a ordenação dos dados
-        paging: true,    // Habilita a paginação
-        autoload: true,  // Carrega os dados automaticamente
-        deleting: true,  // Permite a exclusão de dados
+        inserting: true,
+        editing: true,
+        sorting: true,
+        paging: true,
+        autoload: false,
+        deleting: true,
 
         data: Array.isArray(dataGrid) ? dataGrid : [],
 
         fields: [
-            { name: "descricao", type: "text", title: "Município", width: 200, validate: "required" },
+            { name: "id", type: "number", title: "ID", width: 50, readOnly: true, visible: false },
+            { name: "descricao", type: "text", title: "Município", align: 'left', width: 200, validate: "required" },
             { type: "control", editButton: true, deleteButton: true }
         ],
 
-        // Evento de inserção
-        onItemInserting: async function (args) {
-            try {
-                args.cancel = true;
+        controller: {
 
-                const municipioDTO = new MunicipioDTO(args.item);
-                const response = await ajaxPost('/caixa/municipio-criar', JSON.stringify(municipioDTO));
-                const newMunicipio = await response.json();
-                
-                if (newMunicipio.error != null) {
-                    throw new Error(newMunicipio.error); 
-                }
-                args.item.id = newMunicipio.municipio.id; 
-                
-                 setNewLine(args.item);
-            } catch (error) {
-                // Se houve erro, cancela a inserção
-                openErrorWindow(null, error); // Exibe a janela de erro
-                args.cancel = true;  // Cancela a inserção
-            }
-        },
-        
+            // Insere um novo item (CREATE)
+            insertItem: async function (item) {
+                return await createMunicipio(item);
+            },
 
-        // Evento de atualização
-        onItemUpdating: async function (args) {
-            try {
-                // Atualização de dados via AJAX
-                const response = await ajaxPut('/caixa/municipio-update', args.item);
-                const updatedMunicipio = await response.json();
-                if(updatedMunicipio.error){
-                    throw new Error(updatedMunicipio.error);
-                }
-                args.item.id = updatedMunicipio.id; 
-            } catch (error) {
-                args.cancel = true; // Cancela a atualização em caso de erro
-                openErrorWindow(null, error);
-            }
-        },
-
-        // Evento de exclusão
-        onItemDeleting: async function (args) {
-            try {
-                // Exclusão de dados via AJAX
-                const response = await ajaxDelete('/caixa/municipio-delete', { id: args.item.id });
-                const result = await response.json();
-                if (!result.success) {
-                    args.cancel = true; // Cancela a exclusão se falhar
-                    openErrorWindow(null, "Falha ao excluir o item.");
-                }
-            } catch (error) {
-                args.cancel = true; // Cancela a exclusão em caso de erro
-                openErrorWindow(null, error);
+            updateItem: async function (item) {
+                return await updateMunicipio(item);
+            },
+            
+            deleteItem: async function (item) {
+                return await deleteMunicipio(item);
             }
         }
     });
 }
 
-function setNewLine(newRow){
-    $("#jsGrid").jsGrid("insertItem", newRow)
+async function createMunicipio(item) {
+    try {
+        const municipioDTO = new MunicipioDTO(item);
+        const response = await ajaxPost('/caixa/municipio-criar', JSON.stringify(municipioDTO));
+        const newMunicipio = await response.json();
+
+        if (newMunicipio.error) throw new Error(newMunicipio.error);
+
+        return {
+            id: newMunicipio.municipio.id,
+            descricao: newMunicipio.municipio.descricao
+        };
+    } catch (error) {
+        openErrorWindow(null, error);
+        return $.Deferred().reject(error).promise();
+    }
 }
+
+async function updateMunicipio(item) {
+    try {
+        const municipioDTO = new MunicipioDTO(item);
+        
+        const response = await ajaxPut('/caixa/municipio-update', JSON.stringify(municipioDTO));
+        const updatedMunicipio = await response.json();
+
+        if (updatedMunicipio.error) throw new Error(updatedMunicipio.error);
+
+        return updatedMunicipio.MunicipioDTO;
+    } catch (error) {
+        openErrorWindow(null, error);
+        return $.Deferred().reject(error).promise();
+    }
+}
+
+
+async function deleteMunicipio(item) {
+    try {
+        const bodyRequest = { id: item.id };
+        const response = await ajaxDelete('/caixa/municipio-delete', JSON.stringify(bodyRequest));
+        const result = await response.json();
+
+        if (result.erro) throw new Error(result);
+        
+        return result;
+    } catch (error) {
+        openErrorWindow(null, error.Error);
+        return $.Deferred().reject(error).promise();
+    }
+}
+
+
 
 // Evento do botão "Filtrar"
 document.getElementById("btnFiltrar").addEventListener("click", function () {

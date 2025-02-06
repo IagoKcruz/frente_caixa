@@ -16,6 +16,18 @@ class MunicipioService {
   async create(municipioDto) {
     return await MunicipioRepository.create(municipioDto);
   }
+
+  async update(municipioDto) {
+    return await MunicipioRepository.update(municipioDto)
+  }
+
+  async delete(id) {
+    const municipio = await MunicipioRepository.findById(id)
+    if(municipio == null){
+        throw new Error("Erro ao achar Municipio para excluir");
+    }
+    return await MunicipioRepository.delete(municipio)
+  }
 }
 
 module.exports = new MunicipioService();

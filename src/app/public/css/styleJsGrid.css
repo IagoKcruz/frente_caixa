@@ -3,15 +3,15 @@
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 15px;
     overflow: hidden;
   }
 
   /* Cabeçalho da tabela */
   .jsgrid .jsgrid-header-row {
-    background-color: #007BFF;
-    color: white;
+    background-color: rgb(222, 223, 224) !important;
+    color: rgb(0, 0, 0);
     text-align: center;
     font-weight: bold;
     border-radius: 5px 5px 0 0;
@@ -19,8 +19,7 @@
 
   /* Estilo das células da tabela */
   .jsgrid .jsgrid-cell {
-    padding: 10px;
-    text-align: center;
+    padding: 8px;
     border-bottom: 1px solid #ddd;
     font-size: 14px;
     color: #333;
@@ -28,7 +27,7 @@
 
   /* Estilo das linhas pares e ímpares */
   .jsgrid .jsgrid-row:nth-child(odd) {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9b6;
   }
   
   .jsgrid .jsgrid-row:nth-child(even) {
@@ -47,12 +46,6 @@
     cursor: pointer;
     font-size: 12px;
     transition: background-color 0.3s ease;
-  }
-
-  .jsgrid .jsgrid-edit-button:hover,
-  .jsgrid .jsgrid-delete-button:hover,
-  .jsgrid .jsgrid-insert-button:hover {
-    background-color: #218838;
   }
 
   .jsgrid .jsgrid-delete-button {
@@ -95,4 +88,9 @@
   /* Melhorias visuais gerais */
   .jsgrid .jsgrid-row:hover {
     background-color: #e9ecef;
+  }
+
+  .jsgrid .jsgrid-button{
+    width: 2rem !important;
+    height: 2rem !important;
   }

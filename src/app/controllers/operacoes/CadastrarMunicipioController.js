@@ -30,25 +30,36 @@ class CadastrarMunicipioController {
         try {
             let municipioDto = req.body;
             municipioDto.id = uuidv4();
-            console.log(municipioDto)
             const municipio = await MunicipioService.create(municipioDto);
 
             return res.json({ municipio : municipio , error : null});
         } catch (error) {
             console.error('Erro ao criar município:', error);
             return res.json({error :'Erro ao criar município'});
-
         }
     }
 
     async updateMunicipio (req, res){
         try {
-            const { id, descricao } = req.body;
-            await Municipio.update({ descricao }, { where: { id } });
-            res.json({ id, descricao });
+            const municipioDto = req.body;
+            await MunicipioService.update(municipioDto);
+
+            return res.json({ municipioDto });
         } catch (error) {
             console.error('Erro ao atualizar município:', error);
-            res.status(500).send('Erro ao atualizar município');
+            return res.json({error :'Erro ao criar município'})
+        }
+    }
+
+    async deleteMunicipio(req, res){
+        try {
+            let id = req.body.id;
+            console.log(id)
+            await MunicipioService.delete(id);
+
+            return res.json({ status : true });
+        } catch (erro) {
+            return res.json({error :'Erro ao deletar município'})
         }
     }
 }

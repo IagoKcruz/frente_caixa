@@ -6,7 +6,7 @@ export async function ajaxPost(caminho, body) {
     });
 }
 
-export async function ajaxGet(caminho) {
+export async function ajaxGet(caminho, body) {
     return await fetch(caminho, {
         headers: { "Content-Type": "application/json" },
         body: body,
@@ -14,10 +14,18 @@ export async function ajaxGet(caminho) {
     });
 }
 
-export async function ajaxPut(caminho) {
+export async function ajaxPut(caminho, body) {
     return await fetch(caminho, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: body,
         method: "PUT"
+    });
+}
+
+export async function ajaxDelete(caminho, body) {
+    return await fetch(caminho, {
+        headers: { "Content-Type": "application/json" },
+        body: body,
+        method: "DELETE"
     });
 }
