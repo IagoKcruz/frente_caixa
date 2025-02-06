@@ -21,8 +21,9 @@ router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');
 });
+
+router.post("/listar-municipios", CadastrarMunicipio.listarMunicipios);
 router.get("/cadastrar-municipio", authMiddleware(["ADMIN"]), CadastrarMunicipio.openPageMunicipio);
-router.post("/listar-municipios", authMiddleware(["ADMIN"]), CadastrarMunicipio.listarMunicipios);
 router.post("/municipio-criar", authMiddleware(["ADMIN"]), CadastrarMunicipio.createMunicipio);
 router.put("/municipio-update", authMiddleware(["ADMIN"]), CadastrarMunicipio.updateMunicipio);
 router.delete("/municipio-delete", authMiddleware(["ADMIN"]), CadastrarMunicipio.deleteMunicipio);

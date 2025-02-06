@@ -1,4 +1,7 @@
+const { v4: uuidv4 } = require('uuid');
 const ClienteService = require('../../services/ClienteService');
+const UsuarioService = require('../../services/UsuarioService');
+const gerarCodigoUnico = require('../../utilsBack/CodeGenerator');
 
 class ClienteController {
   async listar(req, res) {
@@ -11,12 +14,10 @@ class ClienteController {
   }
 
   async criar(req, res) {
-
     console.log(req.body)
     try {
       const {
         nome,
-        codigo,
         cnpj_cpf,
         rg,
         data_nascimento,
@@ -26,11 +27,14 @@ class ClienteController {
         logradouro,
         inscricao_estadual,
         municipio_id,
-        promocao_id,
-        sn_ativo,
+        sn_ativo
       } = req.body;
 
-      const novoCliente = await ClienteService.criarCliente({
+      const id = uuidv4();
+      const codigo = gerarCodigoUnico(nome[0]);
+      
+      await ClienteService.criarCliente({
+        id,
         nome,
         codigo,
         cnpj_cpf,
@@ -42,10 +46,11 @@ class ClienteController {
         logradouro,
         inscricao_estadual,
         municipio_id,
-        promocao_id,
         sn_ativo,
       });
 
+      await CriarUsuario(nome, email, sn_ativo); 
+      
       return res.json({ ok: true });
     } catch (error) {
       return res.json({ erro: error.message });
@@ -84,6 +89,16 @@ class ClienteController {
       return res.status(500).json({ error: error.message });
     }
   }
+}
+
+async function CriarUsuario(nome, email, sn_ativo){
+    return await UsuarioService.createUsuario({
+      id : uuidv4(),
+      nome,
+      login : nome,
+      email,
+      sn_ativo
+    })
 }
 
 module.exports = new ClienteController();

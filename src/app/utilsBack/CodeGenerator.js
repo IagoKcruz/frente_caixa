@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const usados = new Set(); // Conjunto para armazenar códigos usados
 
-export function gerarCodigoUnico(prefixo, tamanho = 6) {
+function gerarCodigoUnico(prefixo, tamanho = 6) {
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
     let codigoUnico;
@@ -18,3 +18,5 @@ export function gerarCodigoUnico(prefixo, tamanho = 6) {
     usados.add(codigoUnico);
     return codigoUnico;
 }
+
+module.exports = gerarCodigoUnico;

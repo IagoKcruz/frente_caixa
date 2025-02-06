@@ -1,25 +1,25 @@
-const UsuarioRepository = require('../repositories/UsuarioRepository');
+const UsuarioRepository = require('../repositories/UsuarioRepository.js');
 
 class UsuarioService {
   async getAllUsuarios() {
-    return this.usuarioRepository.findAll();
+    return await UsuarioRepository.findAll();
   }
 
   async getUsuarioById(id) {
-    return this.usuarioRepository.findById(id);
+    return await UsuarioRepository.findById(id);
   }
 
   async createUsuario(data) {
-    return this.usuarioRepository.create(data);
+    return await UsuarioRepository.create(data);
   }
 
   async updateUsuario(id, data) {
-    return this.usuarioRepository.update(id, data);
+    return await UsuarioRepository.update(id, data);
   }
 
   async deleteUsuario(id) {
-    return this.usuarioRepository.delete(id);
+    return await UsuarioRepository.delete(id);
   }
 }
 
-module.exports = UsuarioService;
+module.exports = new UsuarioService();
