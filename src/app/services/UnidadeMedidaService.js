@@ -1,29 +1,31 @@
-const UnidadeMedidaRepository = require('../repositories/UnidadeMedidaRepository');
+const UnidadeMedidaRepository = require('../repositories/UnidadeMedidaRepository.js');
 
 class UnidadeMedidaService {
-  constructor() {
-    this.unidadeMedidaRepository = new UnidadeMedidaRepository();
+  async getAllUnidadesMedida() {
+    return await UnidadeMedidaRepository.findAll();
   }
 
-  async getAllUnidadesMedida() {
-    return this.unidadeMedidaRepository.findAll();
+  async getAllUnidadesMedidaFiltrada(descricao) {
+    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
+    return await UnidadeMedidaRepository.GetAllUnidadesMedidaFiltrada(whereCondition);
   }
 
   async getUnidadeMedidaById(id) {
-    return this.unidadeMedidaRepository.findById(id);
+    return await UnidadeMedidaRepository.findById(id);
   }
 
   async createUnidadeMedida(data) {
-    return this.unidadeMedidaRepository.create(data);
+    return await UnidadeMedidaRepository.create(data);
   }
 
   async updateUnidadeMedida(id, data) {
-    return this.unidadeMedidaRepository.update(id, data);
+    return await UnidadeMedidaRepository.update(id, data);
   }
 
   async deleteUnidadeMedida(id) {
-    return this.unidadeMedidaRepository.delete(id);
+    const unidadeMedida = await UnidadeMedidaRepository.findById(id);
+    return await UnidadeMedidaRepository.delete(unidadeMedida);
   }
 }
 
-module.exports = UnidadeMedidaService;
+module.exports = new UnidadeMedidaService();

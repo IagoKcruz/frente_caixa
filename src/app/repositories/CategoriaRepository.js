@@ -5,6 +5,10 @@ class CategoriaRepository extends BasicRepository {
   constructor() {
     super(Categoria);
   }
+
+  async GetCategoriaFiltrada(whereCondition){
+    await this.findAll({where : whereCondition})
+  }
 }
 
-module.exports = CategoriaRepository;
+module.exports = new CategoriaRepository();

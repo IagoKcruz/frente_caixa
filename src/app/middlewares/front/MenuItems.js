@@ -5,8 +5,11 @@ const menuItems = {
     { name: 'Dashboard', route: '/dashboard', iconClass: 'fas fa-chart-line' },
     { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
     { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
-    { name: 'Cadastrar Municipio', route: '/cadastrar-municipio', iconClass: 'fas fa-cogs' },
-    {name: 'Sair', route: '/logout', iconClass: '/img/login'}
+    { name: 'Municipio', route: '/cadastrar-Municipio', iconClass: 'fas fa-cogs'},
+    { name: 'Unidade de Medida', route: '/cadastrar-UnidadeMedida', iconClass: 'fas fa-cogs'},
+    { name: 'Categoria', route: '/cadastrar-Categoria', iconClass: 'fas fa-cogs'},
+    { name: 'Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs'},
+    { name: 'Sair', route: '/logout', iconClass: '/img/login'}
   ],
   CLIENTE: [
     { name: 'Início', route: '/home', iconClass: 'fas fa-home' },
