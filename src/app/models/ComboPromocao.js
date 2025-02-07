@@ -10,6 +10,9 @@ const ComboPromocao = sequelize.define('ComboPromocao', {
   valor_promocao: {
     type: DataTypes.FLOAT(10, 2),
   }
+},{
+  tableName: 'combo_promocao',
+  modelName: "ComboPromocao"
 });
 
 

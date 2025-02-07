@@ -26,12 +26,12 @@ function limparCampos() {
     document.getElementById("nome").value = "";
     document.getElementById("documento").value = "";
     document.getElementById("rg").value = "";
-    document.getElementById("dataNascimento").value = "";
+    
+    document.getElementById("dataNascimento").value = null;
     document.getElementById("email").value = "";
     document.getElementById("bairro").value = "";
     document.getElementById("rua").value = "";
     document.getElementById("numero").value = "";
-    document.getElementById("municipio").value = "";
     document.getElementById("inscricaoEstadual").value = "";
     document.getElementById("promocao").value = "";
     
@@ -44,9 +44,9 @@ async function registerUser(){
         let clienteDTO = _popularDtoCliente();
         const resAjax = await ajaxPost("/caixa/register-cliente", JSON.stringify(clienteDTO));
         const response = await resAjax.json();
-
-        if (response.ok) {
-            limparCampos()
+        console.log(response.Ok)
+        if (response.Ok) {
+            //limparCampos()
             openSuccessWindow(null, "Usuário registrado com sucesso!");
         } else {
             openErrorWindow(null, response)

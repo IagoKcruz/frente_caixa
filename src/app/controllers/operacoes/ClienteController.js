@@ -50,8 +50,7 @@ class ClienteController {
       });
 
       await CriarUsuario(nome, email, sn_ativo); 
-      
-      return res.json({ ok: true });
+      return res.json({Ok : true});
     } catch (error) {
       return res.json({ erro: error.message });
     }
@@ -92,13 +91,14 @@ class ClienteController {
 }
 
 async function CriarUsuario(nome, email, sn_ativo){
-    return await UsuarioService.createUsuario({
+    const user = await UsuarioService.createUsuario({
       id : uuidv4(),
       nome,
       login : nome,
       email,
       sn_ativo
     })
+    return user;
 }
 
 module.exports = new ClienteController();

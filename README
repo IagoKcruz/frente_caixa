@@ -1,0 +1,5 @@
+GERA SEED 
+
+npx sequelize-cli seed:generate --name seed-usuarios
+
+npx sequelize-cli db:seed:all  --config src/config/config.json
