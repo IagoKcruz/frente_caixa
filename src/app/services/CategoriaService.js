@@ -1,29 +1,31 @@
 const CategoriaRepository = require('../repositories/CategoriaRepository');
 
 class CategoriaService {
-  constructor() {
-    this.categoriaRepository = new CategoriaRepository();
-  }
-
   async getAllCategorias() {
-    return this.categoriaRepository.findAll();
+    return await CategoriaRepository.findAll();
+  }
+  
+  async getCategoriaFiltrada() {
+    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
+    return await CategoriaRepository.GetCategoriaFiltrada(whereCondition);
   }
 
   async getCategoriaById(id) {
-    return this.categoriaRepository.findById(id);
+    return await CategoriaRepository.findById(id);
   }
 
   async createCategoria(data) {
-    return this.categoriaRepository.create(data);
+    return await CategoriaRepository.create(data);
   }
 
   async updateCategoria(id, data) {
-    return this.categoriaRepository.update(id, data);
+    return await CategoriaRepository.update(id, data);
   }
 
   async deleteCategoria(id) {
-    return this.categoriaRepository.delete(id);
+    const categoria = CategoriaRepository.findById(id)
+    return await CategoriaRepository.delete(categoria);
   }
 }
 
-module.exports = CategoriaService;
+module.exports = new CategoriaService();

@@ -14,7 +14,7 @@ const Cliente = sequelize.define('Cliente', {
     allowNull: false,
   },
   codigo: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(9),
     allowNull: false,
   },
   cnpj_cpf: {

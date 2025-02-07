@@ -1,5 +1,6 @@
 const jsonwebtoken = require("jsonwebtoken")
 const AuthService = require("../../services/AuthService");
+const MunicipioService = require("../../services/MunicipioService");
 
 class AuthController {
   async login(req, res) {
@@ -35,13 +36,15 @@ class AuthController {
   }
 
   async openRegisterPage(req, res) {
+    const municipios = await MunicipioService.listarMunicipios();
+
     const token = req.session.token;
     if(token == null || token == undefined){
-      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: ""})
+      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: "", Municipios : municipios})
     }
 
     jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
-      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: decoded.role})
+      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: decoded.role, Municipios : municipios})
     })
   }
 }

@@ -22,6 +22,23 @@ function getDadosTela() {
     documentoInput = document.getElementById('documento');
 }
 
+function limparCampos() {
+    document.getElementById("nome").value = "";
+    document.getElementById("documento").value = "";
+    document.getElementById("rg").value = "";
+    document.getElementById("dataNascimento").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("bairro").value = "";
+    document.getElementById("rua").value = "";
+    document.getElementById("numero").value = "";
+    document.getElementById("municipio").value = "";
+    document.getElementById("inscricaoEstadual").value = "";
+    document.getElementById("promocao").value = "";
+    
+    // Resetando o radio para CPF por padrão
+    document.getElementById("cpf").checked = true;
+    document.getElementById("cnpj").checked = false;
+}
 async function registerUser(){
     try {
         let clienteDTO = _popularDtoCliente();
@@ -29,6 +46,7 @@ async function registerUser(){
         const response = await resAjax.json();
 
         if (response.ok) {
+            limparCampos()
             openSuccessWindow(null, "Usuário registrado com sucesso!");
         } else {
             openErrorWindow(null, response)
@@ -41,17 +59,17 @@ async function registerUser(){
 function _popularDtoCliente(){
     const clienteData = {
         nome: nome.value,
-        cnpjCpf: documento.value,
+        cnpj_cpf: documento.value,
         rg: rg.value,
-        dataNascimento: dataNascimento.value,
+        data_nascimento: dataNascimento.value,
         email: email.value,
         bairro: bairro.value,
         logradouro: logradouro.value,
-        numeroLogradouro: numeroLogradouro.value,
-        municipioId: municipioId.value,
+        numero_logradouro: numeroLogradouro.value,
+        municipio_id: municipioId.value,
         inscricaoEstadual: inscricaoEstadual?.value || null,
-        promocaoId: promocaoId?.value || null,
-        snAtivo: true,
+        promocao_id: promocaoId?.value || null,
+        sn_ativo: "S",
     };
 
     let clienteDto = new ClienteDTO(clienteData)
