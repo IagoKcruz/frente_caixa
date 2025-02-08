@@ -14,6 +14,9 @@ UnidadeMedida.init(
       type: DataTypes.STRING(60),
       allowNull: false,
     },
+    sn_ativo: {
+      type: DataTypes.CHAR(2)
+    }
   },
   {
     sequelize,

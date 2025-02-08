@@ -58,6 +58,6 @@ const ItemVenda = sequelize.define('ItemVenda', {
 // Associações
 ItemVenda.belongsTo(Item, { foreignKey: 'item_id', as: 'item' });
 ItemVenda.belongsTo(Venda, { foreignKey: 'venda_id', as: 'venda' });
-ItemVenda.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
+ItemVenda.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario_item_venda' });
 
 module.exports = ItemVenda;

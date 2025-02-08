@@ -5,6 +5,10 @@ const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("usuario", [
+      { id: uuidv4(), nome: "iago", login: "icruz" ,email : "iago@iago.com", sn_ativo : "S" }
+    ]);
+
     await queryInterface.bulkInsert("municipio", [
       { id: uuidv4(), descricao: "Candelária" },
       { id: uuidv4(), descricao: "Encruzilhada do Sul" },
@@ -86,6 +90,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("municipio", null, {});
+    await queryInterface.bulkDelete("usuario", null, {});
     await queryInterface.bulkDelete("categoria", null, {});
     await queryInterface.bulkDelete("unidade_medida", null, {});
     await queryInterface.bulkDelete("forma_pagamento", null, {});

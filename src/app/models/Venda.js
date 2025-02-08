@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const Cliente = require('./Cliente');
+const Promocao = require('./Promocao');
 
 const Venda = sequelize.define('Venda', {
   id: {
@@ -37,6 +38,9 @@ const Venda = sequelize.define('Venda', {
     type: DataTypes.CHAR(36),
     allowNull: false,
   },
+  promocao_id: {
+    type: DataTypes.CHAR(36),
+  },
 }, {
   tableName: 'venda',
   timestamps: false,
@@ -44,5 +48,6 @@ const Venda = sequelize.define('Venda', {
 
 // Relacionamento
 Venda.belongsTo(Cliente, { foreignKey: 'cliente_id', as: 'cliente' });
+Venda.belongsTo(Promocao, { foreignKey: 'usuario_id', as: 'prmocao_id_venda' });
 
 module.exports = Venda;
