@@ -2,7 +2,7 @@ import { ClienteDTO } from '../../dtos/ClienteDto.js';
 import { openErrorWindow, openSuccessWindow } from '../WindowModal.js';
 import { ajaxGet, ajaxPost } from '../FetchCommom.js'
 
-let nome, documento, rg, dataNascimento, email, bairro, logradouro, numeroLogradouro, municipioId, inscricaoEstadual, promocaoId, registrarBtn, radioCPF, radioCNPJ, documentoInput;
+let nome, documento, rg, dataNascimento, email, bairro, logradouro, numeroLogradouro, municipioId, inscricao_estadual, promocaoId, registrarBtn, radioCPF, radioCNPJ, documentoInput;
 
 function getDadosTela() {
     nome = document.getElementById("nome");
@@ -14,7 +14,7 @@ function getDadosTela() {
     logradouro = document.getElementById("rua");
     numeroLogradouro = document.getElementById("numero");
     municipioId = document.getElementById("municipio");
-    inscricaoEstadual = document.getElementById("inscricaoEstadual");
+    inscricao_estadual = document.getElementById("inscricaoEstadual");
     promocaoId = document.getElementById("promocao");
     registrarBtn = document.getElementById("registrar");
     radioCPF = document.getElementById('cpf');
@@ -22,34 +22,35 @@ function getDadosTela() {
     documentoInput = document.getElementById('documento');
 }
 
-function limparCampos() {
-    document.getElementById("nome").value = "";
-    document.getElementById("documento").value = "";
-    document.getElementById("rg").value = "";
-    
-    document.getElementById("dataNascimento").value = null;
-    document.getElementById("email").value = "";
-    document.getElementById("bairro").value = "";
-    document.getElementById("rua").value = "";
-    document.getElementById("numero").value = "";
-    document.getElementById("inscricaoEstadual").value = "";
-    document.getElementById("promocao").value = "";
-    
-    // Resetando o radio para CPF por padrão
-    document.getElementById("cpf").checked = true;
-    document.getElementById("cnpj").checked = false;
+function redirectLogin(){
+    window.location.href = "/caixa/"
 }
+
+function limparCampos() {
+    nome.value = "";
+    documento.value = "";
+    rg.value = null;
+    dataNascimento.value = null;
+    email.value = "";
+    bairro.value = "";
+    logradouro.value = "";
+    numero.value = "";
+    inscricao_estadual.value = "";
+    radioCPF.checked = true;
+    radioCNPJ.checked = false;
+    municipioId.selectedIndex = -1;
+}
+
 async function registerUser(){
     try {
         let clienteDTO = _popularDtoCliente();
         const resAjax = await ajaxPost("/caixa/register-cliente", JSON.stringify(clienteDTO));
         const response = await resAjax.json();
-        console.log(response.Ok)
         if (response.Ok) {
-            //limparCampos()
-            openSuccessWindow(null, "Usuário registrado com sucesso!");
+            let message = "Usuário registrado com sucesso! <br><br> Você será direcioando a tela de login use seu email para logar"
+            openSuccessWindow(null, message, redirectLogin);
         } else {
-            openErrorWindow(null, response)
+            openErrorWindow(null, response.error)
         }
     } catch (err) {
         openErrorWindow("Erro ao realizar envio", "Erro ao registrar usuário:" + err.message);
@@ -67,7 +68,7 @@ function _popularDtoCliente(){
         logradouro: logradouro.value,
         numero_logradouro: numeroLogradouro.value,
         municipio_id: municipioId.value,
-        inscricaoEstadual: inscricaoEstadual?.value || null,
+        inscricao_estadual: inscricao_estadual?.value || null,
         promocao_id: promocaoId?.value || null,
         sn_ativo: "S",
     };
@@ -131,12 +132,10 @@ function formatarDocumento(event) {
 /// CHAMAR INICIO DE FUNÇÕES
 
 getDadosTela();
-
 registrarBtn.addEventListener("click", () => registerUser())
 documentoInput.addEventListener('input', formatarDocumento);
 
 setDados()
-
 
 radioCPF.addEventListener('change', function() {
     documentoInput.placeholder = 'Digite CPF';

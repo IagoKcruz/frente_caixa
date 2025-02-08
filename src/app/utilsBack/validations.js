@@ -42,6 +42,41 @@ class Validacao {
             this.adicionarErro(mensagem);
         }
     }
+
+    validarCpfOuCnpj = (campo) => {
+        // Expressão regular para CPF e CNPJ
+        const regexCPF = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+        const regexCNPJ = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+    
+        // Verifica se o campo é um CPF válido
+        if (regexCPF.test(campo)) {
+            return { tipo: 'cpf', valido: true };
+        }
+    
+        // Verifica se o campo é um CNPJ válido
+        if (regexCNPJ.test(campo)) {
+            return { tipo: 'cnpj', valido: true };
+        }
+    
+        // Caso o campo não seja nem CPF nem CNPJ
+        return { tipo: null, valido: false };
+    };
+
+    ValidarCPF(cpf) {
+        // Validação básica de CPF
+        const regexCPF = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+        if (!regexCPF.test(cpf)) {
+            this.adicionarErro('CPF inválido');
+        }
+    }
+
+    ValidarCNPJ(cnpj) {
+        // Validação básica de CNPJ
+        const regexCNPJ = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+        if (!regexCNPJ.test(cnpj)) {
+            this.adicionarErro('CNPJ inválido');
+        }
+    }
 }
 
 module.exports = Validacao;

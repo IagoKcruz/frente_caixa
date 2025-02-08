@@ -9,6 +9,7 @@ const RegistrarItem = require('../controllers/operacoes/RegistrarItemController.
 const authMiddleware = require("../middlewares/auth");
 const addMenu = require('../middlewares/front/MenuItems');
 const ValidRegistrarItem = require('../middlewares/validacoes/ValidRegistrarItem.js');
+const validarCadastro = require('../middlewares/validacoes/ValidRegister.js');
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get('/register', AuthController.openRegisterPage);
 
 
 router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) , PromocaoController.openDashboard);
-router.post('/register-cliente', ClienteController.criar)
+router.post('/register-cliente', validarCadastro, ClienteController.criar)
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');

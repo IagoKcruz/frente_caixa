@@ -14,7 +14,6 @@ class ClienteController {
   }
 
   async criar(req, res) {
-    console.log(req.body)
     try {
       const {
         nome,
