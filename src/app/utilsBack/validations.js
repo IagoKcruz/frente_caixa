@@ -34,22 +34,11 @@ class Validacao {
     }
 
     ValidarPreco(mensagem, campo) {
-        if (typeof campo !== "string") {
-            this.adicionarErro(mensagem);
-            return;
-        }
-
-        // Expressão regular para aceitar números inteiros ou com duas casas decimais no formato brasileiro
-        const regexPreco = /^(\d{1,3}(\.\d{3})*|\d+)(,\d{2})?$/;
-
-        if (!regexPreco.test(campo)) {
-            this.adicionarErro(mensagem);
-            return;
-        }
-
-        // Convertendo para número float e validando se é maior que 0.99
-        const precoFormatado = parseFloat(campo.replace(/\./g, "").replace(",", "."));
-        if (precoFormatado < 1) {
+        // Garantir que o campo seja um número e não uma string
+        const precoFormatado = parseFloat(campo);
+    
+        // Verificando se a conversão foi bem-sucedida e se o preço é maior que 0,01
+        if (isNaN(precoFormatado) || precoFormatado <= 0.01) {
             this.adicionarErro(mensagem);
         }
     }

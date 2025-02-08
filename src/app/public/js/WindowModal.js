@@ -6,18 +6,8 @@ function formatMessage(message) {
     }
     
     if (Array.isArray(message)) {
-        console.log(message)
-        return `<ul class='list-none p-0'>${message.map(m => {
-            if(m.erro){
-                `<li>${m.erro}</li>`
-            }
-            if(m.Error){
-                `<li>${m.Error}</li>`
-            }
-            else{
-                `<li>${m}</li>`
-            }
-        }).join("")}</ul>`;
+        const errorList = message.map(formatErrorMessage).join("");
+        return `<ul class='list-none p-0'>${errorList}</ul>`;
     }
     
     if (typeof message === "object" && message.erro) {
@@ -25,6 +15,12 @@ function formatMessage(message) {
     }
     
     return `<span>Erro desconhecido</span>`;
+}
+
+function formatErrorMessage(error) {
+    if (error.erro) return `<li>${error.erro}</li>`;
+    if (error.Error) return `<li>${error.Error}</li>`;
+    return `<li>${error}</li>`;
 }
 
 export function openSuccessWindow(title = "Sucesso Window", message, onConfirm = null, param = null) {
