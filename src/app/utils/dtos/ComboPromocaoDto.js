@@ -1,4 +1,4 @@
-class ComboPromocaoDTO {
+export class ComboPromocaoDTO {
     constructor(data = {}) {
       this.id = data.id || null;
       this.valor_promocao = data.valor_promocao || null;

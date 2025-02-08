@@ -12,14 +12,16 @@ const Promocao = sequelize.define('Promocao', {
     allowNull: false,
   },
   valor_final: {
-    type: DataTypes.FLOAT(10,2)
+    type: DataTypes.FLOAT(10, 2),
   },
   sn_ativo: {
-    type: DataTypes.CHAR(2)
-  }
-},{
+    type: DataTypes.CHAR(2),
+  },
+}, {
   tableName: 'Promocao',
-  modelName: "Promocao"
+  modelName: 'Promocao',
 });
+
+Promocao.hasMany(require('./ComboPromocao'), { foreignKey: 'promocao_id', as: 'combos_promocao' });
 
 module.exports = Promocao;

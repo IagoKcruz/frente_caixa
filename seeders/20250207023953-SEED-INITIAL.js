@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("usuario", [
-      { id: uuidv4(), nome: "iago", login: "icruz" ,email : "iago@iago.com", sn_ativo : "S" }
+      { id: uuidv4(), nome: "iago", login: "icruz", email: "iago@iago.com", sn_ativo: "S" }
     ]);
 
     await queryInterface.bulkInsert("municipio", [
@@ -76,7 +76,7 @@ module.exports = {
       { id: 10, descricao: "Vale-Refeição" }
     ]);
 
-    return queryInterface.bulkInsert("forma_pagamento", [
+    await queryInterface.bulkInsert("forma_pagamento", [
       { id: uuidv4(), codigo: 101, descricao: "À vista", tipo_recebimento_id: 2 },
       { id: uuidv4(), codigo: 102, descricao: "30 dias", tipo_recebimento_id: 2 },
       { id: uuidv4(), codigo: 201, descricao: "Crédito 1x", tipo_recebimento_id: 1 },
@@ -86,6 +86,36 @@ module.exports = {
       { id: uuidv4(), codigo: 301, descricao: "Banco Banrisul", tipo_recebimento_id: 6 },
       { id: uuidv4(), codigo: 302, descricao: "Banco do Brasil", tipo_recebimento_id: 6 }
     ]);
+
+    const uid1 = uuidv4()
+    const uid2 = uuidv4()
+    const uid3 = uuidv4()
+
+    const promocoes = await queryInterface.bulkInsert('Promocao', [
+      {id: uid1, descricao: 'Promoção 10% de desconto', valor_final: 100.0, sn_ativo: 'S', createdAt: new Date(),updatedAt: new Date(),},
+      {id: uid2, descricao: 'Promoção 20% de desconto', valor_final: 100.0, sn_ativo: 'S', createdAt: new Date(),updatedAt: new Date(),},
+      {id: uid3, descricao: 'Promoção 30% de desconto', valor_final: 100.0, sn_ativo: 'S', createdAt: new Date(),updatedAt: new Date(),},
+    ], { returning: true });
+
+    // Inserir os combos promocionais
+    // await queryInterface.bulkInsert('combo_promocao', [
+    //   {
+    //     id: uuidv4(),valor_promocao: null,valor_percentagem: 10, valor_final_promocao: 100, promocao_id: uid1, item_id: uuidv4(), 
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    //   {
+    //     id: uuidv4(),valor_promocao: null,valor_percentagem: 20, valor_final_promocao: 100, promocao_id: uid2, item_id: uuidv4(), 
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    //   {
+    //     id: uuidv4(),valor_promocao: null,valor_percentagem: 30, valor_final_promocao: 100, promocao_id: uid3, item_id: uuidv4(), 
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    // ]);
+
   },
 
   async down(queryInterface, Sequelize) {
@@ -94,6 +124,9 @@ module.exports = {
     await queryInterface.bulkDelete("categoria", null, {});
     await queryInterface.bulkDelete("unidade_medida", null, {});
     await queryInterface.bulkDelete("forma_pagamento", null, {});
-    return queryInterface.bulkDelete("tipo_recebimento", null, {});
+    await queryInterface.bulkDelete("tipo_recebimento", null, {});
+    //await queryInterface.bulkDelete('combo_promocao', null, {});
+    return queryInterface.bulkDelete('Promocao', null, {});
   }
 };
+

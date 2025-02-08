@@ -93,6 +93,15 @@ class ItemController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  async listarItemCombo(req, res){
+    try {
+      const items = await ItemService.listarItemCombo();
+      return res.json({items : items});
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new ItemController();

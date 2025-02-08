@@ -1,5 +1,6 @@
 const BasicRepository = require('./BasicRepository');
 const Item = require('../models/Item');
+const { Sequelize, Op } = require('sequelize');
 
 class ItemRepository extends BasicRepository {
   constructor() {
@@ -8,7 +9,15 @@ class ItemRepository extends BasicRepository {
 
   // Exemplo de método customizado
   async findByCodigo(codigo) {
-    return await this.model.findOne({ where: { codigo } });
+    return await Item.findOne({ where: { codigo } });
+  }
+
+  async findAllToCombo(){
+    return await Item.findAll({ attributes: [
+        "id" ,
+        [Sequelize.literal("CONCAT(preco, ' - ', descricao)"),"descricao"], 
+        "preco"
+    ] })
   }
 }
 
