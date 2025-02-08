@@ -1,11 +1,10 @@
-class ComboPromocaoDTO {
+export class ComboPromocaoDTO {
     constructor(data = {}) {
       this.id = data.id || null;
-      this.valorPromocao = data.valorPromocao || null;
-  
-      // Lista de promoções associadas, inicializa com um array vazio ou com os dados passados
-      this.promocoes = (data.promocoes || []).map(
-        (promocao) => new PromocaoDTO(promocao) // Cria instâncias de PromocaoDTO
-      );
+      this.valor_promocao = data.valor_promocao || null;
+      this.valor_percentagem = data.valor_percentagem || null;
+      this.valor_final_promocao = data.valor_final_promocao || null;
+      this.promocao_id = data.promocao_id || null;
+      this.item_id = data.item_id || null;
     }
   }

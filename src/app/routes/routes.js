@@ -7,7 +7,11 @@ const CadastrarUnidadeMedida = require('../controllers/operacoes/CadastrarUnidad
 const CadastrarCategoria = require('../controllers/operacoes/CadastrarCategoriaController')
 const RegistrarItem = require('../controllers/operacoes/RegistrarItemController.js')
 const authMiddleware = require("../middlewares/auth");
+const ValidRegistrarItem = require('../middlewares/validacoes/ValidRegistrarItem.js');
+const validarCadastro = require('../middlewares/validacoes/ValidRegister.js');
+const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
 const addMenu = require('../middlewares/front/MenuItems');
+
 
 const router = express.Router();
 
@@ -18,7 +22,7 @@ router.get('/register', AuthController.openRegisterPage);
 
 
 router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) , PromocaoController.openDashboard);
-router.post('/register-cliente', ClienteController.criar)
+router.post('/register-cliente', validarCadastro, ClienteController.criar)
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');
@@ -42,6 +46,21 @@ router.post("/Categoria-criar", authMiddleware(["ADMIN"]), CadastrarCategoria.cr
 router.put("/Categoria-update", authMiddleware(["ADMIN"]), CadastrarCategoria.updateCategoria);
 router.delete("/Categoria-delete", authMiddleware(["ADMIN"]), CadastrarCategoria.deleteCategoria);
 
-router.get("/registrar-Item", authMiddleware(["ADMIN"]), RegistrarItem.openRegistrarItem);
+router.get("/registrar-Item", RegistrarItem.openRegistrarItem);
+router.get("/listar-item-combo", RegistrarItem.listarItemCombo);
+router.post("/itens/criar", authMiddleware(["ADMIN"]), ValidRegistrarItem, RegistrarItem.criarItem);
+router.post("/itens/update", authMiddleware(["ADMIN"]), ValidRegistrarItem,RegistrarItem.atualizarItem);
+router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarItem);
+
+router.get("/cadastrar-Promocao", CadastrarPromocao.openPagePromocao);
+router.post("/listar-Promocao", CadastrarPromocao.listarPromocoes);
+router.post("/Promocao-criar", authMiddleware(["ADMIN"]), CadastrarPromocao.createPromocao);
+router.put("/Promocao-update", authMiddleware(["ADMIN"]), CadastrarPromocao.updatePromocao);
+router.delete("/Promocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.desativarPromocao);
+
+router.post("/ComboPromocao-criar", authMiddleware(["ADMIN"]), CadastrarPromocao.createComboPromocao);
+router.put("/ComboPromocao-update", authMiddleware(["ADMIN"]), CadastrarPromocao.updateComboPromocao);
+router.delete("/ComboPromocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.deleteComboPromocao);
 
 module.exports = router;
+

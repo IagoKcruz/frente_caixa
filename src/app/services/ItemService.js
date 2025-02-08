@@ -24,6 +24,10 @@ class ItemService {
   async deletarItem(id) {
     return await ItemRepository.delete(id);
   }
+
+  async listarItemCombo(){
+    return await ItemRepository.findAllToCombo();
+  }
 }
 
 module.exports = new ItemService();

@@ -12,6 +12,9 @@ const Categoria = sequelize.define('Categoria', {
     type: DataTypes.STRING(60),
     allowNull: false,
   },
+  sn_ativo: {
+    type: DataTypes.CHAR(2)
+  }
 }, {
   tableName: 'categoria',
   timestamps: false,

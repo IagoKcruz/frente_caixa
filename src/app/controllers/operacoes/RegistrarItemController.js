@@ -25,7 +25,7 @@ class ItemController {
     }
   }
 
-  async criar(req, res) {
+  async criarItem(req, res) {
     console.log(req.body);
     try {
       const {
@@ -40,12 +40,12 @@ class ItemController {
 
       const id = uuidv4();
       const codigo = gerarCodigoUnico("I");
-      const codigo_barra = gerarCodigoUnico("CBI", 16);
+      const codigo_de_barra = gerarCodigoUnico("CBI", 16);
       
       await ItemService.criarItem({
         id,
         codigo,
-        codigo_barra,
+        codigo_de_barra,
         categoria_id,
         unidade_medida_id,
         saldo_estoque_atual,
@@ -72,7 +72,7 @@ class ItemController {
     }
   }
 
-  async atualizar(req, res) {
+  async atualizarItem(req, res) {
     try {
       const { id } = req.params;
       const atualizacoes = req.body;
@@ -84,11 +84,20 @@ class ItemController {
     }
   }
 
-  async deletar(req, res) {
+  async deletarItem(req, res) {
     try {
       const { id } = req.params;
       await ItemService.deletarItem(id);
       return res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  async listarItemCombo(req, res){
+    try {
+      const items = await ItemService.listarItemCombo();
+      return res.json({items : items});
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

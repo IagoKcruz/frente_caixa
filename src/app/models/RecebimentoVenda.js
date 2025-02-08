@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const Venda = require('./Venda');
 const FormaPagamento = require('./Formapagamento');
+const TipoRecebimento = require('./TipoRecebimento');
 
 const RecebimentoVenda = sequelize.define('RecebimentoVenda', {
   id: {
@@ -17,6 +18,9 @@ const RecebimentoVenda = sequelize.define('RecebimentoVenda', {
     type: DataTypes.CHAR(36),
     allowNull: false,
   },
+  tipo_recebimento_id: {
+    type: DataTypes.INTEGER(11),
+  },
 }, {
   tableName: 'recebimento_venda',
   timestamps: false,
@@ -24,6 +28,7 @@ const RecebimentoVenda = sequelize.define('RecebimentoVenda', {
 
 // Associações
 RecebimentoVenda.belongsTo(Venda, { foreignKey: 'venda_id', as: 'venda' });
-RecebimentoVenda.belongsTo(FormaPagamento, { foreignKey: 'forma_pagamento_id', as: 'formaPagamento' });
+RecebimentoVenda.belongsTo(FormaPagamento, { foreignKey: 'forma_pagamento_id', as: 'formaPagamento_receb_venda' });
+RecebimentoVenda.belongsTo(TipoRecebimento, { foreignKey: 'tipo_recebimento_id', as: 'tipo_recebimento_receb_venda' });
 
 module.exports = RecebimentoVenda;

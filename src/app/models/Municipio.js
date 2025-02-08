@@ -11,6 +11,9 @@ const Municipio = sequelize.define('Municipio',  {
       type: DataTypes.STRING(120),
       allowNull: false,
     },
+    sn_ativo: {
+      type: DataTypes.CHAR(2)
+    }
   },
   {
     sequelize,

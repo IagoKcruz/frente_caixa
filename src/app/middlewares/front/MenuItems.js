@@ -7,6 +7,7 @@ const menuItems = {
     { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
     { name: 'Municipio', route: '/cadastrar-Municipio', iconClass: 'fas fa-cogs'},
     { name: 'Unidade de Medida', route: '/cadastrar-UnidadeMedida', iconClass: 'fas fa-cogs'},
+    { name: 'Promoção', route: '/cadastrar-Promocao', iconClass: 'fas fa-cogs'},
     { name: 'Categoria', route: '/cadastrar-Categoria', iconClass: 'fas fa-cogs'},
     { name: 'Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs'},
     { name: 'Sair', route: '/logout', iconClass: '/img/login'}

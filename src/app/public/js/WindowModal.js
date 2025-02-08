@@ -6,18 +6,8 @@ function formatMessage(message) {
     }
     
     if (Array.isArray(message)) {
-        console.log(message)
-        return `<ul class='list-none p-0'>${message.map(m => {
-            if(m.erro){
-                `<li>${m.erro}</li>`
-            }
-            if(m.Error){
-                `<li>${m.Error}</li>`
-            }
-            else{
-                `<li>${m}</li>`
-            }
-        }).join("")}</ul>`;
+        const errorList = message.map(formatErrorMessage).join("");
+        return `<ul class='list-none p-0'>${errorList}</ul>`;
     }
     
     if (typeof message === "object" && message.erro) {
@@ -25,6 +15,12 @@ function formatMessage(message) {
     }
     
     return `<span>Erro desconhecido</span>`;
+}
+
+function formatErrorMessage(error) {
+    if (error.erro) return `<li>${error.erro}</li>`;
+    if (error.Error) return `<li>${error.Error}</li>`;
+    return `<li>${error}</li>`;
 }
 
 export function openSuccessWindow(title = "Sucesso Window", message, onConfirm = null, param = null) {
@@ -115,3 +111,54 @@ function createModal(title, content, borderColor, onConfirm = null, isDialog = f
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 }
+
+
+export function initializeWindowWithGrid(contentFunction = null) {
+    const windowElement = document.getElementById("window");
+    const gridWindowElement = document.getElementById("gridWindow");
+
+    // Garantir que a janela esteja oculta ao inicializar
+    windowElement.style.display = "flex";
+
+    // Estilizando a janela
+    windowElement.style.position = "fixed";
+    windowElement.style.top = "0";
+    windowElement.style.left = "0";
+    windowElement.style.width = "100%";
+    windowElement.style.height = "100vh"; // A tela ocupa 100% da altura
+    windowElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Fundo semitransparente
+    windowElement.style.justifyContent = "center"; // Centraliza o conteúdo
+    windowElement.style.alignItems = "center"; // Alinha ao centro
+    windowElement.style.padding = "2rem"; // Altura de 80% da tela
+
+    // Estilizando a área da grid
+    gridWindowElement.style.position = "relative";
+    gridWindowElement.style.marginLeft = "64px";
+    gridWindowElement.style.height = "auto"; // Altura de 80% da tela
+    gridWindowElement.style.backgroundColor = "white"; // Fundo branco
+    gridWindowElement.style.borderRadius = "10px"; // Bordas arredondadas
+    gridWindowElement.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)"; // Sombra leve
+    gridWindowElement.style.overflow = "auto"; // Permitir rolagem caso o conteúdo ultrapasse a altura
+
+    // Adicionar um botão de fechar
+    const closeButton = document.createElement("button");
+    closeButton.innerHTML = "&times;";
+    closeButton.className = "absolute top-2 right-2 text-2xl text-gray-600 cursor-pointer hover:text-red-600";
+    closeButton.onclick = () => {
+        windowElement.style.display = "none"; // Fecha a janela ao clicar no botão
+    };
+    gridWindowElement.appendChild(closeButton);
+
+    // Se for fornecida uma função de conteúdo, executá-la
+    if (typeof contentFunction === "function") {
+        contentFunction(gridWindowElement); // Passa o elemento de grid para ser manipulado
+    }
+
+    // Adicionar evento para fechar ao clicar fora da grid
+    windowElement.onclick = function(event) {
+        if (event.target === windowElement) {
+            windowElement.style.display = "none"; // Fecha a janela ao clicar fora
+        }
+    };
+}
+

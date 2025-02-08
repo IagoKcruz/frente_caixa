@@ -10,7 +10,7 @@ const Item = sequelize.define('Item', {
     allowNull: false,
   },
   codigo: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(9),
     allowNull: false,
   },
   codigo_de_barra: {

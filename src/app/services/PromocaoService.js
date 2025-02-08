@@ -2,7 +2,14 @@ const PromocaoRepository = require('../repositories/PromocaoRepository');
 
 class PromocaoService {
   async listarPromocoes() {
-    return await PromocaoRepository.findAll();
+    return await PromocaoRepository.findAllComInclude();
+  }
+
+  async listarPromocoesPorDescricao() {
+    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
+
+    const response = await PromocaoRepository.listarPromocoesPorDescricao(whereCondition)
+    return response;
   }
 
   async buscarPromocaoPorId(id) {
@@ -13,12 +20,16 @@ class PromocaoService {
     return await PromocaoRepository.create(promocaoData);
   }
 
-  async atualizarPromocao(id, promocaoData) {
+  async updatePromocao(id, promocaoData) {
     return await PromocaoRepository.update(id, promocaoData);
   }
 
-  async deletarPromocao(id) {
-    return await PromocaoRepository.delete(id);
+  async desativarPromocao(id) {
+    const promocao = await PromocaoRepository.findById(id);
+    promocao.sn_ativo = "N";
+    await PromocaoRepository.update(promocao.id, promocao);
+
+    return promocao;
   }
 }
 

@@ -8,9 +8,9 @@ export class ClienteDTO {
       this.data_nascimento = data.data_nascimento || null;
       this.email = data.email || null;
       this.bairro = data.bairro || null;
-      this.numeroLogradouro = data.numeroLogradouro || null;
+      this.numero_logradouro = data.numero_logradouro || null;
       this.logradouro = data.logradouro || null;
-      this.inscricaoEstadual = data.inscricaoEstadual || null;
+      this.inscricao_estadual = data.inscricao_estadual || null;
       this.municipio_id = data.municipio_id || null;
       this.promocao_id = data.promocao_id || null;
       this.sn_ativo = data.sn_ativo || null;

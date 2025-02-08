@@ -14,11 +14,11 @@
   <script src="https://cdn.jsdelivr.net/npm/jsgrid/dist/jsgrid.min.js"></script>
 
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 h-screen flex justify-center items-center">
   <!-- Menu Lateral (renderizado apenas uma vez) -->
   <%- include('./partials/MenuSideBar.ejs') %> <!-- Partial do menu -->
 
-  <div id="conteudo" style="margin-left: 64px;" class="flex justify-center items-center">
+  <div id="conteudo" style="margin-left: 64px;">
     <%- include(body) %> <!-- O conteúdo da página será inserido aqui -->
   </div>
   <!-- Inclui o JS para os eventos -->
