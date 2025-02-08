@@ -43,5 +43,8 @@ router.put("/Categoria-update", authMiddleware(["ADMIN"]), CadastrarCategoria.up
 router.delete("/Categoria-delete", authMiddleware(["ADMIN"]), CadastrarCategoria.deleteCategoria);
 
 router.get("/registrar-Item", authMiddleware(["ADMIN"]), RegistrarItem.openRegistrarItem);
+router.post("/itens/criar", authMiddleware(["ADMIN"]), RegistrarItem.criarItem);
+router.post("/itens/update", authMiddleware(["ADMIN"]), RegistrarItem.atualizarItem);
+router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarItem);
 
 module.exports = router;

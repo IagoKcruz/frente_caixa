@@ -37,7 +37,7 @@ async function registerItem(event) {
             preco: preco.value
         };
         
-        const resAjax = await ajaxPost("/itens/register-Item", JSON.stringify(itemDTO));
+        const resAjax = await ajaxPost("/caixa/itens/criar", JSON.stringify(itemDTO));
         const response = await resAjax.json();
 
         if (response.ok) {
