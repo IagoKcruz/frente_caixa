@@ -30,6 +30,17 @@ class CadastrarPromocaoController {
         }
     }
 
+    async verificarSePromoTemComboPromo(req, res) {
+        try {
+            const promoId = req.body.promoId;
+            let verificar = await PromocaoService.verificarSePromoTemComboPromo(promoId);
+
+            return res.json({verificar});
+        } catch (error) {
+            return res.json({ error: error });
+        }
+    }
+
     // Criar Promoção
     async createPromocao(req, res) {
         try {
@@ -37,10 +48,10 @@ class CadastrarPromocaoController {
             promocaoDto.id = uuidv4();
             const promocao = await PromocaoService.criarPromocao(promocaoDto);
 
-            return res.json({ promocao: promocao, error: null });
+            return res.json({ promocao: promocao });
         } catch (error) {
             console.error('Erro ao criar promoção:', error);
-            return res.json({ error: 'Erro ao criar promoção' });
+            return res.json({ error: error });
         }
     }
 

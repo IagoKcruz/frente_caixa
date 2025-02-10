@@ -92,9 +92,9 @@ module.exports = {
     const uid3 = uuidv4()
 
     const promocoes = await queryInterface.bulkInsert('Promocao', [
-      {id: uid1, descricao: 'Promoção 10% de desconto', valor_final: 100.0, sn_ativo: 'S', createdAt: new Date(),updatedAt: new Date(),},
-      {id: uid2, descricao: 'Promoção 20% de desconto', valor_final: 100.0, sn_ativo: 'S', createdAt: new Date(),updatedAt: new Date(),},
-      {id: uid3, descricao: 'Promoção 30% de desconto', valor_final: 100.0, sn_ativo: 'S', createdAt: new Date(),updatedAt: new Date(),},
+      {id: uid1, descricao: 'Promoção 10% de desconto', valor_final: 100.0, sn_ativo: 'S', sn_promocao_geral : 'N', sn_percentagem : 'C' , createdAt: new Date(),updatedAt: new Date(),},
+      {id: uid2, descricao: 'Promoção 20% de desconto', valor_final: 100.0, sn_ativo: 'S', sn_promocao_geral : 'N', sn_percentagem : 'C' , createdAt: new Date(),updatedAt: new Date(),},
+      {id: uid3, descricao: 'Promoção 30% de desconto', valor_final: 100.0, sn_ativo: 'S', sn_promocao_geral : 'S', sn_percentagem : 'V' , createdAt: new Date(),updatedAt: new Date(),},
     ], { returning: true });
 
     // Inserir os combos promocionais

@@ -55,6 +55,7 @@ router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarIte
 router.get("/cadastrar-Promocao", CadastrarPromocao.openPagePromocao);
 router.post("/listar-Promocao", CadastrarPromocao.listarPromocoes);
 router.post("/Promocao-criar", authMiddleware(["ADMIN"]), CadastrarPromocao.createPromocao);
+router.post("/verificar-promcao-com-items", authMiddleware(["ADMIN"]), CadastrarPromocao.verificarSePromoTemComboPromo);
 router.put("/Promocao-update", authMiddleware(["ADMIN"]), CadastrarPromocao.updatePromocao);
 router.delete("/Promocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.desativarPromocao);
 

@@ -1,3 +1,4 @@
+const ComboPromocaoRepository = require('../repositories/ComboPromocaoRepository');
 const PromocaoRepository = require('../repositories/PromocaoRepository');
 
 class PromocaoService {
@@ -9,6 +10,11 @@ class PromocaoService {
     let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
 
     const response = await PromocaoRepository.listarPromocoesPorDescricao(whereCondition)
+    return response;
+  }
+
+  async verificarSePromoTemComboPromo(promoId) {
+    const response = await ComboPromocaoRepository.verificarSePromoTemComboPromo(promoId)
     return response;
   }
 

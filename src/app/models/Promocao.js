@@ -14,6 +14,13 @@ const Promocao = sequelize.define('Promocao', {
   valor_final: {
     type: DataTypes.FLOAT(10, 2),
   },
+  sn_promocao_geral: {
+    type: DataTypes.CHAR(2),
+    allowNull: false,
+  },
+  sn_percentagem: {
+    type: DataTypes.CHAR(2),
+  },
   sn_ativo: {
     type: DataTypes.CHAR(2),
   },

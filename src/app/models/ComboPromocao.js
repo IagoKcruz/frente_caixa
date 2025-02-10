@@ -12,16 +12,12 @@ const ComboPromocao = sequelize.define('ComboPromocao', {
   valor_promocao: {
     type: DataTypes.FLOAT(10, 2),
   },
-  valor_percentagem: {
-    type: DataTypes.INTEGER(3),
-  },
-  valor_final_promocao: {
-    type: DataTypes.FLOAT(10, 2),
-    allowNull: false,
-  },
   promocao_id: {
     type: DataTypes.CHAR(36),
     allowNull: false,
+  },
+  sn_percentagem: {
+    type: DataTypes.CHAR(2),
   },
   item_id: {
     type: DataTypes.CHAR(36),
