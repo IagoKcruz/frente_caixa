@@ -3,3 +3,11 @@ GERA SEED
 npx sequelize-cli seed:generate --name seed-usuarios
 
 npx sequelize-cli db:seed:all  --config src/config/config.json
+
+
+JWT_SECRET=IAGOMARIAOI
+DB_NAME=frente_caixa
+DB_USER=root
+DB_PASS=
+DB_HOST=localhost
+DB_FORCE_SYNC=false

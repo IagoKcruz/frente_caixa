@@ -30,6 +30,17 @@ class CadastrarPromocaoController {
         }
     }
 
+    async verificarSePromoTemComboPromo(req, res) {
+        try {
+            const promoId = req.body.promoId;
+            let verificar = await PromocaoService.verificarSePromoTemComboPromo(promoId);
+
+            return res.json({verificar});
+        } catch (error) {
+            return res.json({ error: error });
+        }
+    }
+
     // Criar Promoção
     async createPromocao(req, res) {
         try {
@@ -37,10 +48,10 @@ class CadastrarPromocaoController {
             promocaoDto.id = uuidv4();
             const promocao = await PromocaoService.criarPromocao(promocaoDto);
 
-            return res.json({ promocao: promocao, error: null });
+            return res.json({ promocao: promocao });
         } catch (error) {
             console.error('Erro ao criar promoção:', error);
-            return res.json({ error: 'Erro ao criar promoção' });
+            return res.json({ error: error });
         }
     }
 
@@ -72,58 +83,58 @@ class CadastrarPromocaoController {
     }
 
     // Criar Combo de Promoção
-async createComboPromocao(req, res) {
-    try {
-        const { valor_promocao, valor_percentagem, item_id, promocao_id } = req.body;
+    async createComboPromocao(req, res) {
+        try {
+            const { valor_promocao, sn_percentagem, item_id, promocao_id } = req.body;
 
-        // Criar o Combo de Promoção
-        const comboPromocaoDto = {
-            id: uuidv4(),
-            valor_promocao,
-            valor_percentagem,
-            item_id,
-            promocao_id
-        };
+            // Criar o Combo de Promoção
+            const comboPromocaoDto = {
+                id: uuidv4(),
+                valor_promocao,
+                valor_percentagem,
+                item_id,
+                promocao_id
+            };
 
-        const comboPromocao = await ComboPromocaoService.create(comboPromocaoDto);
+            const comboPromocao = await ComboPromocaoService.create(comboPromocaoDto);
 
-        // Atualizar o valor_total da Promoção
-        await this.atualizarValorFinalPromocao(promocao_id, comboPromocao.valor_promocao);
+            // Atualizar o valor_total da Promoção
+            await this.atualizarValorFinalPromocao(promocao_id, comboPromocao.valor_promocao);
 
-        return res.json({ comboPromocao, error: null });
-    } catch (error) {
-        console.error('Erro ao criar combo de promoção:', error);
-        return res.json({ error: 'Erro ao criar combo de promoção' });
+            return res.json({ comboPromocao, error: null });
+        } catch (error) {
+            console.error('Erro ao criar combo de promoção:', error);
+            return res.json({ error: 'Erro ao criar combo de promoção' });
+        }
     }
-}
 
-// Atualizar Combo de Promoção
-async updateComboPromocao(req, res) {
-    try {
-        const comboPromocaoDto = req.body;
+    // Atualizar Combo de Promoção
+    async updateComboPromocao(req, res) {
+        try {
+            const comboPromocaoDto = req.body;
 
-        await ComboPromocaoService.atualizarCombo(comboPromocaoDto);
+            await ComboPromocaoService.atualizarCombo(comboPromocaoDto);
 
-        return res.json({ comboPromocaoDto });
-    } catch (erro) {
-        console.error('Erro ao atualizar combo de promoção:', erro);
-        return res.json({ error: erro.error });
+            return res.json({ comboPromocaoDto });
+        } catch (erro) {
+            console.error('Erro ao atualizar combo de promoção:', erro);
+            return res.json({ error: erro.error });
+        }
     }
-}
 
-// Deletar Combo de Promoção
-async deleteComboPromocao(req, res) {
-    try {
-        const { id } = req.body;
+    // Deletar Combo de Promoção
+    async deleteComboPromocao(req, res) {
+        try {
+            const { id } = req.body;
 
-        await ComboPromocaoService.deletarCombo(id);
+            await ComboPromocaoService.deletarCombo(id);
 
-        return res.json({ status: true });
-    } catch (error) {
-        console.error('Erro ao deletar combo de promoção:', error);
-        return res.json({ error: 'Erro ao deletar combo de promoção' });
-    }
-}   
+            return res.json({ status: true });
+        } catch (error) {
+            console.error('Erro ao deletar combo de promoção:', error);
+            return res.json({ error: 'Erro ao deletar combo de promoção' });
+        }
+    }   
 }
 
 module.exports = new CadastrarPromocaoController();
