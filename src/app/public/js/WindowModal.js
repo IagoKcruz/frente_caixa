@@ -14,7 +14,7 @@ function formatMessage(message) {
         return `<span>${message.erro}</span>`;
     }
     
-    return `<span>Erro desconhecido</span>`;
+    return `<span>${JSON.stringify(message)}</span>`;
 }
 
 function formatErrorMessage(error) {

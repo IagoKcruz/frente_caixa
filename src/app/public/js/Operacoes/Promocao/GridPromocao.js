@@ -9,7 +9,7 @@ function gerarTemplateSelect(value, nomeId, options) {
         select.append($("<option>").attr("value", option.value).text(option.text));
     });
 
-    $("#"+nomeId).on("change", ()=>{
+    $("#" + nomeId).on("change", () => {
         console.log("oi")
     })
 
@@ -23,23 +23,7 @@ const options = [
 ];
 
 // Função para o `insertTemplate` e `editTemplate` de sn_ativo
-function gerarTemplateSnAtivo(value, nomeId) {
-    return gerarTemplateSelect(value, nomeId, options);
-}
-
-// Função para o `insertTemplate` e `editTemplate` de sn_promocao_geral
-function gerarTemplateSnPromocaoGeral(value, nomeId) {
-
-    return gerarTemplateSelect(value, nomeId, options);
-}
-
-// Função para o `insertTemplate` e `editTemplate` de sn_percentagem
-function gerarTemplateSnPercentagem(value, nomeId) {
-    const options = [
-        { value: "P", text: "%" },
-        { value: "V", text: "Valor" },
-        { value: "C", text: "Combo Promoção" }
-    ];
+function gerarTemplateSn(value, nomeId) {
     return gerarTemplateSelect(value, nomeId, options);
 }
 
@@ -65,7 +49,6 @@ export function montarGridPromocao(dataGrid) {
         editing: true,
         sorting: true,
         paging: true,
-        autoload: true,
         deleting: true,
 
         data: Array.isArray(dataGrid) ? dataGrid : [],
@@ -73,13 +56,13 @@ export function montarGridPromocao(dataGrid) {
         fields: [
             { name: "id", type: "number", title: "ID", width: 50, readOnly: true, visible: false },
             { name: "descricao", type: "text", title: "Descrição", width: 150 },
-            { 
-                name: "valor_final", 
-                type: "number", 
-                title: "Valor Final", 
-                width: 100, 
-                readOnly: true, 
-                
+            {
+                name: "valor_final",
+                type: "number",
+                title: "Valor Final",
+                width: 100,
+                readOnly: true,
+
                 insertTemplate: function () {
                     return $("<input>").attr("id", "insertValorFinal_novo").attr("type", "number");
                 },
@@ -93,78 +76,78 @@ export function montarGridPromocao(dataGrid) {
                     return $("#editValorFinal_" + this.item.id).val();
                 }
             },
-            { 
-                name: "sn_promocao_geral", 
-                type: "select", 
-                title: "Promoção Geral", 
-                items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }], 
-                valueField: "Id", 
-                textField: "Name", 
-                width: 80, 
-                
+            {
+                name: "sn_promocao_geral",
+                type: "select",
+                title: "Promoção Geral",
+                items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }],
+                valueField: "Id",
+                textField: "Name",
+                width: 80,
+
                 insertTemplate: function () {
-                    return gerarTemplateSnPromocaoGeral("", "insertSnPromocaoGeral_novo");
+                    return gerarTemplateSn("", "insertSnPromocaoGeral_novo");
                 },
                 editTemplate: function (value, item) {
-                    return gerarTemplateSnPromocaoGeral(value, "editSnPromocaoGeral");
+                    return gerarTemplateSn(value, "editSnPromocaoGeral");
                 },
                 insertValue: function () {
                     return $("#insertSnPromocaoGeral_novo").val();
                 },
                 editValue: function () {
-                    return $("#editSnPromocaoGeral_" + this.item.id).val();
+                    return $("#editSnPromocaoGeral").val();
                 }
             },
-            { 
-                name: "sn_percentagem", 
-                type: "select", 
-                title: "Valor em %", 
-                items: [{ Name: "%", Id: "P" }, { Name: "Valor", Id: "V" }, { Name: "Combo Promoção", Id: "C" }], 
-                valueField: "Id", 
-                textField: "Name", 
-                width: 80, 
-                
+            {
+                name: "sn_percentagem",
+                type: "select",
+                title: "Valor em %",
+                items: [{ Name: "%", Id: "P" }, { Name: "Valor", Id: "V" }, { Name: "Combo Promoção", Id: "C" }],
+                valueField: "Id",
+                textField: "Name",
+                width: 80,
+
                 insertTemplate: function () {
-                    return gerarTemplateSnPercentagem("", "insertSnPercentagem_novo");
+                    return gerarTemplateSn("", "insertSnPercentagem_novo");
                 },
                 editTemplate: function (value, item) {
-                    return gerarTemplateSnPercentagem(value, "editSnPercentagem");
+                    return gerarTemplateSn(value, "editSnPercentagem");
                 },
                 insertValue: function () {
                     return $("#insertSnPercentagem_novo").val();
                 },
                 editValue: function () {
-                    return $("#editSnPercentagem_" + this.item.id).val();
+                    return $("#editSnPercentagem").val();
                 }
             },
-            { 
-                name: "sn_ativo", 
-                type: "select", 
-                title: "Ativo", 
-                items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }], 
-                valueField: "Id", 
-                textField: "Name", 
-                width: 80, 
-               
+            {
+                name: "sn_ativo",
+                type: "select",
+                title: "Ativo",
+                items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }],
+                valueField: "Id",
+                textField: "Name",
+                width: 80,
+
                 insertTemplate: function () {
-                    return gerarTemplateSnAtivo("", "insertSnAtivo_novo");
+                    return gerarTemplateSn("", "insertSnAtivo_novo");
                 },
                 editTemplate: function (value, item) {
-                    return gerarTemplateSnAtivo(value, "editSnAtivo");
+                    return gerarTemplateSn(value, "editSnAtivo");
                 },
                 insertValue: function () {
                     return $("#insertSnAtivo_novo").val();
                 },
                 editValue: function () {
-                    return $("#editSnAtivo_" + this.item.id).val();
+                    return $("#editSnAtivo").val();
                 }
             },
-            { 
-                name: "abrirComo", 
-                title: "Abrir SubGrid", 
+            {
+                name: "abrirComo",
+                title: "Abrir SubGrid",
                 width: 100,
                 itemTemplate: function (value, item) {
-                    if(item.sn_promocao_geral == "N"){
+                    if (item.sn_promocao_geral == "N") {
                         return $("<button>").text("Abrir Combo").on("click", async function (event) {
                             event.stopPropagation()
                             await gridComboPromocao.abrirPopupCombos(item.sn_promocao_geral, item.combos_promocao, item.id);
@@ -177,15 +160,26 @@ export function montarGridPromocao(dataGrid) {
         ],
 
         controller: {
-            insertItem: async function(item) {
-                return await createPromocao(item);
-            },
+            insertItem: async function (item) {
+                item.cancel = true;
 
-            updateItem: async function(item) {
+                let result = await createPromocao(item);
+    
+                if (result === false) {
+                    this.cancelEdit();
+                    return false;  // Impede a inserção do item na grid
+                }
+    
+                return result;
+            },
+    
+            updateItem: async function (item) {
+                item.cancel = true;
                 return await updatePromocao(item);
             },
-
-            deleteItem: async function(item) {
+    
+            deleteItem: async function (item) {
+                item.cancel = true;
                 return await deletePromocao(item);
             }
         },
@@ -198,9 +192,11 @@ async function createPromocao(item) {
         const response = await ajaxPost('/caixa/Promocao-criar', JSON.stringify(promocaoDTO));
         const newPromocao = await response.json();
 
-        console.log(newPromocao)
 
-        if (newPromocao.error) throw new Error(newPromocao.error);
+        if (newPromocao.error) { 
+            openErrorWindow(null, newPromocao.error); 
+            return false;
+        }
 
         return {
             id: newPromocao.promocao.id,
@@ -223,10 +219,15 @@ async function updatePromocao(item) {
         const response = await ajaxPut('/caixa/Promocao-update', JSON.stringify(promocaoDTO));
         const updatedPromocao = await response.json();
 
-        if (updatedPromocao.error) throw new Error(updatedPromocao.error);
+        if (newPromocao.error) { 
+            openErrorWindow(null, newPromocao.error); 
+            $("#jsGridPromocao").jsGrid("cancelInsert");
+            return false;
+        }
 
         return updatedPromocao.PromocaoDTO;
     } catch (error) {
+        $("#jsGridPromocao").jsGrid("cancelInsert");
         openErrorWindow(null, error);
         return $.Deferred().reject(error).promise();
     }
@@ -238,7 +239,11 @@ async function deletePromocao(item) {
         const response = await ajaxDelete('/caixa/Promocao-delete', JSON.stringify(bodyRequest));
         const result = await response.json();
 
-        if (result.erro) throw new Error(result);
+        if (newPromocao.error) { 
+            openErrorWindow(null, newPromocao.error); 
+            $("#jsGridPromocao").jsGrid("cancelInsert");
+            return false;
+        }
 
         return result;
     } catch (error) {
@@ -265,7 +270,8 @@ export function validarCamposComBaseEmPromocaoGeralInsert() {
     } else {
         // Desabilita o campo valor_final
         $("#insertValorFinal_novo").prop("disabled", true);
-        
+        $("#insertValorFinal_novo").val("");
+
         // Desabilita sn_percentagem e limpa o valor
         $("#insertSnPercentagem_novo").prop("disabled", true).val("");
     }
@@ -284,7 +290,8 @@ export function validarCamposComBaseEmPromocaoGeralEdit() {
     } else {
         // Desabilita o campo valor_final
         $("#editValorFinal").prop("disabled", true);
-        
+        $("#editValorFinal").val("");
+
         // Desabilita sn_percentagem e limpa o valor
         $("#editSnPercentagem").prop("disabled", true).val("");
     }
@@ -292,7 +299,7 @@ export function validarCamposComBaseEmPromocaoGeralEdit() {
 
 async function verificarSeTemCombo(promocaoId) {
     try {
-        let response = await ajaxGet("/caixa/verificar-promcao-com-items", JSON.stringify({promoId : promocaoId}));
+        let response = await ajaxGet("/caixa/verificar-promcao-com-items", JSON.stringify({ promoId: promocaoId }));
         let result = await response.json();
         return result.temComboAtivo; // Retorna true se houver combos ativos, senão false
     } catch (error) {

@@ -9,6 +9,8 @@ const RegistrarItem = require('../controllers/operacoes/RegistrarItemController.
 const authMiddleware = require("../middlewares/auth");
 const ValidRegistrarItem = require('../middlewares/validacoes/ValidRegistrarItem.js');
 const validarCadastro = require('../middlewares/validacoes/ValidRegister.js');
+const validarPromocao = require('../middlewares/validacoes/ValidPromocao.js');
+const validarComboPromocao = require('../middlewares/validacoes/ValidComboPromocao.js');
 const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
 const addMenu = require('../middlewares/front/MenuItems');
 
@@ -29,38 +31,38 @@ router.get('/logout', (req, res) => {
 });
 
 router.get("/cadastrar-Municipio", authMiddleware(["ADMIN"]), CadastrarMunicipio.openPageMunicipio);
-router.post("/listar-municipios", CadastrarMunicipio.listarMunicipios);
+router.post("/listar-municipios", authMiddleware(["ADMIN"]), CadastrarMunicipio.listarMunicipios);
 router.post("/municipio-criar", authMiddleware(["ADMIN"]), CadastrarMunicipio.createMunicipio);
 router.put("/municipio-update", authMiddleware(["ADMIN"]), CadastrarMunicipio.updateMunicipio);
 router.delete("/municipio-delete", authMiddleware(["ADMIN"]), CadastrarMunicipio.deleteMunicipio);
 
 router.get("/cadastrar-UnidadeMedida", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.openPageUnidadeMedida);
-router.post("/listar-UnidadeMedida", CadastrarUnidadeMedida.listarUnidadeMedidas);
+router.post("/listar-UnidadeMedida", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.listarUnidadeMedidas);
 router.post("/UnidadeMedida-criar", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.createUnidadeMedida);
 router.put("/UnidadeMedida-update", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.updateUnidadeMedida);
 router.delete("/UnidadeMedida-delete", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.deleteUnidadeMedida);
 
 router.get("/cadastrar-Categoria", authMiddleware(["ADMIN"]), CadastrarCategoria.openPageCategoria);
-router.post("/listar-Categoria", CadastrarCategoria.listarCategorias);
+router.post("/listar-Categoria", authMiddleware(["ADMIN"]), CadastrarCategoria.listarCategorias);
 router.post("/Categoria-criar", authMiddleware(["ADMIN"]), CadastrarCategoria.createCategoria);
 router.put("/Categoria-update", authMiddleware(["ADMIN"]), CadastrarCategoria.updateCategoria);
 router.delete("/Categoria-delete", authMiddleware(["ADMIN"]), CadastrarCategoria.deleteCategoria);
 
-router.get("/registrar-Item", RegistrarItem.openRegistrarItem);
-router.get("/listar-item-combo", RegistrarItem.listarItemCombo);
+router.get("/registrar-Item", authMiddleware(["ADMIN"]), RegistrarItem.openRegistrarItem);
+router.get("/listar-item-combo", authMiddleware(["ADMIN"]), RegistrarItem.listarItemCombo);
 router.post("/itens/criar", authMiddleware(["ADMIN"]), ValidRegistrarItem, RegistrarItem.criarItem);
 router.post("/itens/update", authMiddleware(["ADMIN"]), ValidRegistrarItem,RegistrarItem.atualizarItem);
 router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarItem);
 
-router.get("/cadastrar-Promocao", CadastrarPromocao.openPagePromocao);
-router.post("/listar-Promocao", CadastrarPromocao.listarPromocoes);
-router.post("/Promocao-criar", authMiddleware(["ADMIN"]), CadastrarPromocao.createPromocao);
+router.get("/cadastrar-Promocao", authMiddleware(["ADMIN"]), CadastrarPromocao.openPagePromocao);
+router.post("/listar-Promocao",authMiddleware(["ADMIN"]), CadastrarPromocao.listarPromocoes);
+router.post("/Promocao-criar", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.createPromocao);
 router.post("/verificar-promcao-com-items", authMiddleware(["ADMIN"]), CadastrarPromocao.verificarSePromoTemComboPromo);
-router.put("/Promocao-update", authMiddleware(["ADMIN"]), CadastrarPromocao.updatePromocao);
+router.put("/Promocao-update", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.updatePromocao);
 router.delete("/Promocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.desativarPromocao);
 
-router.post("/ComboPromocao-criar", authMiddleware(["ADMIN"]), CadastrarPromocao.createComboPromocao);
-router.put("/ComboPromocao-update", authMiddleware(["ADMIN"]), CadastrarPromocao.updateComboPromocao);
+router.post("/ComboPromocao-criar", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.createComboPromocao);
+router.put("/ComboPromocao-update", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.updateComboPromocao);
 router.delete("/ComboPromocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.deleteComboPromocao);
 
 module.exports = router;
