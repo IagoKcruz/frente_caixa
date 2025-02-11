@@ -46,6 +46,7 @@ async function registerUser(){
         let clienteDTO = _popularDtoCliente();
         const resAjax = await ajaxPost("/caixa/register-cliente", JSON.stringify(clienteDTO));
         const response = await resAjax.json();
+        console.log(response)
         if (response.Ok) {
             let message = "Usuário registrado com sucesso! <br><br> Você será direcioando a tela de login use seu email para logar"
             openSuccessWindow(null, message, redirectLogin);

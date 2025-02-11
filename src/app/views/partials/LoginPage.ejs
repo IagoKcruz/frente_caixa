@@ -4,25 +4,55 @@
 <% var corTexto = "text-gray-700" %>  <!-- Cor do texto -->
 <% var corBorda = "border-blue-500" %>  <!-- Cor da borda -->
 
-<div class="<%- corFundo %> mt-20 p-8 rounded-lg shadow-lg w-96">
-    <h2 class="text-2xl font-bold text-center <%- corTexto %> mb-6">Login</h2>
-    <div>
-        <div class="mb-4">
-            <div class="flex flex-col items-center justify-center gap-3">
-                <label for="email" class="w-full flex <%- corTexto %> items-start">Email</label>
-                <input type="text" id="username"  placeholder="Escreva seu Email" name="email" class="w-full px-4 py-2 <%- corBorda %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                <button id="buttonEmail" type="button" class="w-full py-2 <%- corBotao %> text-white rounded-md <%- corBotaoHover %> transition duration-300">PROCURAR</button>
-            </div>
+<div class="flex justify-center items-center w-full h-full">
+    <div class="<%- corFundo %> p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div class="space-y-4">
+        <!-- Campo Email -->
+        <div class="flex flex-col">
+          <label for="email" class="text-sm font-medium <%- corTexto %>">Email</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="email" 
+            placeholder="Escreva seu Email"
+            class="px-4 py-2 <%- corBorda %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            required
+          />
+          <button 
+            id="buttonEmail" 
+            type="button" 
+            class="w-full py-2 <%- corBotao %> text-white rounded-md <%- corBotaoHover %> transition duration-300 mt-2">
+            PROCURAR
+          </button>
         </div>
-        <div id="fieldCode" class="w-full mb-6">
-            <div class="w-full flex flex-col items-center justify-center gap-3">
-                <label for="number" class="w-full flex <%- corTexto %> items-start">Codigo</label>
-                <input type="number" id="code" name="code" class="w-full px-4 py-2 <%- corBorda %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
+  
+        <!-- Campo Código -->
+        <div id="fieldCode" class="flex flex-col">
+          <label for="code" class="text-sm font-medium <%- corTexto %>">Código</label>
+          <input 
+            type="number" 
+            id="code" 
+            name="code" 
+            class="px-4 py-2 <%- corBorda %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            required
+          />
         </div>
-        <button id="entrar" type="button" class="w-full py-2 <%- corBotao %> text-white rounded-md <%- corBotaoHover %> transition duration-300">Entrar</button>
-        <button id="recuperar_codigo" type="button" class="w-full py-2">Recuperar Codigo</button>
+  
+        <!-- Botões -->
+        <button 
+          id="entrar" 
+          type="button" 
+          class="w-full py-2 <%- corBotao %> text-white rounded-md <%- corBotaoHover %> transition duration-300">
+          Entrar
+        </button>
+        <button 
+          id="recuperar_codigo" 
+          type="button" 
+          class="w-full py-2 text-blue-600 hover:underline">
+          Recuperar Código
+        </button>
+      </div>
     </div>
-</div>
-
+  </div>
+  
 <script type="module" src="/js/operacoes/LoginPage.js"></script>

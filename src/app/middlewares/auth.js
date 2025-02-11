@@ -9,7 +9,7 @@ module.exports = (allowedRoles = []) => {
     }
     try {
       jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
-        
+        console.log(decoded, allowedRoles)
         if (allowedRoles.length > 0 && !allowedRoles.includes(decoded.role)) {
           return res.json({ error: "Permissão negada!" });
         }

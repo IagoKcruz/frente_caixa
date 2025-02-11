@@ -5,9 +5,8 @@ class CategoriaService {
     return await CategoriaRepository.findAll();
   }
   
-  async getCategoriaFiltrada() {
-    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
-    return await CategoriaRepository.GetCategoriaFiltrada(whereCondition);
+  async getCategoriaFiltrada(nome) {
+    return await CategoriaRepository.GetCategoriaFiltrada(nome);
   }
 
   async getCategoriaById(id) {

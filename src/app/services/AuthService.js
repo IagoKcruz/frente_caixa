@@ -16,17 +16,16 @@ class AuthService {
 
     const payload = {
       id: user.email,
-      role: "ADMIN",
+      role: user.grupo_usuario_id,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"24h", subject:payload.id });
-    console.log(payload)
     return token;
   }
 
   async findUserByEmail(email) {
     const user = await UsuarioRepository.countByEmail(email);
-    console.log(user)
+    
     if (!user || user == 0) {
        throw new Error("Email não encontrado");
     }

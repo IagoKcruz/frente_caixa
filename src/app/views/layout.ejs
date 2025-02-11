@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Software</title>
+  <title><%= title %></title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet"> <!-- Estilos personalizados -->
   <link rel="stylesheet" href="/css/styleJsGrid.css">
@@ -12,16 +12,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsgrid/dist/jsgrid.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsgrid/dist/jsgrid-theme.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/jsgrid/dist/jsgrid.min.js"></script>
-
 </head>
-<body class="bg-gray-100 h-screen flex justify-center items-center">
-  <!-- Menu Lateral (renderizado apenas uma vez) -->
+<body class="bg-gray-100 h-screen flex">
+  
+  <!-- Menu Lateral -->
   <%- include('./partials/MenuSideBar.ejs') %> <!-- Partial do menu -->
 
-  <div id="conteudo" style="margin-left: 64px;">
-    <%- include(body) %> <!-- O conteúdo da página será inserido aqui -->
+  <!-- Conteúdo Principal -->
+  <div id="conteudo" class="flex flex-col flex-1 p-6 ml-12">
+    <!-- Título Dinâmico -->
+    <h1 class="text-3xl font-semibold text-center text-gray-700 mb-8"><%= title %></h1>
+
+    <!-- Corpo da Página -->
+    <div class="flex-1 flex">
+      <%- include(body) %>
+    </div>
   </div>
-  <!-- Inclui o JS para os eventos -->
+  
+  <div style="display: none;" id="window">
+    <div id="gridWindow"></div>
+  </div>
+  <!-- JS -->
   <script src="/js/MenuSideBar.js" type="module"></script>
 </body>
 </html>

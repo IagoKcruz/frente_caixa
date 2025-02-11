@@ -4,8 +4,6 @@ module.exports = (req, res, next) => {
     const dados = req.body;
     const validacaoInstancia = new validacao();
 
-    console.log(req.body);
-
     validacaoInstancia.NotNULL('Descrição é obrigatória', dados.descricao);
 
     if (dados.sn_promocao_geral === null || dados.sn_promocao_geral === undefined) {

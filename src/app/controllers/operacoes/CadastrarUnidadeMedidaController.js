@@ -1,10 +1,11 @@
+const { title } = require('process');
 const UnidadeMedidaService = require('../../services/UnidadeMedidaService.js')
 const { v4: uuidv4 } = require('uuid');
 
 class CadastrarUnidadeMedidaController {
     async openPageUnidadeMedida(req, res){
         try {
-            return res.render('layout', { body: './partials/Operacoes/UnidadeMedidaPage.ejs'});
+            return res.render('layout', { body: './partials/Operacoes/UnidadeMedidaPage.ejs', title : "UNIDADE DE MEDIDAS" });
         } catch (error) {
             return res.json({error : error});
         }

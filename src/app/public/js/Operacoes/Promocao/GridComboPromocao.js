@@ -1,5 +1,5 @@
 import { ComboPromocaoDTO } from '../../../dtos/ComboPromocaoDto.js';
-import { initializeWindowWithGrid, openErrorWindow, openSuccessWindow } from '../../WindowModal.js';
+import { initializeWindowWithGrid, openDialogWindow, openErrorWindow, openSuccessWindow } from '../../WindowModal.js';
 import { ajaxGet, ajaxPost, ajaxPut, ajaxDelete } from '../../FetchCommom.js'
 // Função para abrir a subgrid com os combos
 function abrirSubgridComboPromocao(data, items, promocaoId) {
@@ -7,32 +7,63 @@ function abrirSubgridComboPromocao(data, items, promocaoId) {
         width: "100%",
         inserting: true,
         editing: true,
-        deleting: true,
+        confirmDeleting: false,
+        deleteConfirm: null,
+
         data: Array.isArray(data) ? data : [],
         fields: [
             { name: "id", type: "number", title: "ID", width: 50, readOnly: true, visible: false },
-            { name: "valor_promocao", type: "number", title: "Valor Promoção", width: 100, validate: "required" },
+            { name: "valor_promocao", type: "number", title: "Valor Promoção", width: 100 },
             {
                 name: "item_id", type: "select", title: "Item",
                 items: items,
                 valueField: "id", textField: "descricao",
-                validate: "required", width: 150,
+                width: 150,
             },
-            { name: "sn_percentagem", type: "select", title: "Valor em %", items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }], valueField: "Id", textField: "Name", width: 80, validate: "required" },
-            { type: "control", editButton: true, deleteButton: true }
+            { name: "sn_percentagem", type: "select", title: "Valor em %", items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }], valueField: "Id", textField: "Name", width: 80 },
+            {
+                title: "Delete",
+                itemTemplate: function(value, item) {
+                    console.log(value, item);
+                    return $("<button>")
+                    .text("Excluir")
+                    .addClass("btn btn-danger")
+                    .on("click", async function(event) {
+                        event.stopPropagation()
+                        // Chama a função de exclusão passando o item
+                        openDialogWindow(null,"Deseja deletar eest item", deleteComboPromocao, item)
+                    });
+                }
+            },
+            { type: "control", editButton: true, deleteButton: false }
         ],
         controller: {
-            insertItem: async function(subitem) {
-                return await createComboPromocao(subitem, promocaoId);
+            insertItem: async function (subitem) {
+                let result = await createComboPromocao(subitem, promocaoId);
+                if (result === false) {
+                    // Se a inserção falhou (erro do backend), cancela a edição e não insere o item
+                    this.cancelEdit();
+                    return false;  // Impede a inserção do item na grid
+                }
+
+                // Se a inserção for bem-sucedida, retorna os dados para a grid
+                return result;
             },
-            updateItem: async function(subitem) {
-                return await updateComboPromocao(subitem, promocaoId);
-            },
-            deleteItem: async function(subitem) {
-                return await deleteComboPromocao(subitem, promocaoId);
+            updateItem: async function (subitem) {
+                let result = updateComboPromocao(subitem, promocaoId);
+
+                if (result === false) {
+                    // Se a inserção falhou (erro do backend), cancela a edição e não insere o item
+                    this.cancelEdit();
+                    return false;  // Impede a inserção do item na grid
+                }
+
+                // Se a inserção for bem-sucedida, retorna os dados para a grid
+                return result;
             }
         }
     });
+
 }
 
 // Função para carregar os itens da lista para o select
@@ -44,7 +75,7 @@ async function carregarItems(selectedValue) {
 
 // Função para abrir o popup dos combos
 export async function abrirPopupCombos(sn_promocao_geral, data, promocaoId) {
-    if(sn_promocao_geral == "N"){
+    if (sn_promocao_geral == "N") {
         const items = await carregarItems();
         abrirSubgridComboPromocao(data, items, promocaoId);
         initializeWindowWithGrid();
@@ -52,19 +83,23 @@ export async function abrirPopupCombos(sn_promocao_geral, data, promocaoId) {
 }
 
 // Funções de CRUD para ComboPromoção
-async function createComboPromocao(subitem, promocaoId) {
+export async function createComboPromocao(subitem, promocaoId) {
     try {
         const comboPromocaoDTO = new ComboPromocaoDTO(subitem);
         comboPromocaoDTO.promocao_id = promocaoId;
         const response = await ajaxPost('/caixa/ComboPromocao-criar', JSON.stringify(comboPromocaoDTO));
         const newComboPromocao = await response.json();
-        if (newComboPromocao.error) throw new Error(newComboPromocao.error);
+
+        if (newComboPromocao.error) {
+            openErrorWindow(null, newComboPromocao.error);
+            return false;
+        }
 
         return {
-            id: newComboPromocao.ComboPromocao.id,
-            valor_promocao: newComboPromocao.ComboPromocao.valor_promocao,
-            sn_percentagem: newComboPromocao.ComboPromocao.sn_percentagem,
-            item_id: newComboPromocao.ComboPromocao.item_id
+            id: newComboPromocao.combo.id,
+            valor_promocao: newComboPromocao.combo.valor_promocao,
+            sn_percentagem: newComboPromocao.combo.sn_percentagem,
+            item_id: newComboPromocao.combo.item_id
         };
     } catch (error) {
         openErrorWindow(null, error);
@@ -72,29 +107,48 @@ async function createComboPromocao(subitem, promocaoId) {
     }
 }
 
-async function updateComboPromocao(subitem) {
+export async function updateComboPromocao(subitem, promocaoId) {
     try {
         const comboPromocaoDTO = new ComboPromocaoDTO(subitem);
+        comboPromocaoDTO.promocao_id = promocaoId;
         const response = await ajaxPut('/caixa/ComboPromocao-update', JSON.stringify(comboPromocaoDTO));
         const updatedComboPromocao = await response.json();
-        if (updatedComboPromocao.error) throw new Error(updatedComboPromocao.error);
 
-        return updatedComboPromocao.ComboPromocaoDTO;
+        console.log(updatedComboPromocao)
+
+        if (!updatedComboPromocao.combo) {
+            this.cancelEdit();
+            openErrorWindow(null, updatedComboPromocao.error);
+            return false;
+        }
+
+        return updatedComboPromocao.combo;
     } catch (error) {
+        $("#gridWindow").jsGrid("cancelUpdate");
         openErrorWindow(null, error);
         return $.Deferred().reject(error).promise();
     }
 }
 
-async function deleteComboPromocao(subitem) {
+export async function deleteComboPromocao(subitem) {
     try {
         const bodyRequest = { id: subitem.id };
         const response = await ajaxDelete('/caixa/ComboPromocao-delete', JSON.stringify(bodyRequest));
         const result = await response.json();
-        if (result.erro) throw new Error(result);
-        return result;
+
+        console.log($("#gridWindow").jsGrid("option", "data"));
+
+        let gridData = $("#gridWindow").jsGrid("option", "data");
+        let itemToDelete = gridData.find(item => item.id === subitem.id); // Substitua "id" pelo campo correto
+
+        console.log(result, itemToDelete)
+        if (result.error) {
+            openErrorWindow(null, result.error);
+            return;
+        }
+        $("#gridWindow").jsGrid("deleteItem", subitem);
     } catch (error) {
         openErrorWindow(null, error.Error);
-        return $.Deferred().reject(error).promise();
+        return false;
     }
 }

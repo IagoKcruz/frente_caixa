@@ -1,5 +1,6 @@
 const Usuario = require('../models/Usuario.js');
 const BaseRepository = require('./BasicRepository.js');
+const { Op } = require('sequelize');
 
 class UsuarioRepository extends BaseRepository {
   constructor() {
@@ -12,6 +13,24 @@ class UsuarioRepository extends BaseRepository {
     });
 
     return count;
+  }
+
+  async findUserByEmail(email){
+    const one = await Usuario.findOne({
+      where: { email: email }
+    });
+
+    return one;
+  }
+
+  async findAllWithFiltro(nome){
+    const whereClause = nome ?
+    { nome: { [Op.like]: `%${nome}%` } } :
+    {};
+
+    return await Usuario.findAll({
+      where: whereClause
+    });
   }
 }
 

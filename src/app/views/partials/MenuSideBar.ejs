@@ -1,12 +1,12 @@
 <div id="menu" class="bg-blue-900 text-white w-64 h-full fixed top-0 left-0 z-10 transition-all duration-300">
-    <div class="flex items-center justify-center mt-4">
+    <!-- <div class="flex items-center justify-center mt-4">
         <img src="" alt="Logo" class="w-24 h-24 rounded-full">
-    </div>
+    </div> -->
     <ul id="menu-items" class="mt-8 space-y-4">
         <% menuItems.forEach(item => { %>
             <li class="w-full flex gap-2 items-start justify-center menu-item ">
                 <a href="/caixa<%= item.route %>" class="h-6 w-full flex items-center px-6 py-4 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-                    <img src="<%= item.iconClass %>" class="mr-6 w-4 h-4"/> <!-- Ícone sempre visível -->
+                    <!-- <img src="" class="mr-6 w-4 h-4"/>  -->
                     <span class="menu-text <%= item.isActive ? 'text-black' : 'text-white' %>"><%= item.name %></span>
                 </a>
                 <% if(item.submenu) { %>
@@ -26,3 +26,4 @@
     </ul>
   </div>
   
+  <!-- < item.iconClass %> -->

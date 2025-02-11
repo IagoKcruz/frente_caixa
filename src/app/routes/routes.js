@@ -1,5 +1,4 @@
 const express = require('express');
-const PromocaoController = require('../controllers/helpers/PromocaoController');
 const ClienteController = require('../controllers/operacoes/ClienteController');
 const AuthController = require("../controllers/operacoes/UserAuthController");    
 const CadastrarMunicipio = require('../controllers/operacoes/CadastrarMunicipioController')
@@ -12,58 +11,67 @@ const validarCadastro = require('../middlewares/validacoes/ValidRegister.js');
 const validarPromocao = require('../middlewares/validacoes/ValidPromocao.js');
 const validarComboPromocao = require('../middlewares/validacoes/ValidComboPromocao.js');
 const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
+const ConsultarUsuarios = require('../controllers/operacoes/ConsultarUsuariosController.js');
+const Catalogo = require('../controllers/operacoes/CatalogoController.js');
+const enumRole = require('../utilsBack/EnumRoles.js');
+
 const addMenu = require('../middlewares/front/MenuItems');
 
 
 const router = express.Router();
 
-router.get("/", AuthController.openHome);
+router.get("/", AuthController.index);
 router.post("/login", AuthController.login);
 router.post("/find-user", AuthController.findUserByEmail);
 router.get('/register', AuthController.openRegisterPage);
 
 
-router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) , PromocaoController.openDashboard);
 router.post('/register-cliente', validarCadastro, ClienteController.criar)
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');
 });
 
-router.get("/cadastrar-Municipio", authMiddleware(["ADMIN"]), CadastrarMunicipio.openPageMunicipio);
-router.post("/listar-municipios", authMiddleware(["ADMIN"]), CadastrarMunicipio.listarMunicipios);
-router.post("/municipio-criar", authMiddleware(["ADMIN"]), CadastrarMunicipio.createMunicipio);
-router.put("/municipio-update", authMiddleware(["ADMIN"]), CadastrarMunicipio.updateMunicipio);
-router.delete("/municipio-delete", authMiddleware(["ADMIN"]), CadastrarMunicipio.deleteMunicipio);
+router.get("/cadastrar-Municipio", authMiddleware(enumRole.ADMIN), CadastrarMunicipio.openPageMunicipio);
+router.post("/listar-municipios", authMiddleware(enumRole.ADMIN), CadastrarMunicipio.listarMunicipios);
+router.post("/municipio-criar", authMiddleware(enumRole.ADMIN), CadastrarMunicipio.createMunicipio);
+router.put("/municipio-update", authMiddleware(enumRole.ADMIN), CadastrarMunicipio.updateMunicipio);
+router.delete("/municipio-delete", authMiddleware(enumRole.ADMIN), CadastrarMunicipio.deleteMunicipio);
 
-router.get("/cadastrar-UnidadeMedida", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.openPageUnidadeMedida);
-router.post("/listar-UnidadeMedida", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.listarUnidadeMedidas);
-router.post("/UnidadeMedida-criar", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.createUnidadeMedida);
-router.put("/UnidadeMedida-update", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.updateUnidadeMedida);
-router.delete("/UnidadeMedida-delete", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.deleteUnidadeMedida);
+router.get("/cadastrar-UnidadeMedida", authMiddleware(enumRole.ADMIN), CadastrarUnidadeMedida.openPageUnidadeMedida);
+router.post("/listar-UnidadeMedida", authMiddleware(enumRole.ADMIN), CadastrarUnidadeMedida.listarUnidadeMedidas);
+router.post("/UnidadeMedida-criar", authMiddleware(enumRole.ADMIN), CadastrarUnidadeMedida.createUnidadeMedida);
+router.put("/UnidadeMedida-update", authMiddleware(enumRole.ADMIN), CadastrarUnidadeMedida.updateUnidadeMedida);
+router.delete("/UnidadeMedida-delete", authMiddleware(enumRole.ADMIN), CadastrarUnidadeMedida.deleteUnidadeMedida);
 
-router.get("/cadastrar-Categoria", authMiddleware(["ADMIN"]), CadastrarCategoria.openPageCategoria);
-router.post("/listar-Categoria", authMiddleware(["ADMIN"]), CadastrarCategoria.listarCategorias);
-router.post("/Categoria-criar", authMiddleware(["ADMIN"]), CadastrarCategoria.createCategoria);
-router.put("/Categoria-update", authMiddleware(["ADMIN"]), CadastrarCategoria.updateCategoria);
-router.delete("/Categoria-delete", authMiddleware(["ADMIN"]), CadastrarCategoria.deleteCategoria);
+router.get("/cadastrar-Categoria", authMiddleware(enumRole.ADMIN), CadastrarCategoria.openPageCategoria);
+router.post("/listar-Categoria", authMiddleware(enumRole.ADMIN), CadastrarCategoria.listarCategorias);
+router.post("/Categoria-criar", authMiddleware(enumRole.ADMIN), CadastrarCategoria.createCategoria);
+router.put("/Categoria-update", authMiddleware(enumRole.ADMIN), CadastrarCategoria.updateCategoria);
+router.delete("/Categoria-delete", authMiddleware(enumRole.ADMIN), CadastrarCategoria.deleteCategoria);
 
-router.get("/registrar-Item", authMiddleware(["ADMIN"]), RegistrarItem.openRegistrarItem);
-router.get("/listar-item-combo", authMiddleware(["ADMIN"]), RegistrarItem.listarItemCombo);
-router.post("/itens/criar", authMiddleware(["ADMIN"]), ValidRegistrarItem, RegistrarItem.criarItem);
-router.post("/itens/update", authMiddleware(["ADMIN"]), ValidRegistrarItem,RegistrarItem.atualizarItem);
-router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarItem);
+router.get("/registrar-Item", authMiddleware(enumRole.ADMIN), RegistrarItem.openRegistrarItem);
+router.get("/listar-item-combo", RegistrarItem.listarItemCombo);
+router.post("/itens/criar", authMiddleware(enumRole.ADMIN), ValidRegistrarItem, RegistrarItem.criarItem);
+router.post("/itens/update", authMiddleware(enumRole.ADMIN), ValidRegistrarItem,RegistrarItem.atualizarItem);
+router.post("/itens/delete", authMiddleware(enumRole.ADMIN), RegistrarItem.deletarItem);
 
-router.get("/cadastrar-Promocao", authMiddleware(["ADMIN"]), CadastrarPromocao.openPagePromocao);
-router.post("/listar-Promocao",authMiddleware(["ADMIN"]), CadastrarPromocao.listarPromocoes);
-router.post("/Promocao-criar", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.createPromocao);
-router.post("/verificar-promcao-com-items", authMiddleware(["ADMIN"]), CadastrarPromocao.verificarSePromoTemComboPromo);
-router.put("/Promocao-update", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.updatePromocao);
-router.delete("/Promocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.desativarPromocao);
+router.get("/cadastrar-Promocao", authMiddleware(enumRole.ADMIN), CadastrarPromocao.openPagePromocao);
+router.post("/listar-Promocao", authMiddleware(enumRole.ADMIN), CadastrarPromocao.listarPromocoes);
+router.post("/Promocao-criar", authMiddleware(enumRole.ADMIN), validarPromocao, CadastrarPromocao.createPromocao);
+router.post("/verificar-promcao-com-items", authMiddleware(enumRole.ADMIN), CadastrarPromocao.verificarSePromoTemComboPromo);
+router.put("/Promocao-update", authMiddleware(enumRole.ADMIN), validarPromocao, CadastrarPromocao.updatePromocao);
 
-router.post("/ComboPromocao-criar", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.createComboPromocao);
-router.put("/ComboPromocao-update", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.updateComboPromocao);
-router.delete("/ComboPromocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.deleteComboPromocao);
+router.post("/ComboPromocao-criar", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarPromocao.createComboPromocao);
+router.put("/ComboPromocao-update", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarPromocao.updateComboPromocao);
+router.delete("/ComboPromocao-delete", authMiddleware(enumRole.ADMIN), CadastrarPromocao.deleteComboPromocao);
+
+router.get("/usuarios/page", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.openPage);
+router.post("/listar-Usuarios", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.listarUsuarios);
+router.put("/Usuario-update", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.updateUsuario);
+
+
+router.get('/catalogo', addMenu, authMiddleware(enumRole.ADMIN, enumRole.CLIENTE), Catalogo.openCatalogoPage);
 
 module.exports = router;
 

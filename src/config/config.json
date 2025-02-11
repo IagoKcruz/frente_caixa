@@ -19,6 +19,6 @@
       "database": "frente_caixa",
       "host": "localhost",
       "dialect": "mysql"
-    }
+    } 
   }
   

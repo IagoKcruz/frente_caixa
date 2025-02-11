@@ -1,0 +1,22 @@
+<div class="flex flex-col items-center p-6 lg:p-12 w-full">
+  <div class="container mx-auto px-4 py-6">
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-auto gap-6">
+      <% items.forEach(item => { %>
+        <div class="bg-white p-6 border rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col items-center">
+          
+          <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center"><%= item.descricao %></h2>
+          
+          
+          <div class="w-32rem h-32rem bg-gray-300 rounded-md"></div>
+          
+          
+          <div class="text-2xl font-bold text-green-600 mt-4"><%= item.preco %></div>
+          
+          
+          <div class="mt-2 text-gray-500 text-sm">Código: <%= item.codigo %></div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

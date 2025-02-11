@@ -1,7 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
 const ClienteService = require('../../services/ClienteService');
 const UsuarioService = require('../../services/UsuarioService');
+const AuthService = require('../../services/AuthService');
 const gerarCodigoUnico = require('../../utilsBack/CodeGenerator');
+const enumRole = require('../../utilsBack/EnumRoles');
 
 class ClienteController {
   async listar(req, res) {
@@ -29,6 +31,12 @@ class ClienteController {
         sn_ativo
       } = req.body;
 
+      const existeUsuarioComEsteEmail = await UsuarioService.findUserByEmail(email);
+
+      if(existeUsuarioComEsteEmail != null){
+        return res.json({ error : "Email inválido"})
+      }
+
       const id = uuidv4();
       const codigo = gerarCodigoUnico(nome[0]);
       
@@ -48,7 +56,9 @@ class ClienteController {
         sn_ativo,
       });
 
-      await CriarUsuario(nome, email, sn_ativo); 
+      let grupo_usuario_id = enumRole.CLIENTE;
+      await CriarUsuario(nome, email, sn_ativo, grupo_usuario_id); 
+      
       return res.json({Ok : true});
     } catch (error) {
       return res.json({ erro: error.message });
@@ -89,11 +99,12 @@ class ClienteController {
   }
 }
 
-async function CriarUsuario(nome, email, sn_ativo){
+async function CriarUsuario(nome, email, sn_ativo, grupo_usuario_id){
     const user = await UsuarioService.createUsuario({
       id : uuidv4(),
       nome,
       login : nome,
+      grupo_usuario_id,
       email,
       sn_ativo
     })
