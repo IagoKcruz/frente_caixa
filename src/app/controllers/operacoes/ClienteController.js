@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const ClienteService = require('../../services/ClienteService');
 const UsuarioService = require('../../services/UsuarioService');
+const AuthService = require('../../services/AuthService');
 const gerarCodigoUnico = require('../../utilsBack/CodeGenerator');
 const enumRole = require('../../utilsBack/EnumRoles');
 
@@ -29,6 +30,12 @@ class ClienteController {
         municipio_id,
         sn_ativo
       } = req.body;
+
+      const existeUsuarioComEsteEmail = await UsuarioService.findUserByEmail(UserEmail);
+
+      if(existeUsuarioComEsteEmail != null){
+        return res.json({ error : "Email inválido"})
+      }
 
       const id = uuidv4();
       const codigo = gerarCodigoUnico(nome[0]);

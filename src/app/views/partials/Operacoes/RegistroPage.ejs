@@ -1,24 +1,23 @@
-<% var corFundo = "bg-gray-300" %> <!-- Cor de fundo geral -->
-<% var corFundoSecundario = "bg-gray-300" %> <!-- Cor de fundo do container principal -->
-<% var corBotao = "bg-blue-500" %> <!-- Cor dos botões -->
-<% var corBotaoHover = "hover:bg-blue-600" %> <!-- Cor do hover do botão -->
-<% var corTexto = "text-gray-700" %> <!-- Cor do texto -->
-<% var corBorda = "border-blue-500" %> <!-- Cor da borda dos campos -->
-<% var corLabel = "text-gray-600" %> <!-- Cor dos labels -->
-<% var corBordaInput = "border-gray-300" %> <!-- Cor da borda dos campos de input -->
-<% var textInput  = "block text-sm font-medium text-gray-700 mb-2" %> <!-- Cor da borda dos campos de input -->
-
-<div class="<%- corFundoSecundario %> mt-10 p-6 rounded-lg shadow-lg w-full max-w-3xl"> <!-- Diminuir o padding e largura do container -->
-    <h2 class="text-2xl font-bold text-center <%- corTexto %> p-2">Registro de Usuário</h2>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> <!-- Mudando para 1 coluna em telas pequenas -->
-        <!-- Nome -->
+<% var corFundo = "bg-gray-300" %>
+<% var corFundoSecundario = "bg-gray-300" %>
+<% var corBotao = "bg-blue-500" %>
+<% var corBotaoHover = "hover:bg-blue-600" %>
+<% var corTexto = "text-gray-700" %>
+<% var corBorda = "border-blue-500" %>
+<% var corLabel = "text-gray-600" %>
+<% var corBordaInput = "border-gray-300" %>
+<% var textInput  = "block text-sm font-medium text-gray-700 mb-2" %>
+<div class="flex flex-col w-full justify-center items-center">
+<div class="<%- corFundoSecundario %> p-6 rounded-lg shadow-lg w-full max-w-3xl"> 
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> 
+       
         <div class="col-span-2">
             <label for="nome" class="<%- corLabel %> <%- textInput %>">Nome</label>
             <input type="text" id="nome" name="nome" placeholder="Digite seu nome" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- CPF ou CNPJ -->
+        
         <div>
             <label class="<%- corLabel %> <%- textInput %> flex flex-row gap-x-2">Tipo de Documento
             <div class="flex items-center gap-2">
@@ -31,49 +30,49 @@
             <input type="text" id="documento" name="documento" placeholder="Digite CPF ou CNPJ" class="w-full mt-2 px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- RG -->
+        
         <div class="flex flex-col justify-between">
             <label for="rg" class="<%- corLabel %> <%- textInput %>">RG</label>
             <input type="text" id="rg" name="rg" placeholder="Digite seu RG" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- Data de Nascimento -->
+        
         <div>
             <label for="dataNascimento" class="<%- corLabel %> <%- textInput  %>">Data de Nascimento</label>
             <input type="date" id="dataNascimento" name="dataNascimento" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- Email -->
+        
         <div>
             <label for="email" class="<%- corLabel %> <%- textInput  %>">Email</label>
             <input type="email" id="email" name="email" placeholder="Digite seu email" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- Bairro -->
+        
         <div>
             <label for="bairro" class="<%- corLabel %> <%- textInput  %>">Bairro</label>
             <input type="text" id="bairro" name="bairro" placeholder="Digite seu bairro" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- Rua -->
+        
         <div>
             <label for="rua" class="<%- corLabel %> <%- textInput  %>">Rua</label>
             <input type="text" id="rua" name="rua" placeholder="Digite sua rua" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- Número -->
+        
         <div>
             <label for="numero" class="<%- corLabel %> <%- textInput  %>">Número</label>
             <input type="number" id="numero" name="numero" placeholder="Digite o número" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <!-- Inscrição Estadual (Aparece apenas para CNPJ) -->
+        
         <div id="inscricaoEstadualDiv" style="display: none;">
             <label for="inscricaoEstadual" class="<%- corLabel %> <%- textInput  %>">Inscrição Estadual</label>
             <input type="text" id="inscricaoEstadual" name="inscricaoEstadual" placeholder="Digite a Inscrição Estadual" class="w-full px-4 py-2 <%- corBordaInput %> rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
-        <!-- ComboBox Município -->
+        
         <div class="col-span-1">
             <%- include('../Combos/ComboChaveValor.ejs', { 
                 id: 'municipio', 
@@ -90,5 +89,5 @@
             </div>
         <% } %>
     </div>
-
+</div>
 <script type="module" src="/js/Operacoes/RegisterPage.js"></script>

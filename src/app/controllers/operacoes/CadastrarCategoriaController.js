@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 class CadastrarCategoriaController {
     async openPageCategoria(req, res){
         try {
-            return res.render('layout', { body: './partials/Operacoes/CategoriaPage.ejs'});
+            return res.render('layout', { body: './partials/Operacoes/CategoriaPage.ejs', title : "CADASTRAR CATEGORIA"});
         } catch (error) {
             return res.json({error : error});
         }

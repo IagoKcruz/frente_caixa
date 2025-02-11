@@ -20,7 +20,7 @@ const addMenu = require('../middlewares/front/MenuItems');
 
 const router = express.Router();
 
-router.get("/", AuthController.openHome);
+router.get("/", AuthController.index);
 router.post("/login", AuthController.login);
 router.post("/find-user", AuthController.findUserByEmail);
 router.get('/register', AuthController.openRegisterPage);

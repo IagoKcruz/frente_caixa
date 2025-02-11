@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 class CadastrarMunicipioController {
     async openPageMunicipio(req, res){
         try {
-            return res.render('layout', { body: './partials/Operacoes/MunicipioPage.ejs'});
+            return res.render('layout', { body: './partials/Operacoes/MunicipioPage.ejs', title : "CADASTRAR MUNICÍPIO"});
         } catch (error) {
             return res.json({error : error});
         }

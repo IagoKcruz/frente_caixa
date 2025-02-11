@@ -5,6 +5,10 @@ class UsuarioService {
     return await UsuarioRepository.findAllWithFiltro(nome);
   }
 
+  async findUserByEmail(email) {
+    return await UsuarioRepository.findUserByEmail(email);
+  }
+
   async getUsuarioById(id) {
     return await UsuarioRepository.findById(id);
   }

@@ -15,6 +15,14 @@ class UsuarioRepository extends BaseRepository {
     return count;
   }
 
+  async findUserByEmail(email){
+    const one = await Usuario.findOne({
+      where: { email: email }
+    });
+
+    return one;
+  }
+
   async findAllWithFiltro(nome){
     const whereClause = nome ?
     { nome: { [Op.like]: `%${nome}%` } } :
