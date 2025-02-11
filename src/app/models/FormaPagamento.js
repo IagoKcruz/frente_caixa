@@ -20,6 +20,9 @@ const FormaPagamento = sequelize.define('FormaPagamento', {
     type: DataTypes.INTEGER(11),
     allowNull: false,
   },
+  parcelas: {
+    type: DataTypes.INTEGER(11),
+  },
 },{
   tableName: 'forma_pagamento',
   modelName: "FormaPagamento"

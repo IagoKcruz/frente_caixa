@@ -1,31 +1,26 @@
 const FormaPagamentoRepository = require('../repositories/FormaPagamentoRepository');
 
 class FormaPagamentoService {
-  constructor() {
-    this.formaPagamentoRepository = new FormaPagamentoRepository();
-  }
-
-  async getAllFormasPagamento() {
-    return this.formaPagamentoRepository.findAll({
-      include: ['tipoRecebimento'],
-    });
+  async getAllFormasPagamento(descricao) {
+    return await FormaPagamentoRepository.getAllFormasPagamento(descricao);
   }
 
   async getFormaPagamentoById(id) {
-    return this.formaPagamentoRepository.findById(id);
+    return await FormaPagamentoRepository.findById(id);
   }
 
   async createFormaPagamento(data) {
-    return this.formaPagamentoRepository.create(data);
+    return await FormaPagamentoRepository.create(data);
   }
 
-  async updateFormaPagamento(id, data) {
-    return this.formaPagamentoRepository.update(id, data);
+  async updateFormaPagamento(data) {
+    return await FormaPagamentoRepository.update(data);
   }
 
   async deleteFormaPagamento(id) {
-    return this.formaPagamentoRepository.delete(id);
+    const formaPagamento = await this.findById(id)
+    return await FormaPagamentoRepository.delete(formaPagamento);
   }
 }
 
-module.exports = FormaPagamentoService;
+module.exports = new FormaPagamentoService();

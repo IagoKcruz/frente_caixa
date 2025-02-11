@@ -7,4 +7,4 @@ class TipoOperacaoRepository extends BasicRepository {
   }
 }
 
-module.exports = TipoOperacaoRepository;
+module.exports = new TipoOperacaoRepository();

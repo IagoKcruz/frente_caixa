@@ -16,6 +16,7 @@ const Catalogo = require('../controllers/operacoes/CatalogoController.js');
 const enumRole = require('../utilsBack/EnumRoles.js');
 
 const addMenu = require('../middlewares/front/MenuItems');
+const CadastrarFormaPagamentoController = require('../controllers/operacoes/CadastrarFormaPagamentoController.js');
 
 
 const router = express.Router();
@@ -72,6 +73,13 @@ router.put("/Usuario-update", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.
 
 
 router.get('/catalogo', addMenu, authMiddleware(enumRole.ADMIN, enumRole.CLIENTE), Catalogo.openCatalogoPage);
+
+router.get("/FormaPagamento/openPage", authMiddleware(enumRole.ADMIN), CadastrarFormaPagamentoController.openPageFormaPagamento);
+router.post("/listar-FormaPagamento", authMiddleware(enumRole.ADMIN), CadastrarFormaPagamentoController.listarFormaPagamentos);
+router.post("/FormaPagamento-criar", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarFormaPagamentoController.createFormaPagamento);
+router.put("/FormaPagamento-update", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarFormaPagamentoController.updateFormaPagamento);
+router.delete("/FormaPagamento-delete", authMiddleware(enumRole.ADMIN), CadastrarFormaPagamentoController.deleteFormaPagamento);
+
 
 module.exports = router;
 

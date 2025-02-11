@@ -136,12 +136,6 @@ export async function deleteComboPromocao(subitem) {
         const response = await ajaxDelete('/caixa/ComboPromocao-delete', JSON.stringify(bodyRequest));
         const result = await response.json();
 
-        console.log($("#gridWindow").jsGrid("option", "data"));
-
-        let gridData = $("#gridWindow").jsGrid("option", "data");
-        let itemToDelete = gridData.find(item => item.id === subitem.id); // Substitua "id" pelo campo correto
-
-        console.log(result, itemToDelete)
         if (result.error) {
             openErrorWindow(null, result.error);
             return;
