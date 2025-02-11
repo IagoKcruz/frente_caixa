@@ -39,7 +39,7 @@ function montarGridFormaPagamento(dataGrid, tipo_recebimento) {
 
         fields: [
             { name: "id", type: "number", title: "ID", width: 50, readOnly: true, visible: false },
-            { name: "codigo", type: "text", title: "Descrição", width: 150 },
+            { name: "codigo", type: "text", title: "Código", width: 50, readOnly: true, editable: false },
             { name: "descricao", type: "text", title: "Descrição", width: 150 },
             {
                 name: "tipo_recebimento_id",
@@ -63,10 +63,10 @@ function montarGridFormaPagamento(dataGrid, tipo_recebimento) {
                 }
             },
             {
-                name: "sn_promocao_geral",
+                name: "parcelas",
                 type: "select",
-                title: "Promoção Geral",
-                width: 80,
+                title: "Qnt. Parcelas",
+                width: 120,
                 insertTemplate: function () {
                     return $("<input>").attr("id", "insertQntParcelas_novo").attr("type", "number");
                 },
@@ -74,7 +74,7 @@ function montarGridFormaPagamento(dataGrid, tipo_recebimento) {
                     return $("<input>").attr("id", "editQntParcelas").attr("type", "number").val(value);
                 },
                 insertValue: function () {
-                    return $("#insertQntParcelas_novo").val().prop("disabled", true);
+                    return $("#insertQntParcelas_novo").val();
                 },
                 editValue: function (item) {
                     return $("#editQntParcelas").val();
@@ -91,7 +91,7 @@ function montarGridFormaPagamento(dataGrid, tipo_recebimento) {
                         .on("click", async function (event) {
                             event.stopPropagation()
                             // Chama a função de exclusão passando o item
-                            openDialogWindow(null, "Deseja deletar eest item", deleteComboPromocao, item)
+                            openDialogWindow(null, "Deseja deletar eest item", deleteFormaPagamento, item)
                         });
                 }
             }
@@ -130,6 +130,7 @@ async function createFormaPagamento(item) {
         const formapagamentoTO = new FormaPagamentoDTO(item);
         const response = await ajaxPost('/caixa/FormaPagamento-criar', JSON.stringify(formapagamentoTO));
         const formaPagamento = await response.json();
+        console.log(formaPagamento)
 
 
         if (formaPagamento.error) {

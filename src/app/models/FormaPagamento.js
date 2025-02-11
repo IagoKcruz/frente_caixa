@@ -9,7 +9,7 @@ const FormaPagamento = sequelize.define('FormaPagamento', {
     allowNull: false,
   },
   codigo: {
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.STRING(11),
     allowNull: false,
   },
   descricao: {

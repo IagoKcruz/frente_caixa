@@ -6,13 +6,16 @@ const CadastrarUnidadeMedida = require('../controllers/operacoes/CadastrarUnidad
 const CadastrarCategoria = require('../controllers/operacoes/CadastrarCategoriaController')
 const RegistrarItem = require('../controllers/operacoes/RegistrarItemController.js')
 const authMiddleware = require("../middlewares/auth");
+const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
+const ConsultarUsuarios = require('../controllers/operacoes/ConsultarUsuariosController.js');
+const Catalogo = require('../controllers/operacoes/CatalogoController.js');
+
 const ValidRegistrarItem = require('../middlewares/validacoes/ValidRegistrarItem.js');
 const validarCadastro = require('../middlewares/validacoes/ValidRegister.js');
 const validarPromocao = require('../middlewares/validacoes/ValidPromocao.js');
 const validarComboPromocao = require('../middlewares/validacoes/ValidComboPromocao.js');
-const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
-const ConsultarUsuarios = require('../controllers/operacoes/ConsultarUsuariosController.js');
-const Catalogo = require('../controllers/operacoes/CatalogoController.js');
+const ValidarFormaPagamento = require('../middlewares/validacoes/ValidFormaPagamento.js');
+
 const enumRole = require('../utilsBack/EnumRoles.js');
 
 const addMenu = require('../middlewares/front/MenuItems');
@@ -76,8 +79,8 @@ router.get('/catalogo', addMenu, authMiddleware(enumRole.ADMIN, enumRole.CLIENTE
 
 router.get("/FormaPagamento/openPage", authMiddleware(enumRole.ADMIN), CadastrarFormaPagamentoController.openPageFormaPagamento);
 router.post("/listar-FormaPagamento", authMiddleware(enumRole.ADMIN), CadastrarFormaPagamentoController.listarFormaPagamentos);
-router.post("/FormaPagamento-criar", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarFormaPagamentoController.createFormaPagamento);
-router.put("/FormaPagamento-update", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarFormaPagamentoController.updateFormaPagamento);
+router.post("/FormaPagamento-criar", authMiddleware(enumRole.ADMIN), ValidarFormaPagamento, CadastrarFormaPagamentoController.createFormaPagamento);
+router.put("/FormaPagamento-update", authMiddleware(enumRole.ADMIN),  ValidarFormaPagamento, CadastrarFormaPagamentoController.updateFormaPagamento);
 router.delete("/FormaPagamento-delete", authMiddleware(enumRole.ADMIN), CadastrarFormaPagamentoController.deleteFormaPagamento);
 
 
