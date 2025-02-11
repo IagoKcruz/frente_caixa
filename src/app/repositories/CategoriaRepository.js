@@ -6,8 +6,8 @@ class CategoriaRepository extends BasicRepository {
     super(Categoria);
   }
 
-  async GetCategoriaFiltrada(whereCondition){
-    await this.findAll({where : whereCondition})
+  async GetCategoriaFiltrada(nome) {
+    await this.findAll({ where: { descricao: { [Op.like]: `%${nome}%` } } })
   }
 }
 

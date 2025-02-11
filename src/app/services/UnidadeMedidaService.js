@@ -6,8 +6,7 @@ class UnidadeMedidaService {
   }
 
   async getAllUnidadesMedidaFiltrada(descricao) {
-    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
-    return await UnidadeMedidaRepository.GetAllUnidadesMedidaFiltrada(whereCondition);
+    return await UnidadeMedidaRepository.GetAllUnidadesMedidaFiltrada(descricao);
   }
 
   async getUnidadeMedidaById(id) {

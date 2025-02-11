@@ -18,9 +18,9 @@ module.exports = (req, res, next) => {
     // Se sn_percentagem for "S", validamos o valor_promocao
     if (dados.sn_percentagem) {
         if (dados.sn_percentagem === 'N') {
-            validacaoInstancia.ValidarPreco('Valor final deve ser um valor válido', dados.valor_final);
+            validacaoInstancia.ValidarPreco('Valor final deve ser um valor válido', dados.valor_promocao);
         }
-        if (dados.valor_promocao === "S" && dados.valor_promocao > 100) {
+        if (dados.sn_percentagem === "S" && dados.valor_promocao > 100) {
             validacaoInstancia.adicionarErro('Valor da promoção não pode ser maior que 100%');
         }
     }

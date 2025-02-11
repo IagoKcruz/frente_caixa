@@ -260,6 +260,7 @@ export async function validarCamposComBaseEmPromocaoGeralEdit() {
             // Habilita sn_percentagem
             $("#editSnPercentagem").prop("disabled", false)
         }else if(response == false){
+            $("#editSnPercentagem").prop("disabled", false).val("")
             $("#editSnPromocaoGeral").val("N")
             openErrorWindow(null, "Não será possivél mudar para promoção geral, pois existem combos abertas");
         }

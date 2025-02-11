@@ -6,9 +6,9 @@ class UnidadeMedidaRepository extends BasicRepository {
     super(UnidadeMedida);
   }
 
-  async GetAllUnidadesMedidaFiltrada(whereCondition){
-    await this.findAll(whereCondition)
+  async GetAllUnidadesMedidaFiltrada(nome) {
+    await this.findAll({ where: { descricao: { [Op.like]: `%${nome}%` } } })
   }
 }
 
-module.exports = new  UnidadeMedidaRepository();
+module.exports = new UnidadeMedidaRepository();

@@ -35,7 +35,7 @@ class Validacao {
 
     ValidarPreco(mensagem, campo) {
         // Garantir que o campo seja um número e não uma string
-        const precoFormatado = parseFloat(campo) || parseInt(campo);
+        const precoFormatado = parseFloat(campo);
         // Verificando se a conversão foi bem-sucedida e se o preço é maior que 0,01
         if (isNaN(precoFormatado) || precoFormatado <= 0.01) {
             this.adicionarErro(mensagem);

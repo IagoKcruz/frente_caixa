@@ -6,10 +6,8 @@ class PromocaoService {
     return await PromocaoRepository.findAllComInclude();
   }
 
-  async listarPromocoesPorDescricao() {
-    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
-
-    const response = await PromocaoRepository.listarPromocoesPorDescricao(whereCondition)
+  async listarPromocoesPorDescricao(nome) {
+    const response = await PromocaoRepository.listarPromocoesPorDescricao(nome)
     return response;
   }
 

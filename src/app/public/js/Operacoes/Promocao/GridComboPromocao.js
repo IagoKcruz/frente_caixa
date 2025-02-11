@@ -7,8 +7,8 @@ function abrirSubgridComboPromocao(data, items, promocaoId) {
         width: "100%",
         inserting: true,
         editing: true,
-        deleting: true,
-        deleting: false,
+        confirmDeleting: false,
+        deleteConfirm: null,
 
         data: Array.isArray(data) ? data : [],
         fields: [
@@ -24,6 +24,7 @@ function abrirSubgridComboPromocao(data, items, promocaoId) {
             {
                 title: "Delete",
                 itemTemplate: function(value, item) {
+                    console.log(value, item);
                     return $("<button>")
                     .text("Excluir")
                     .addClass("btn btn-danger")
@@ -62,6 +63,7 @@ function abrirSubgridComboPromocao(data, items, promocaoId) {
             }
         }
     });
+
 }
 
 // Função para carregar os itens da lista para o select
@@ -122,7 +124,7 @@ export async function updateComboPromocao(subitem, promocaoId) {
 
         return updatedComboPromocao.combo;
     } catch (error) {
-        $("#jsGridPromocao").jsGrid("cancelUpdate");
+        $("#gridWindow").jsGrid("cancelUpdate");
         openErrorWindow(null, error);
         return $.Deferred().reject(error).promise();
     }
@@ -134,12 +136,17 @@ export async function deleteComboPromocao(subitem) {
         const response = await ajaxDelete('/caixa/ComboPromocao-delete', JSON.stringify(bodyRequest));
         const result = await response.json();
 
-        console.log(result)
+        console.log($("#gridWindow").jsGrid("option", "data"));
+
+        let gridData = $("#gridWindow").jsGrid("option", "data");
+        let itemToDelete = gridData.find(item => item.id === subitem.id); // Substitua "id" pelo campo correto
+
+        console.log(result, itemToDelete)
         if (result.error) {
             openErrorWindow(null, result.error);
             return;
         }
-        $("#jsGridPromocao").jsGrid("deleteItem", subitem);
+        $("#gridWindow").jsGrid("deleteItem", subitem);
     } catch (error) {
         openErrorWindow(null, error.Error);
         return false;

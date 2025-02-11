@@ -3,9 +3,7 @@ const MunicipioRepository = require('../repositories/MunicipioRepository');
 class MunicipioService {
   
   async GetlistarMunicipios(nome){
-    let whereCondition = nome ? { descricao: { [Op.like]: `%${nome}%` } }: {};
-
-    const response = await MunicipioRepository.GetlistarMunicipios(whereCondition)
+    const response = await MunicipioRepository.GetlistarMunicipios(nome)
     return response;
   }
 

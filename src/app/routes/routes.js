@@ -49,20 +49,20 @@ router.put("/Categoria-update", authMiddleware(["ADMIN"]), CadastrarCategoria.up
 router.delete("/Categoria-delete", authMiddleware(["ADMIN"]), CadastrarCategoria.deleteCategoria);
 
 router.get("/registrar-Item", authMiddleware(["ADMIN"]), RegistrarItem.openRegistrarItem);
-router.get("/listar-item-combo", authMiddleware(["ADMIN"]), RegistrarItem.listarItemCombo);
+router.get("/listar-item-combo", RegistrarItem.listarItemCombo);
 router.post("/itens/criar", authMiddleware(["ADMIN"]), ValidRegistrarItem, RegistrarItem.criarItem);
 router.post("/itens/update", authMiddleware(["ADMIN"]), ValidRegistrarItem,RegistrarItem.atualizarItem);
 router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarItem);
 
-router.get("/cadastrar-Promocao", authMiddleware(["ADMIN"]), CadastrarPromocao.openPagePromocao);
-router.post("/listar-Promocao",authMiddleware(["ADMIN"]), CadastrarPromocao.listarPromocoes);
-router.post("/Promocao-criar", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.createPromocao);
-router.post("/verificar-promcao-com-items", authMiddleware(["ADMIN"]), CadastrarPromocao.verificarSePromoTemComboPromo);
-router.put("/Promocao-update", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.updatePromocao);
+router.get("/cadastrar-Promocao", CadastrarPromocao.openPagePromocao);
+router.post("/listar-Promocao",CadastrarPromocao.listarPromocoes);
+router.post("/Promocao-criar", validarPromocao, CadastrarPromocao.createPromocao);
+router.post("/verificar-promcao-com-items", CadastrarPromocao.verificarSePromoTemComboPromo);
+router.put("/Promocao-update", validarPromocao, CadastrarPromocao.updatePromocao);
 
-router.post("/ComboPromocao-criar", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.createComboPromocao);
-router.put("/ComboPromocao-update", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.updateComboPromocao);
-router.delete("/ComboPromocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.deleteComboPromocao);
+router.post("/ComboPromocao-criar", validarComboPromocao, CadastrarPromocao.createComboPromocao);
+router.put("/ComboPromocao-update", validarComboPromocao, CadastrarPromocao.updateComboPromocao);
+router.delete("/ComboPromocao-delete", CadastrarPromocao.deleteComboPromocao);
 
 module.exports = router;
 

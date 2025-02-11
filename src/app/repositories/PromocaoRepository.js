@@ -7,17 +7,20 @@ class PromocaoRepository extends BasicRepository {
     super(Promocao);
   }
 
-  async findAllComInclude(){
+  async findAllComInclude(nome){
     return await Promocao.findAll({
       include: [{
         model: ComboPromocao,
         as: 'combos_promocao', // alias definido no relacionamento hasMany
-      }]
+      }],
+      where : [
+        { descricao: { [Op.like]: `%${nome}%` } }
+      ]
     });
   }
 
-  async listarPromocoesPorDescricao(whereCondition){
-    return await this.findAllComInclude(whereCondition)
+  async listarPromocoesPorDescricao(nome){
+    return await this.findAllComInclude(nome)
   }
 }
 

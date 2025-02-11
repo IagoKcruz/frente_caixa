@@ -22,9 +22,9 @@ $(document).on("change", "#insertSnPromocaoGeral_novo, #editSnPromocaoGeral", as
 });
 
 
-document.getElementById("btnFiltrar").addEventListener("click", function () {
+document.getElementById("btnFiltrar").addEventListener("click", async function () {
     const nome = document.getElementById("filterNome").value;
-    carregarPromocao(nome);
+    await carregarPromocao(nome);
 });
 
 carregarPromocao()

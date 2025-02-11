@@ -8,8 +8,8 @@ class ItemRepository extends BasicRepository {
   }
 
   // Exemplo de método customizado
-  async findByCodigo(codigo) {
-    return await Item.findOne({ where: { codigo } });
+  async findByCodigo(nome){
+    await Item.findAll({where : { descricao: { [Op.like]: `%${nome}%` } }})
   }
 
   async findAllToCombo(){
@@ -17,7 +17,8 @@ class ItemRepository extends BasicRepository {
         "id" ,
         [Sequelize.literal("CONCAT(preco, ' - ', descricao)"),"descricao"], 
         "preco"
-    ] })
+    ] 
+    })
   }
 }
 
