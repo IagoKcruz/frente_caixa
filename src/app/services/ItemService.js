@@ -4,6 +4,12 @@ class ItemService {
   async listarItens() {
     return await ItemRepository.findAll({ include: ['categoria', 'unidade_medida'] });
   }
+  async listarItensAtivos() {
+    return await ItemRepository.findAll({ 
+      include: ['categoria', 'unidade_medida'],
+      where : [{sn_ativo : "S"}]
+    });
+  }
 
   async buscarItemPorId(id) {
     return await ItemRepository.findById(id);

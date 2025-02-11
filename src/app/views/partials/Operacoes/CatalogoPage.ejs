@@ -1,0 +1,31 @@
+<style>
+  .card {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+</style>
+<div class="flex flex-col items-center p-6 lg:p-12 w-full">
+<h2 class="text-2xl font-semibold mb-6 mt-10">Catálogo</h2>
+<div class="container mx-auto px-4 py-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <% items.forEach(item => { %>
+      <div class="bg-white p-4 border rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+        <div class="flex flex-col items-center justify-center gap-3">
+          <h2 class="text-xl font-semibold text-gray-800"><%= item.descricao %></h2>
+          <div class="w-32 h-32 p-2 bg-gray-300"></div>
+          <div class="text-lg font-semibold text-green-600"><%= item.preco %></div>
+        </div>
+        <div class="my-2 text-gray-600">
+          BOTÕES
+        </div>
+        <div class="mt-2 text-gray-500 text-sm">
+          <span>Código: <%= item.codigo %></span>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+</div>

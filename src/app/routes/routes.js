@@ -12,6 +12,7 @@ const validarPromocao = require('../middlewares/validacoes/ValidPromocao.js');
 const validarComboPromocao = require('../middlewares/validacoes/ValidComboPromocao.js');
 const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
 const ConsultarUsuarios = require('../controllers/operacoes/ConsultarUsuariosController.js');
+const Catalogo = require('../controllers/operacoes/CatalogoController.js');
 const enumRole = require('../utilsBack/EnumRoles.js');
 
 const addMenu = require('../middlewares/front/MenuItems');
@@ -65,9 +66,12 @@ router.post("/ComboPromocao-criar", authMiddleware(enumRole.ADMIN), validarCombo
 router.put("/ComboPromocao-update", authMiddleware(enumRole.ADMIN), validarComboPromocao, CadastrarPromocao.updateComboPromocao);
 router.delete("/ComboPromocao-delete", authMiddleware(enumRole.ADMIN), CadastrarPromocao.deleteComboPromocao);
 
-router.get("/usuarios/page", addMenu, ConsultarUsuarios.openPage);
-router.post("/listar-Usuarios", ConsultarUsuarios.listarUsuarios);
-router.put("/Usuario-update", ConsultarUsuarios.updateUsuario);
+router.get("/usuarios/page", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.openPage);
+router.post("/listar-Usuarios", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.listarUsuarios);
+router.put("/Usuario-update", authMiddleware(enumRole.ADMIN), ConsultarUsuarios.updateUsuario);
+
+
+router.get('/catalogo', addMenu, authMiddleware(enumRole.ADMIN, enumRole.CLIENTE), Catalogo.openCatalogoPage);
 
 module.exports = router;
 

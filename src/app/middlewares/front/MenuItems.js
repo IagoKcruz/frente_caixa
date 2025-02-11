@@ -3,20 +3,18 @@ const enumRole = require('../../utilsBack/EnumRoles');
 
 const menuItems = {
   ADMIN: [
-    { name: 'Dashboard', route: '/dashboard', iconClass: 'fas fa-chart-line' },
     { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
-    { name: 'Configurações', route: '/config', iconClass: 'fas fa-cogs' },
     { name: 'Municipio', route: '/cadastrar-Municipio', iconClass: 'fas fa-cogs' },
     { name: 'Unidade de Medida', route: '/cadastrar-UnidadeMedida', iconClass: 'fas fa-cogs' },
     { name: 'Promoção', route: '/cadastrar-Promocao', iconClass: 'fas fa-cogs' },
     { name: 'Categoria', route: '/cadastrar-Categoria', iconClass: 'fas fa-cogs' },
+    { name: 'Catálogo', route: '/catalogo', iconClass: 'fas fa-cogs' },
     { name: 'Usuário', route: '/usuarios/page', iconClass: 'fas fa-cogs' },
     { name: 'Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs' },
     { name: 'Sair', route: '/logout', iconClass: '/img/login' }
   ],
   CLIENTE: [
-    { name: 'Início', route: '/home', iconClass: 'fas fa-home' },
-    { name: 'Perfil', route: '/perfil', iconClass: 'fas fa-user' },
+    { name: 'Catálogo', route: '/catalogo', iconClass: 'fas fa-cogs' },
     { name: 'Sair', route: '/logout', iconClass: '/img/login.svg' }
   ],
   menu: [
