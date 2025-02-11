@@ -3,8 +3,8 @@ import { initializeWindowWithGrid, openErrorWindow, openSuccessWindow } from '..
 import { ajaxGet, ajaxPost, ajaxPut, ajaxDelete } from '../../FetchCommom.js'
 import * as gridComboPromocao from '../../Operacoes/Promocao/GridComboPromocao.js'
 // Função Genérica para Montar `insertTemplate` e `editTemplate`
-function gerarTemplateSelect(value, nomeId, options) {
-    const select = $("<select>").attr("id", nomeId);
+function gerarTemplateSelect(value, nomeId, options, id) {
+    const select = $("<select>").attr("id", nomeId).attr("class", (id ?? ""));
     options.forEach(option => {
         select.append($("<option>").attr("value", option.value).text(option.text));
     });
@@ -23,20 +23,8 @@ const options = [
 ];
 
 // Função para o `insertTemplate` e `editTemplate` de sn_ativo
-function gerarTemplateSn(value, nomeId) {
-    return gerarTemplateSelect(value, nomeId, options);
-}
-
-// Função para "Abrir SubGrid"
-function gerarAbrirSubGridButton(snPromocaoGeral, itemId) {
-    const button = $("<button>").text("Abrir Combo").attr("disabled", snPromocaoGeral !== "N");
-    button.on("click", async function (event) {
-        event.stopPropagation();
-        if (snPromocaoGeral === "N") {
-            await abrirPopupCombos(itemId);
-        }
-    });
-    return button;
+function gerarTemplateSn(value, nomeId, id) {
+    return gerarTemplateSelect(value, nomeId, options, id);
 }
 
 // Função para montar a grid
@@ -47,9 +35,9 @@ export function montarGridPromocao(dataGrid) {
 
         inserting: true,
         editing: true,
+        deleting: false,
         sorting: true,
         paging: true,
-        deleting: true,
 
         data: Array.isArray(dataGrid) ? dataGrid : [],
 
@@ -73,7 +61,7 @@ export function montarGridPromocao(dataGrid) {
                     return $("#insertValorFinal_novo").val();
                 },
                 editValue: function () {
-                    return $("#editValorFinal_" + this.item.id).val();
+                    return $("#editValorFinal").val();
                 }
             },
             {
@@ -89,7 +77,7 @@ export function montarGridPromocao(dataGrid) {
                     return gerarTemplateSn("", "insertSnPromocaoGeral_novo");
                 },
                 editTemplate: function (value, item) {
-                    return gerarTemplateSn(value, "editSnPromocaoGeral");
+                    return gerarTemplateSn(value, "editSnPromocaoGeral", item.id);
                 },
                 insertValue: function () {
                     return $("#insertSnPromocaoGeral_novo").val();
@@ -102,12 +90,12 @@ export function montarGridPromocao(dataGrid) {
                 name: "sn_percentagem",
                 type: "select",
                 title: "Valor em %",
-                items: [{ Name: "%", Id: "P" }, { Name: "Valor", Id: "V" }, { Name: "Combo Promoção", Id: "C" }],
+                items: [{ Name: "Sim", Id: "S" }, { Name: "Não", Id: "N" }],
                 valueField: "Id",
                 textField: "Name",
                 width: 80,
 
-                insertTemplate: function () {
+                insertTemplate: function (value, item) {
                     return gerarTemplateSn("", "insertSnPercentagem_novo");
                 },
                 editTemplate: function (value, item) {
@@ -156,7 +144,7 @@ export function montarGridPromocao(dataGrid) {
                     return "<span>";
                 }
             },
-            { type: "control", editButton: true, deleteButton: true },
+            { type: "control", editButton: true, deleteButton: false },
         ],
 
         controller: {
@@ -174,13 +162,14 @@ export function montarGridPromocao(dataGrid) {
             },
     
             updateItem: async function (item) {
-                item.cancel = true;
-                return await updatePromocao(item);
-            },
+                const result =await updatePromocao(item);
+                    
+                if (result === false) {
+                    this.cancelEdit();
+                    return false;  // Impede a inserção do item na grid
+                }
     
-            deleteItem: async function (item) {
-                item.cancel = true;
-                return await deletePromocao(item);
+                return result;
             }
         },
     });
@@ -219,9 +208,8 @@ async function updatePromocao(item) {
         const response = await ajaxPut('/caixa/Promocao-update', JSON.stringify(promocaoDTO));
         const updatedPromocao = await response.json();
 
-        if (newPromocao.error) { 
-            openErrorWindow(null, newPromocao.error); 
-            $("#jsGridPromocao").jsGrid("cancelInsert");
+        if (updatedPromocao.error) { 
+            openErrorWindow(null, updatedPromocao.error); 
             return false;
         }
 
@@ -233,27 +221,8 @@ async function updatePromocao(item) {
     }
 }
 
-async function deletePromocao(item) {
-    try {
-        const bodyRequest = { id: item.id };
-        const response = await ajaxDelete('/caixa/Promocao-delete', JSON.stringify(bodyRequest));
-        const result = await response.json();
 
-        if (newPromocao.error) { 
-            openErrorWindow(null, newPromocao.error); 
-            $("#jsGridPromocao").jsGrid("cancelInsert");
-            return false;
-        }
-
-        return result;
-    } catch (error) {
-        openErrorWindow(null, error.Error);
-        return $.Deferred().reject(error).promise();
-    }
-}
-
-
-export function validarCamposComBaseEmPromocaoGeralInsert() {
+export function validarCamposComBaseEmPromocaoGeralInsert(e) {
     // Verifica o valor selecionado de sn_promocao_geral
     const snPromocaoGeral = $("#insertSnPromocaoGeral_novo").val();
 
@@ -277,16 +246,23 @@ export function validarCamposComBaseEmPromocaoGeralInsert() {
     }
 }
 
-export function validarCamposComBaseEmPromocaoGeralEdit() {
+export async function validarCamposComBaseEmPromocaoGeralEdit() {
     // Verifica o valor selecionado de sn_promocao_geral
     const snPromocaoGeral = $("#editSnPromocaoGeral").val();
-
     if (snPromocaoGeral === "S") {
-        // Habilita o campo valor_final
-        $("#editValorFinal").prop("disabled", false);
-        
-        // Habilita sn_percentagem
-        $("#editSnPercentagem").prop("disabled", false)
+        let promocaoId = $("#editSnPromocaoGeral").attr("class");
+
+        const response = await verificarSeTemCombo(promocaoId);
+        if(response){
+            // Habilita o campo valor_final
+            $("#editValorFinal").prop("disabled", false);
+            
+            // Habilita sn_percentagem
+            $("#editSnPercentagem").prop("disabled", false)
+        }else if(response == false){
+            $("#editSnPromocaoGeral").val("N")
+            openErrorWindow(null, "Não será possivél mudar para promoção geral, pois existem combos abertas");
+        }
     } else {
         // Desabilita o campo valor_final
         $("#editValorFinal").prop("disabled", true);
@@ -299,11 +275,14 @@ export function validarCamposComBaseEmPromocaoGeralEdit() {
 
 async function verificarSeTemCombo(promocaoId) {
     try {
-        let response = await ajaxGet("/caixa/verificar-promcao-com-items", JSON.stringify({ promoId: promocaoId }));
+        let response = await ajaxPost("/caixa/verificar-promcao-com-items", JSON.stringify({ promoId: promocaoId }));
         let result = await response.json();
-        return result.temComboAtivo; // Retorna true se houver combos ativos, senão false
+        if(result.error){
+            openErrorWindow(null, result.error);
+            return false;
+        }
+        return result.verificar; // Retorna true se houver combos ativos, senão false
     } catch (error) {
-        console.error("Erro ao verificar combo ativo:", error);
         return false;
     }
 }

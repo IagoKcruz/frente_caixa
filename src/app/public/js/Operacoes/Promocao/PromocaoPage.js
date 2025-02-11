@@ -16,9 +16,9 @@ async function carregarPromocao(nome = "") {
 }
 
 // Aplica a função sempre que o campo `sn_promocao_geral` for alterado
-$(document).on("change", "#insertSnPromocaoGeral_novo, #editSnPromocaoGeral", function () {
+$(document).on("change", "#insertSnPromocaoGeral_novo, #editSnPromocaoGeral", async function () {
     gridPromocao.validarCamposComBaseEmPromocaoGeralInsert();
-    gridPromocao.validarCamposComBaseEmPromocaoGeralEdit();
+    await gridPromocao.validarCamposComBaseEmPromocaoGeralEdit();
 });
 
 

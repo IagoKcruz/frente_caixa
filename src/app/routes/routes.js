@@ -59,7 +59,6 @@ router.post("/listar-Promocao",authMiddleware(["ADMIN"]), CadastrarPromocao.list
 router.post("/Promocao-criar", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.createPromocao);
 router.post("/verificar-promcao-com-items", authMiddleware(["ADMIN"]), CadastrarPromocao.verificarSePromoTemComboPromo);
 router.put("/Promocao-update", authMiddleware(["ADMIN"]), validarPromocao, CadastrarPromocao.updatePromocao);
-router.delete("/Promocao-delete", authMiddleware(["ADMIN"]), CadastrarPromocao.desativarPromocao);
 
 router.post("/ComboPromocao-criar", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.createComboPromocao);
 router.put("/ComboPromocao-update", authMiddleware(["ADMIN"]), validarComboPromocao, CadastrarPromocao.updateComboPromocao);

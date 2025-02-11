@@ -34,8 +34,12 @@ class CadastrarPromocaoController {
         try {
             const promoId = req.body.promoId;
             let verificar = await PromocaoService.verificarSePromoTemComboPromo(promoId);
-
-            return res.json({verificar});
+            if(verificar == null){
+                return res.json({verificar : true});
+            }else{
+                return res.json({verificar : false});
+            }
+            
         } catch (error) {
             return res.json({ error: error });
         }
@@ -64,21 +68,7 @@ class CadastrarPromocaoController {
             return res.json({ promocaoDto });
         } catch (error) {
             console.error('Erro ao atualizar promoção:', error);
-            return res.json({ error: 'Erro ao atualizar promoção' });
-        }
-    }
-
-    // Deletar Promoção
-    async desativarPromocao(req, res) {
-        try {
-            const { id } = req.body;
-
-            await PromocaoService.desativarPromocao(id);
-
-            return res.json({ status: true });
-        } catch (error) {
-            console.error('Erro ao deletar promoção:', error);
-            return res.json({ error: 'Erro ao deletar promoção' });
+            return res.json({ error: error });
         }
     }
 
@@ -86,25 +76,27 @@ class CadastrarPromocaoController {
     async createComboPromocao(req, res) {
         try {
             const { valor_promocao, sn_percentagem, item_id, promocao_id } = req.body;
-
+            
             // Criar o Combo de Promoção
             const comboPromocaoDto = {
                 id: uuidv4(),
                 valor_promocao,
-                valor_percentagem,
+                sn_percentagem,
                 item_id,
                 promocao_id
             };
 
-            const comboPromocao = await ComboPromocaoService.create(comboPromocaoDto);
+            const validarComboExistente =  await ComboPromocaoService.verificaSeItemJaEstaNapromocao(comboPromocaoDto.promocao_id, comboPromocaoDto.item_id);      
+            if(validarComboExistente){
+                return res.json({error : "Produto já inserido nessa Promoção"})
+            }
 
-            // Atualizar o valor_total da Promoção
-            await this.atualizarValorFinalPromocao(promocao_id, comboPromocao.valor_promocao);
+            const comboPromocao = await ComboPromocaoService.criarCombo(comboPromocaoDto);
 
-            return res.json({ comboPromocao, error: null });
+            return res.json({ combo : comboPromocao });
         } catch (error) {
             console.error('Erro ao criar combo de promoção:', error);
-            return res.json({ error: 'Erro ao criar combo de promoção' });
+            return res.json({ error: error });
         }
     }
 
@@ -112,13 +104,11 @@ class CadastrarPromocaoController {
     async updateComboPromocao(req, res) {
         try {
             const comboPromocaoDto = req.body;
-
-            await ComboPromocaoService.atualizarCombo(comboPromocaoDto);
-
-            return res.json({ comboPromocaoDto });
+            const response = await ComboPromocaoService.atualizarCombo(comboPromocaoDto);
+            console.log(response)
+            return res.json({ combo : comboPromocaoDto });
         } catch (erro) {
-            console.error('Erro ao atualizar combo de promoção:', erro);
-            return res.json({ error: erro.error });
+            return res.json({ error: erro.Error });
         }
     }
 
@@ -126,13 +116,16 @@ class CadastrarPromocaoController {
     async deleteComboPromocao(req, res) {
         try {
             const { id } = req.body;
+            const response = await ComboPromocaoService.deletarCombo(id);
+            if(response){
+                return res.json({ status: true });
+            }else{
+                return res.json({error : "Erro ao excluir Combo Promoção"})
+            }
 
-            await ComboPromocaoService.deletarCombo(id);
-
-            return res.json({ status: true });
         } catch (error) {
-            console.error('Erro ao deletar combo de promoção:', error);
-            return res.json({ error: 'Erro ao deletar combo de promoção' });
+            console.log(error.Error)
+            return res.json({ error: error.Error });
         }
     }   
 }

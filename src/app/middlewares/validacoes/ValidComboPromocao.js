@@ -1,10 +1,7 @@
 const validacao = require('../../utilsBack/validations'); // Importando a classe de validação
-
 module.exports = (req, res, next) => {
     const dados = req.body;
     const validacaoInstancia = new validacao();
-
-    console.log(req.body);
 
     // Validação para o campo valor_promocao
     validacaoInstancia.NotNULL('Valor da promoção é obrigatório', dados.valor_promocao);
@@ -23,7 +20,7 @@ module.exports = (req, res, next) => {
         if (dados.sn_percentagem === 'N') {
             validacaoInstancia.ValidarPreco('Valor final deve ser um valor válido', dados.valor_final);
         }
-        if (dados.valor_promocao === "S" && parseFloat(dados.valor_promocao) > 100) {
+        if (dados.valor_promocao === "S" && dados.valor_promocao > 100) {
             validacaoInstancia.adicionarErro('Valor da promoção não pode ser maior que 100%');
         }
     }
