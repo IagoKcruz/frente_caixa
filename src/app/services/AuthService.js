@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
 const UsuarioRepository = require("../repositories/UsuarioRepository");
-const { isValidRole, getRoleName } = require('../utilsBack/EnumRoles.js')
 
 class AuthService {
   async login(email, codigo, sessionCode) {
     const user = await Usuario.findOne({ where: { email : email } });
+    console.log(user)
     if (!user) {
       throw new Error("Usuário não encontrado");
     }
@@ -17,7 +17,7 @@ class AuthService {
 
     const payload = {
       id: user.email,
-      role: getRoleName(user.grupo_usuario_id),
+      role: user.grupo_usuario_id,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"24h", subject:payload.id });

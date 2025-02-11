@@ -12,6 +12,8 @@ const validarCadastro = require('../middlewares/validacoes/ValidRegister.js');
 const validarPromocao = require('../middlewares/validacoes/ValidPromocao.js');
 const validarComboPromocao = require('../middlewares/validacoes/ValidComboPromocao.js');
 const CadastrarPromocao = require('../controllers/operacoes/CadastrarPromocaoController.js');
+const enumRole = require('../utilsBack/EnumRoles.js');
+
 const addMenu = require('../middlewares/front/MenuItems');
 
 
@@ -23,36 +25,36 @@ router.post("/find-user", AuthController.findUserByEmail);
 router.get('/register', AuthController.openRegisterPage);
 
 
-router.get('/dashboardadmin', addMenu, authMiddleware(["ADMIN"]) , PromocaoController.openDashboard);
+router.get('/dashboardadmin', addMenu, authMiddleware(enumRole.CLIENTE) , PromocaoController.openDashboard);
 router.post('/register-cliente', validarCadastro, ClienteController.criar)
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/caixa/');
 });
 
-router.get("/cadastrar-Municipio", authMiddleware(["ADMIN"]), CadastrarMunicipio.openPageMunicipio);
-router.post("/listar-municipios", authMiddleware(["ADMIN"]), CadastrarMunicipio.listarMunicipios);
-router.post("/municipio-criar", authMiddleware(["ADMIN"]), CadastrarMunicipio.createMunicipio);
-router.put("/municipio-update", authMiddleware(["ADMIN"]), CadastrarMunicipio.updateMunicipio);
-router.delete("/municipio-delete", authMiddleware(["ADMIN"]), CadastrarMunicipio.deleteMunicipio);
+router.get("/cadastrar-Municipio", authMiddleware(enumRole.CLIENTE), CadastrarMunicipio.openPageMunicipio);
+router.post("/listar-municipios", authMiddleware(enumRole.CLIENTE), CadastrarMunicipio.listarMunicipios);
+router.post("/municipio-criar", authMiddleware(enumRole.CLIENTE), CadastrarMunicipio.createMunicipio);
+router.put("/municipio-update", authMiddleware(enumRole.CLIENTE), CadastrarMunicipio.updateMunicipio);
+router.delete("/municipio-delete", authMiddleware(enumRole.CLIENTE), CadastrarMunicipio.deleteMunicipio);
 
-router.get("/cadastrar-UnidadeMedida", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.openPageUnidadeMedida);
-router.post("/listar-UnidadeMedida", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.listarUnidadeMedidas);
-router.post("/UnidadeMedida-criar", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.createUnidadeMedida);
-router.put("/UnidadeMedida-update", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.updateUnidadeMedida);
-router.delete("/UnidadeMedida-delete", authMiddleware(["ADMIN"]), CadastrarUnidadeMedida.deleteUnidadeMedida);
+router.get("/cadastrar-UnidadeMedida", authMiddleware(enumRole.CLIENTE), CadastrarUnidadeMedida.openPageUnidadeMedida);
+router.post("/listar-UnidadeMedida", authMiddleware(enumRole.CLIENTE), CadastrarUnidadeMedida.listarUnidadeMedidas);
+router.post("/UnidadeMedida-criar", authMiddleware(enumRole.CLIENTE), CadastrarUnidadeMedida.createUnidadeMedida);
+router.put("/UnidadeMedida-update", authMiddleware(enumRole.CLIENTE), CadastrarUnidadeMedida.updateUnidadeMedida);
+router.delete("/UnidadeMedida-delete", authMiddleware(enumRole.CLIENTE), CadastrarUnidadeMedida.deleteUnidadeMedida);
 
-router.get("/cadastrar-Categoria", authMiddleware(["ADMIN"]), CadastrarCategoria.openPageCategoria);
-router.post("/listar-Categoria", authMiddleware(["ADMIN"]), CadastrarCategoria.listarCategorias);
-router.post("/Categoria-criar", authMiddleware(["ADMIN"]), CadastrarCategoria.createCategoria);
-router.put("/Categoria-update", authMiddleware(["ADMIN"]), CadastrarCategoria.updateCategoria);
-router.delete("/Categoria-delete", authMiddleware(["ADMIN"]), CadastrarCategoria.deleteCategoria);
+router.get("/cadastrar-Categoria", authMiddleware(enumRole.CLIENTE), CadastrarCategoria.openPageCategoria);
+router.post("/listar-Categoria", authMiddleware(enumRole.CLIENTE), CadastrarCategoria.listarCategorias);
+router.post("/Categoria-criar", authMiddleware(enumRole.CLIENTE), CadastrarCategoria.createCategoria);
+router.put("/Categoria-update", authMiddleware(enumRole.CLIENTE), CadastrarCategoria.updateCategoria);
+router.delete("/Categoria-delete", authMiddleware(enumRole.CLIENTE), CadastrarCategoria.deleteCategoria);
 
-router.get("/registrar-Item", authMiddleware(["ADMIN"]), RegistrarItem.openRegistrarItem);
+router.get("/registrar-Item", authMiddleware(enumRole.CLIENTE), RegistrarItem.openRegistrarItem);
 router.get("/listar-item-combo", RegistrarItem.listarItemCombo);
-router.post("/itens/criar", authMiddleware(["ADMIN"]), ValidRegistrarItem, RegistrarItem.criarItem);
-router.post("/itens/update", authMiddleware(["ADMIN"]), ValidRegistrarItem,RegistrarItem.atualizarItem);
-router.post("/itens/delete", authMiddleware(["ADMIN"]), RegistrarItem.deletarItem);
+router.post("/itens/criar", authMiddleware(enumRole.CLIENTE), ValidRegistrarItem, RegistrarItem.criarItem);
+router.post("/itens/update", authMiddleware(enumRole.CLIENTE), ValidRegistrarItem,RegistrarItem.atualizarItem);
+router.post("/itens/delete", authMiddleware(enumRole.CLIENTE), RegistrarItem.deletarItem);
 
 router.get("/cadastrar-Promocao", CadastrarPromocao.openPagePromocao);
 router.post("/listar-Promocao",CadastrarPromocao.listarPromocoes);

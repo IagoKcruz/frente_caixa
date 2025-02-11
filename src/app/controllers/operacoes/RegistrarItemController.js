@@ -26,7 +26,6 @@ class ItemController {
   }
 
   async criarItem(req, res) {
-    console.log(req.body);
     try {
       const {
         categoria_id,
