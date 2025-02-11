@@ -8,7 +8,7 @@ class MunicipioRepository extends BasicRepository {
   }
 
   async GetlistarMunicipios(nome){
-    await this.findAll({where : { descricao: { [Op.like]: `%${nome}%` } }})
+    return await Municipio.findAll({where : { descricao: { [Op.like]: `%${nome}%` } }})
   }
 }
 module.exports = new MunicipioRepository();

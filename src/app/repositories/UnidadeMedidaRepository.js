@@ -8,7 +8,7 @@ class UnidadeMedidaRepository extends BasicRepository {
   }
 
   async GetAllUnidadesMedidaFiltrada(nome) {
-    await this.findAll({ where: { descricao: { [Op.like]: `%${nome}%` } } })
+    await UnidadeMedida.findAll({ where: { descricao: { [Op.like]: `%${nome}%` } } })
   }
 }
 

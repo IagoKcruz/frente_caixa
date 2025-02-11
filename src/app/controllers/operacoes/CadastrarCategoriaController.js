@@ -13,6 +13,7 @@ class CadastrarCategoriaController {
     async listarCategorias(req, res){
         try {
             const nome = req.body.nome;
+            console.log(nome)
             let lista;
             if (!nome) {
                 lista = await CategoriaService.getAllCategorias();
