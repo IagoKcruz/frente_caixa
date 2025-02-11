@@ -3,7 +3,6 @@ const enumRole = require('../../utilsBack/EnumRoles');
 
 const menuItems = {
   ADMIN: [
-    { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
     { name: 'Municipio', route: '/cadastrar-Municipio', iconClass: 'fas fa-cogs' },
     { name: 'Unidade de Medida', route: '/cadastrar-UnidadeMedida', iconClass: 'fas fa-cogs' },
     { name: 'Promoção', route: '/cadastrar-Promocao', iconClass: 'fas fa-cogs' },

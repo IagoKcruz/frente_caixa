@@ -31,7 +31,7 @@ class ClienteController {
         sn_ativo
       } = req.body;
 
-      const existeUsuarioComEsteEmail = await UsuarioService.findUserByEmail(UserEmail);
+      const existeUsuarioComEsteEmail = await UsuarioService.findUserByEmail(email);
 
       if(existeUsuarioComEsteEmail != null){
         return res.json({ error : "Email inválido"})
