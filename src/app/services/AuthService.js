@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
 const UsuarioRepository = require("../repositories/UsuarioRepository");
+const { isValidRole, getRoleName } = require('../utilsBack/EnumRoles.js')
 
 class AuthService {
   async login(email, codigo, sessionCode) {
@@ -16,17 +17,16 @@ class AuthService {
 
     const payload = {
       id: user.email,
-      role: "ADMIN",
+      role: getRoleName(user.grupo_usuario_id),
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"24h", subject:payload.id });
-    console.log(payload)
     return token;
   }
 
   async findUserByEmail(email) {
     const user = await UsuarioRepository.countByEmail(email);
-    console.log(user)
+    
     if (!user || user == 0) {
        throw new Error("Email não encontrado");
     }
