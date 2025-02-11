@@ -1,5 +1,6 @@
 const BasicRepository = require('./BasicRepository.js');
 const UnidadeMedida = require('../models/UnidadeMedida');
+const { Op } = require('sequelize');
 
 class UnidadeMedidaRepository extends BasicRepository {
   constructor() {

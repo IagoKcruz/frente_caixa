@@ -1,5 +1,6 @@
 const BasicRepository = require('./BasicRepository.js');
 const Categoria = require('../models/Categoria');
+const { Op } = require('sequelize');
 
 class CategoriaRepository extends BasicRepository {
   constructor() {

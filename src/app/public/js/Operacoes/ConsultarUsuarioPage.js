@@ -4,7 +4,7 @@ import { UsuarioDTO } from '../../dtos/UsuarioDto.js';
 
 async function carregarUsuarios(nome = "") {
     try {
-        const response = await ajaxPost("/caixa/listar-Usuarios", JSON.stringify({nome}));
+        const response = await ajaxPost("/caixa/listar-Usuarios", JSON.stringify({ nome }));
         const usuario = await response.json();
         montarGrid(usuario.usuarios);
     } catch (error) {
@@ -13,40 +13,38 @@ async function carregarUsuarios(nome = "") {
     }
 }
 
-function montarGrid(data){
+function montarGrid(dataGrid) {
     $("#jsGrid").jsGrid({
         height: "auto",
         width: "100%",
-        inserting: false,
+
+        inserting: true,
         editing: true,
         sorting: true,
         paging: true,
-        data: data,  // Aqui você coloca os dados que vêm do backend
-    
+        autoload: false,
+        deleting: true,
+
+        data: Array.isArray(dataGrid) ? dataGrid : [],  // Aqui você coloca os dados que vêm do backend
+
         fields: [
             {
                 name: "nome",
                 title: "Nome",
                 type: "text",
-                width: 150,
-                editing: true, 
-                readonly : true // Não editável
+                width: 150, readOnly: true
             },
             {
                 name: "email",
                 title: "Email",
                 type: "text",
-                width: 200,
-                editing: true, 
-                readonly : true // Não editável
+                width: 200, readOnly: true
             },
             {
                 name: "login",
                 title: "Login",
                 type: "text",
-                width: 150,
-                editing: true, 
-                readonly : true // Editável
+                width: 150, readOnly: true
             },
             {
                 name: "grupo_usuario_id",
@@ -58,32 +56,24 @@ function montarGrid(data){
                 ],
                 valueField: "Id",
                 textField: "Name",
-                width: 150,
-                editing: true, 
-                readonly : true// Editável
+                width: 150
             },
-            {
-                type: "control",
-                modeSwitchButton: false,
-                editButton: true,
-                deleteButton: false,
-                width: 50
-            }
+            { type: "control", editButton: true, deleteButton: false }
         ],
-    
-        // Função para atualização de dados
-        updateItem: async function (value, item) {
-            console.log(item)
-            const result = await updateUsuario(item);
-    
-            if (result === false) {
-                this.cancelEdit();
-                return false;  // Impede a atualização do item na grid
+        controller: {
+            updateItem: async function (item) {
+                const result = await updateUsuario(item);
+
+                if (result === false) {
+                    this.cancelEdit();
+                    return false;  // Impede a atualização do item na grid
+                }
+
+                return result;
             }
-    
-            return result;
         }
-    });
+    }
+    );
 }
 
 async function updateUsuario(item) {
@@ -93,12 +83,12 @@ async function updateUsuario(item) {
         const response = await ajaxPut('/caixa/Usuario-update', JSON.stringify(usuarioDTO));
         const updatedUsuario = await response.json();
 
-        if (updatedUsuario.error) { 
-            openErrorWindow(null, updatedUsuario.error); 
+        if (updatedUsuario.error) {
+            openErrorWindow(null, updatedUsuario.error);
             return false;
         }
-
-        return updatedUsuario.UsuarioDTO;
+        openSuccessWindow(null, "Sucesso ao alterar usuário");
+        return updatedUsuario.usuario;
     } catch (error) {
         $("#jsGridUsuario").jsGrid("cancelInsert");
         openErrorWindow(null, error);

@@ -67,7 +67,7 @@ router.delete("/ComboPromocao-delete", authMiddleware(enumRole.ADMIN), Cadastrar
 
 router.get("/usuarios/page", addMenu, ConsultarUsuarios.openPage);
 router.post("/listar-Usuarios", ConsultarUsuarios.listarUsuarios);
-router.put("/Usuarios-update", ConsultarUsuarios.update);
+router.put("/Usuario-update", ConsultarUsuarios.updateUsuario);
 
 module.exports = router;
 

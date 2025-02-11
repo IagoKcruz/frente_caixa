@@ -1,6 +1,7 @@
 const Promocao = require('../models/Promocao');
 const ComboPromocao = require('../models/ComboPromocao');
 const BasicRepository = require('./BasicRepository');
+const { Op } = require('sequelize');
 
 class PromocaoRepository extends BasicRepository {
   constructor() {

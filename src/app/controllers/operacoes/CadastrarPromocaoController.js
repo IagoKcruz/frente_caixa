@@ -105,7 +105,7 @@ class CadastrarPromocaoController {
         try {
             const comboPromocaoDto = req.body;
             const response = await ComboPromocaoService.atualizarCombo(comboPromocaoDto);
-            console.log(response)
+
             return res.json({ combo : comboPromocaoDto });
         } catch (erro) {
             return res.json({ error: erro.Error });

@@ -21,10 +21,19 @@ class ConsultarUsuariosController {
         }
     }
 
-    async update(req, res) {
-        const usuario = await await UsuarioService.updateUsuario(req.body);
-        console.log(usuario);
-        res.json(usuario);
+    async updateUsuario(req, res) {
+        try 
+        {
+            const usuario = await UsuarioService.updateUsuario(req.body);
+            console.log(usuario);
+            if(usuario){
+                return res.json({ usuario: usuario });
+            }else{
+                return res.json({error : error})
+            }
+        }catch (erro){
+            return res.json({error : erro})
+        }
     }
 }
 
