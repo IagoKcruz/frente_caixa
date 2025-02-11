@@ -11,7 +11,7 @@ function eventLogin(){
 
         if(!response.error){
             localStorage.setItem("token", response.token)
-            window.location.href = "/caixa/dashboardadmin"
+            window.location.href = "/caixa/usuarios/page"
         }else{
             openErrorWindow(null, response.error)
         }

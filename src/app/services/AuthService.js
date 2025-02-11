@@ -5,7 +5,6 @@ const UsuarioRepository = require("../repositories/UsuarioRepository");
 class AuthService {
   async login(email, codigo, sessionCode) {
     const user = await Usuario.findOne({ where: { email : email } });
-    console.log(user)
     if (!user) {
       throw new Error("Usuário não encontrado");
     }

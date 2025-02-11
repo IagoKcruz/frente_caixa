@@ -8,11 +8,6 @@ function gerarTemplateSelect(value, nomeId, options, id) {
     options.forEach(option => {
         select.append($("<option>").attr("value", option.value).text(option.text));
     });
-
-    $("#" + nomeId).on("change", () => {
-        console.log("oi")
-    })
-
     if (value) select.val(value);
     return select;
 }

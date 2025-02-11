@@ -13,6 +13,16 @@ class UsuarioRepository extends BaseRepository {
 
     return count;
   }
+
+  async findAllWithFiltro(nome){
+    const whereClause = nome ?
+    { descricao: { [Op.like]: `%${nome}%` } } :
+    {};
+
+    return await Usuario.findAll({
+      where: whereClause
+    });
+  }
 }
 
 module.exports = new UsuarioRepository();

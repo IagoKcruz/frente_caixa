@@ -6,7 +6,7 @@
         <% menuItems.forEach(item => { %>
             <li class="w-full flex gap-2 items-start justify-center menu-item ">
                 <a href="/caixa<%= item.route %>" class="h-6 w-full flex items-center px-6 py-4 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-                    <img src="<%= item.iconClass %>" class="mr-6 w-4 h-4"/> <!-- Ícone sempre visível -->
+                    <!-- <img src="" class="mr-6 w-4 h-4"/>  -->
                     <span class="menu-text <%= item.isActive ? 'text-black' : 'text-white' %>"><%= item.name %></span>
                 </a>
                 <% if(item.submenu) { %>
@@ -26,3 +26,4 @@
     </ul>
   </div>
   
+  <!-- < item.iconClass %> -->

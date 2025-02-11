@@ -10,6 +10,7 @@ const menuItems = {
     { name: 'Unidade de Medida', route: '/cadastrar-UnidadeMedida', iconClass: 'fas fa-cogs' },
     { name: 'Promoção', route: '/cadastrar-Promocao', iconClass: 'fas fa-cogs' },
     { name: 'Categoria', route: '/cadastrar-Categoria', iconClass: 'fas fa-cogs' },
+    { name: 'Usuário', route: '/usuarios/page', iconClass: 'fas fa-cogs' },
     { name: 'Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs' },
     { name: 'Sair', route: '/logout', iconClass: '/img/login' }
   ],

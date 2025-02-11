@@ -1,8 +1,8 @@
 const UsuarioRepository = require('../repositories/UsuarioRepository.js');
 
 class UsuarioService {
-  async getAllUsuarios() {
-    return await UsuarioRepository.findAll();
+  async getAllUsuarios(nome) {
+    return await UsuarioRepository.findAllWithFiltro(nome);
   }
 
   async getUsuarioById(id) {
