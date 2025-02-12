@@ -10,7 +10,6 @@ class FormaPagamentoService {
   }
 
   async createFormaPagamento(data) {
-    confirm.log(data)
     return await FormaPagamentoRepository.create(data);
   }
 

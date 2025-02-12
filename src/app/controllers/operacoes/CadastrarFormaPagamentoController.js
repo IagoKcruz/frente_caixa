@@ -49,20 +49,16 @@ class CadastrarFormaPagamentoController {
 
             const id = uuidv4()
             const codigo = gerarCodigoUnico("FP");
-            console.log(        id, 
-                codigo,
-                descricao,
-                tipo_recebimento_id,
-                parcelas)
+
             const formaPagamento = await FormaPagamentoService.createFormaPagamento( 
-                id, 
+                {id, 
                 codigo,
                 descricao,
                 tipo_recebimento_id,
-                parcelas
+                parcelas}
             );
 
-            return res.json({ FormaPagamento : formaPagamento});
+            return res.json({ formaPagamento : formaPagamento});
         } catch (erro) {
             let error = erro.Error
             return res.json({error :error});
@@ -79,10 +75,12 @@ class CadastrarFormaPagamentoController {
             } = req.body;
 
             const formaPagamento = await FormaPagamentoService.updateFormaPagamento(  
-                codigo,
-                descricao,
-                tipo_recebimento_id,
-                parcelas);
+                    {
+                        descricao,
+                        tipo_recebimento_id,
+                        parcelas
+                    }
+                );
 
             return res.json({ formaPagamento: formaPagamento });
         } catch (erro) {

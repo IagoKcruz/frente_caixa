@@ -7,7 +7,7 @@ async function carregarFormaPagamento(descricao = "") {
         const response = await ajaxPost("/caixa/listar-FormaPagamento", JSON.stringify({ descricao }));
         const formaPagamento = await response.json();
 
-        montarGridFormaPagamento(formaPagamento.Promocoes, formaPagamento.tipo_recebimento);
+        montarGridFormaPagamento(formaPagamento.formaPagamentos, formaPagamento.tipo_recebimento);
     } catch (error) {
         openErrorWindow(null, error.error);
     }
@@ -44,7 +44,7 @@ function montarGridFormaPagamento(dataGrid, tipo_recebimento) {
             {
                 name: "tipo_recebimento_id",
                 type: "number",
-                item: tipo_recebimento,
+                item: [tipo_recebimento],
                 title: "Tipo Recebimento",
                 valueField: "id", textField: "descricao",
                 width: 100,
@@ -138,13 +138,7 @@ async function createFormaPagamento(item) {
             return false;
         }
 
-        return {
-            id: formaPagamento.forma.id,
-            descricao: formaPagamento.forma.codigo,
-            descricao: formaPagamento.forma.descricao,
-            descricao: formaPagamento.forma.tipo_recebimento_id,
-            descricao: formaPagamento.forma.parcelas,
-        };
+        return formaPagamento.formaPagamento;
     } catch (error) {
         openErrorWindow(null, error.error || error.errors);
         return $.Deferred().reject(error).promise();
