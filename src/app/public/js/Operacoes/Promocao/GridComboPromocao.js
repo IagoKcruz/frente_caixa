@@ -114,8 +114,6 @@ export async function updateComboPromocao(subitem, promocaoId) {
         const response = await ajaxPut('/caixa/ComboPromocao-update', JSON.stringify(comboPromocaoDTO));
         const updatedComboPromocao = await response.json();
 
-        console.log(updatedComboPromocao)
-
         if (!updatedComboPromocao.combo) {
             this.cancelEdit();
             openErrorWindow(null, updatedComboPromocao.error);
