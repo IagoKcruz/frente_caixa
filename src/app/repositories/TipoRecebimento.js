@@ -7,4 +7,4 @@ class TipoRecebimentoRepository extends BasicRepository {
   }
 }
 
-module.exports = TipoRecebimentoRepository;
+module.exports = new TipoRecebimentoRepository();

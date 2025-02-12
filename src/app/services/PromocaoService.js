@@ -24,8 +24,8 @@ class PromocaoService {
     return await PromocaoRepository.create(promocaoData);
   }
 
-  async updatePromocao(id, promocaoData) {
-    return await PromocaoRepository.update(id, promocaoData);
+  async updatePromocao(promocaoData) {
+    return await PromocaoRepository.update(promocaoData);
   }
 
   async desativarPromocao(id) {

@@ -1,0 +1,18 @@
+<div class="flex flex-col items-center p-6 w-full">
+  <!-- Filtro -->
+  <div class="bg-white p-4 rounded-lg shadow-md mb-6 w-full max-w-3xl">
+    <label for="filtroNome" class="block text-gray-700 font-semibold mb-2">Filtrar por Nome:</label>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input type="text" id="filtroNome"
+        class="border border-gray-300 p-2 rounded-lg flex-1 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <button id="btnFiltrar" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+        Filtrar
+      </button>
+    </div>
+  </div>
+
+  <div id="jsGrid">
+  </div>
+</div>
+
+<script src="/js/Operacoes/FormaPagamentoPage.js" type="module"></script>

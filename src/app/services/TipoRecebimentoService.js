@@ -1,29 +1,28 @@
-const TipoRecebimentoRepository = require('../repositories/TipoOperacaoRepository');
+const TipoRecebimentoRepository = require('../repositories/TipoRecebimento.js');
 
 class TipoRecebimentoService {
-  constructor() {
-    this.tipoRecebimentoRepository = new TipoRecebimentoRepository();
-  }
-
   async getAllTiposRecebimento() {
-    return this.tipoRecebimentoRepository.findAll();
+    console.log("aqui")
+    const tipos = await TipoRecebimentoRepository.findAll();
+    console.log(tipos)
+    return tipos
   }
 
   async getTipoRecebimentoById(id) {
-    return this.tipoRecebimentoRepository.findById(id);
+    return await TipoRecebimentoRepository.findById(id);
   }
 
   async createTipoRecebimento(data) {
-    return this.tipoRecebimentoRepository.create(data);
+    return await TipoRecebimentoRepository.create(data);
   }
 
   async updateTipoRecebimento(id, data) {
-    return this.tipoRecebimentoRepository.update(id, data);
+    return await TipoRecebimentoRepository.update(id, data);
   }
 
   async deleteTipoRecebimento(id) {
-    return this.tipoRecebimentoRepository.delete(id);
+    return await TipoRecebimentoRepository.delete(id);
   }
 }
 
-module.exports = TipoRecebimentoService;
+module.exports = new TipoRecebimentoService();

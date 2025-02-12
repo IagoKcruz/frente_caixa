@@ -9,7 +9,8 @@ const menuItems = {
     { name: 'Categoria', route: '/cadastrar-Categoria', iconClass: 'fas fa-cogs' },
     { name: 'Catálogo', route: '/catalogo', iconClass: 'fas fa-cogs' },
     { name: 'Usuário', route: '/usuarios/page', iconClass: 'fas fa-cogs' },
-    { name: 'Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs' },
+    { name: 'Cadastrar Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs' },
+    { name: 'Forma Pagamento', route: '/FormaPagamento/openPage', iconClass: 'fas fa-cogs' },
     { name: 'Sair', route: '/logout', iconClass: '/img/login' }
   ],
   CLIENTE: [
