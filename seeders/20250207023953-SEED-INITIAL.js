@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("usuario", [
-      { id: uuidv4(), nome: "iago", login: "icruz", email: "iago@iago.com", sn_ativo: "S" }
+      { id: uuidv4(), nome: "iago", login: "icruz", email: "iago@iago.com", grupo_usuario_id: 1 ,sn_ativo: "S" }
     ]);
 
     await queryInterface.bulkInsert("municipio", [
