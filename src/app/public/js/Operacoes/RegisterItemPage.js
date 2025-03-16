@@ -11,7 +11,7 @@ function getDadosTela() {
     snAtivo = document.getElementById("sn_ativo");
     descricao = document.getElementById("descricao");
     preco = document.getElementById("preco");
-    salvarBtn = document.querySelector("#formItem button[type='submit']");
+    salvarBtn = document.querySelector("#salvar");
 }
 
 function limparCampos() {

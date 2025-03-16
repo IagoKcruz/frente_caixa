@@ -7,7 +7,7 @@ class CadastrarPromocaoController {
     // Abrir página de cadastro de Promoção
     async openPagePromocao(req, res) {
         try {
-            return res.render('layout', { body: './partials/Operacoes/PromocaoPage.ejs' });
+            return res.render('layout', { body: './partials/Operacoes/PromocaoPage.ejs', title : "PROMOÇÃO" });
         } catch (error) {
             return res.json({ error: error });
         }

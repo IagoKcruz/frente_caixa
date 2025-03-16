@@ -4,9 +4,9 @@ import { initializeWindowWithGrid, openErrorWindow, openSuccessWindow } from '..
 import { ajaxGet, ajaxPost, ajaxPut, ajaxDelete } from '../../FetchCommom.js'
 import * as gridPromocao from '../../Operacoes/Promocao/GridPromocao.js'
 
-async function carregarPromocao(nome = "") {
+async function carregarPromocao(descricao = "") {
     try {
-        const response = await ajaxPost("/caixa/listar-Promocao", JSON.stringify({ nome }));
+        const response = await ajaxPost("/caixa/listar-Promocao", JSON.stringify({ descricao }));
         const promocao = await response.json();
         gridPromocao.montarGridPromocao(promocao.Promocoes);
     } catch (error) {
@@ -23,8 +23,8 @@ $(document).on("change", "#insertSnPromocaoGeral_novo, #editSnPromocaoGeral", as
 
 
 document.getElementById("btnFiltrar").addEventListener("click", async function () {
-    const nome = document.getElementById("filterNome").value;
-    await carregarPromocao(nome);
+    const descricao = document.getElementById("filtroNome").value;
+    await carregarPromocao(descricao);
 });
 
 carregarPromocao()

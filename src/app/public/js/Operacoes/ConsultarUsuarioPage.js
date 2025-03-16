@@ -98,7 +98,7 @@ async function updateUsuario(item) {
 
 // Evento do botão "Filtrar"
 document.getElementById("btnFiltrar").addEventListener("click", async function () {
-    const nome = document.getElementById("filterNome").value;
+    const nome = document.getElementById("filtroNome").value;
     await carregarUsuarios(nome);
 });
 

@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 class CadastrarCategoriaController {
     async openPageCategoria(req, res){
         try {
-            return res.render('layout', { body: './partials/Operacoes/CategoriaPage.ejs'});
+            return res.render('layout', { body: './partials/Operacoes/CategoriaPage.ejs', title : "CADASTRAR CATEGORIA"});
         } catch (error) {
             return res.json({error : error});
         }
@@ -13,6 +13,7 @@ class CadastrarCategoriaController {
     async listarCategorias(req, res){
         try {
             const nome = req.body.nome;
+            console.log(nome)
             let lista;
             if (!nome) {
                 lista = await CategoriaService.getAllCategorias();

@@ -5,7 +5,7 @@ class CatalogoController {
     try {
       const items = await ItemService.listarItensAtivos();
 
-      return res.render('layout', { body: './partials/Operacoes/CatalogoPage.ejs' , items : items})
+      return res.render('layout', { body: './partials/Operacoes/CatalogoPage.ejs' , items : items, title : "CATÁLOGO"})
     } catch (error) {
       return res.json({ error: error.message });
     }

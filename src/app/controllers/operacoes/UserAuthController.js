@@ -31,21 +31,14 @@ class AuthController {
     }
   }
 
-  async openHome(req, res) {
-      return res.render('layout', { body: './partials/LoginPage.ejs' })
+  async index(req, res) {
+      return res.render('layout', { body: './partials/LoginPage.ejs', title : "LOGIN" })
   }
 
   async openRegisterPage(req, res) {
     const municipios = await MunicipioService.listarMunicipios();
 
-    const token = req.session.token;
-    if(token == null || token == undefined){
-      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: "", Municipios : municipios})
-    }
-
-    jsonwebtoken.verify(token, process.env.JWT_SECRET, (erro, decoded) => { 
-      return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: decoded.role, Municipios : municipios})
-    })
+    return res.render('layout', { body: './partials/Operacoes/RegistroPage.ejs', role: "", Municipios : municipios, title : "CRIAR CONTA"})
   }
 }
 

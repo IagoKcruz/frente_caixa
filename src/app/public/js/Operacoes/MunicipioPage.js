@@ -107,7 +107,7 @@ async function deleteMunicipio(item) {
 
 // Evento do botão "Filtrar"
 document.getElementById("btnFiltrar").addEventListener("click", function () {
-    const nome = document.getElementById("filterNome").value;
+    const nome = document.getElementById("filtroNome").value;
     carregarMunicipios(nome);
 });
 

@@ -9,7 +9,7 @@ const FormaPagamento = sequelize.define('FormaPagamento', {
     allowNull: false,
   },
   codigo: {
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.STRING(9),
     allowNull: false,
   },
   descricao: {
@@ -19,6 +19,9 @@ const FormaPagamento = sequelize.define('FormaPagamento', {
   tipo_recebimento_id: {
     type: DataTypes.INTEGER(11),
     allowNull: false,
+  },
+  parcelas: {
+    type: DataTypes.INTEGER(11),
   },
 },{
   tableName: 'forma_pagamento',

@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("usuario", [
-      { id: uuidv4(), nome: "iago", login: "icruz", email: "iago@iago.com", sn_ativo: "S" }
+      { id: uuidv4(), nome: "iago", login: "icruz", email: "iago@iago.com", grupo_usuario_id: 1 ,sn_ativo: "S" }
     ]);
 
     await queryInterface.bulkInsert("municipio", [
@@ -51,18 +51,6 @@ module.exports = {
       { descricao: "Unidade (UN)" }
     ]);
 
-    const tiposRecebimento = [
-      { id: uuidv4(), descricao: "Crédito" },
-      { id: uuidv4(), descricao: "Débito" },
-      { id: uuidv4(), descricao: "Dinheiro" },
-      { id: uuidv4(), descricao: "Pix" },
-      { id: uuidv4(), descricao: "Boleto" },
-      { id: uuidv4(), descricao: "Transferência Bancária" },
-      { id: uuidv4(), descricao: "Carteira Digital" },
-      { id: uuidv4(), descricao: "Cheque" },
-      { id: uuidv4(), descricao: "Vale-Alimentação" },
-      { id: uuidv4(), descricao: "Vale-Refeição" }
-    ];
     await queryInterface.bulkInsert("tipo_recebimento", [
       { id: 1, descricao: "Crédito" },
       { id: 2, descricao: "Débito" },
@@ -74,17 +62,6 @@ module.exports = {
       { id: 8, descricao: "Cheque" },
       { id: 9, descricao: "Vale-Alimentação" },
       { id: 10, descricao: "Vale-Refeição" }
-    ]);
-
-    await queryInterface.bulkInsert("forma_pagamento", [
-      { id: uuidv4(), codigo: 101, descricao: "À vista", tipo_recebimento_id: 2 },
-      { id: uuidv4(), codigo: 102, descricao: "30 dias", tipo_recebimento_id: 2 },
-      { id: uuidv4(), codigo: 201, descricao: "Crédito 1x", tipo_recebimento_id: 1 },
-      { id: uuidv4(), codigo: 202, descricao: "Crédito 2x", tipo_recebimento_id: 1 },
-      { id: uuidv4(), codigo: 203, descricao: "Crédito 3x", tipo_recebimento_id: 1 },
-      { id: uuidv4(), codigo: 204, descricao: "Crédito 4x", tipo_recebimento_id: 1 },
-      { id: uuidv4(), codigo: 301, descricao: "Banco Banrisul", tipo_recebimento_id: 6 },
-      { id: uuidv4(), codigo: 302, descricao: "Banco do Brasil", tipo_recebimento_id: 6 }
     ]);
 
     const uid1 = uuidv4()
@@ -123,7 +100,6 @@ module.exports = {
     await queryInterface.bulkDelete("usuario", null, {});
     await queryInterface.bulkDelete("categoria", null, {});
     await queryInterface.bulkDelete("unidade_medida", null, {});
-    await queryInterface.bulkDelete("forma_pagamento", null, {});
     await queryInterface.bulkDelete("tipo_recebimento", null, {});
     //await queryInterface.bulkDelete('combo_promocao', null, {});
     return queryInterface.bulkDelete('Promocao', null, {});

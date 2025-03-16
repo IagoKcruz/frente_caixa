@@ -19,7 +19,7 @@ class ItemController {
       const categoria = await CategoriaService.getAllCategorias();
       const unidadeMedida = await UnidadeMedidaService.getAllUnidadesMedida();
 
-      return res.render('layout', { body: './partials/Operacoes/RegistrarItemPage.ejs', UnidadeMedida : unidadeMedida, Categoria: categoria})
+      return res.render('layout', { body: './partials/Operacoes/RegistrarItemPage.ejs', UnidadeMedida : unidadeMedida, Categoria: categoria, title: "REGISTRO PRODUTO" })
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

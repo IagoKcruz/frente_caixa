@@ -3,7 +3,7 @@ const UsuarioService = require('../../services/UsuarioService');
 class ConsultarUsuariosController {
     async openPage(req, res) {
         try {
-            return res.render('layout', { body: './partials/Operacoes/ConsultarUsuariosPage.ejs'});
+            return res.render('layout', { body: './partials/Operacoes/ConsultarUsuariosPage.ejs', title : "CONTROLE DE USUÁRIOS"});
         } catch (error) {
             return res.json({error : error});
         }

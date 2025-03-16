@@ -3,14 +3,14 @@ const enumRole = require('../../utilsBack/EnumRoles');
 
 const menuItems = {
   ADMIN: [
-    { name: 'Usuários', route: '/usuarios', iconClass: 'fas fa-users' },
     { name: 'Municipio', route: '/cadastrar-Municipio', iconClass: 'fas fa-cogs' },
     { name: 'Unidade de Medida', route: '/cadastrar-UnidadeMedida', iconClass: 'fas fa-cogs' },
     { name: 'Promoção', route: '/cadastrar-Promocao', iconClass: 'fas fa-cogs' },
     { name: 'Categoria', route: '/cadastrar-Categoria', iconClass: 'fas fa-cogs' },
     { name: 'Catálogo', route: '/catalogo', iconClass: 'fas fa-cogs' },
     { name: 'Usuário', route: '/usuarios/page', iconClass: 'fas fa-cogs' },
-    { name: 'Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs' },
+    { name: 'Cadastrar Produto', route: '/registrar-Item', iconClass: 'fas fa-cogs' },
+    { name: 'Forma Pagamento', route: '/FormaPagamento/openPage', iconClass: 'fas fa-cogs' },
     { name: 'Sair', route: '/logout', iconClass: '/img/login' }
   ],
   CLIENTE: [

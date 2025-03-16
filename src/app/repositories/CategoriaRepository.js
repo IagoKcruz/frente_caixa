@@ -8,7 +8,7 @@ class CategoriaRepository extends BasicRepository {
   }
 
   async GetCategoriaFiltrada(nome) {
-    await this.findAll({ where: { descricao: { [Op.like]: `%${nome}%` } } })
+    return await Categoria.findAll({ where: { descricao: { [Op.like]: `%${nome}%` } } })
   }
 }
 
